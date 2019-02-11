@@ -1,4 +1,5 @@
 
+
 int E_ATTRIB_SIZE = 5; // This is a constant;
 
 typedef struct graph {
@@ -42,6 +43,14 @@ typedef struct graph {
  * 
  */
 
+int set_connected(graph *G, int start_v, int end_v){
+  if (start_v ==-1){G->is_connected = false; }
+  else if (G->v_adj[start_v][end_v]==1) {G->is_connected = true;}
+  else { G->is_connected = false;}
+  return 0;
+}
+
+
 /**
  * Showing how the command line must be used.
  * 
@@ -51,9 +60,11 @@ int usage(){
     fprintf(stderr,"Use it properly!");
     return -1;
 }
+
 /**
  * Parse the command line arguments. 
 */
+
 int parse(char* argv[], int argc,int *no_e, int *no_v, char * IfileName, char * OfileName){
   char ch;
   extern char* optarg;
@@ -125,12 +136,6 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     return 0;
 }
 
-int set_connected(graph *G, int start_v, int end_v){
-  if (start_v ==-1){G->is_connected = false; }
-  else if (G->v_adj[start_v][end_v]==1) {G->is_connected = true;}
-  else { G->is_connected = false;}
-  return 0;
-}
 
 int move_v(){return 0;}
 /**
@@ -222,15 +227,15 @@ int write_adjency(graph *G, char delim,char * OfileName){
   fprintf(stdout,"%c",delim);
   for (i=0;i< G->no_v;i++){
       if (G->v[i] !=-1){
-        fprintf(stdout,"%c%d",delim,G->v[i]);
+        fprintf(stdout,"%c%ld",delim,G->v[i]);
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
   for (i=0;i< G->no_v;i++){
       if (G->v[i] !=-1){
-        fprintf(stdout,"\n%d",G->v[i]);
+        fprintf(stdout,"\n%ld",G->v[i]);
         for (j=0;j< G->no_v;j++){
             if (G->v[j] !=-1){
-                fprintf(stdout,"%c%d",delim,G->v_adj[i][j]);
+                fprintf(stdout,"%c%ld",delim,G->v_adj[i][j]);
             } else {j=G->no_v;}
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
@@ -248,10 +253,10 @@ int write_incidence(graph *G, char delim,char * OfileName){
   }
   for (i=0;i<G->no_v;i++){
       if (G->v[i] !=-1){
-        fprintf(stdout,"\n%d",G->v[i]);
+        fprintf(stdout,"\n%ld",G->v[i]);
         for (j=0;j<G->no_e;j++){
             if (G->e[j][0] !=-1){
-                fprintf(stdout,"%c%d",delim,G->v_incidents[i][j]);
+                fprintf(stdout,"%c%ld",delim,G->v_incidents[i][j]);
             } else {j=G->no_e;}
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
@@ -274,11 +279,11 @@ int init_G(graph *G, int no_e, int no_v){
   G->is_bypartheid=true;
   G->no_e = no_e;
   G->no_v = no_v;
-  G->e = (long*) calloc(no_e, sizeof(long));
+  G->e = (long **) calloc(no_e, sizeof(long));
   G->v = (long*) calloc(no_v, sizeof(long));
   G->v_degree = (long*) calloc(no_v, sizeof(long));
-  G->v_adj = (long*) calloc(no_v, sizeof(long));
-  G->v_incidents = (long*) calloc(no_v, sizeof(long));
+  G->v_adj = (long**) calloc(no_v, sizeof(long));
+  G->v_incidents = (long**) calloc(no_v, sizeof(long));
   
   for (i=0; i < no_e; i++){
       G->e[i]=(long*) calloc(E_ATTRIB_SIZE, sizeof(long));
@@ -301,12 +306,12 @@ int disp_graph(graph *G, int no_e, int no_v){
   
   for (i=0; i < no_e; i++){
       for (j=0; j < E_ATTRIB_SIZE; j++){
-          fprintf(stdout,"\nG->e[%d][%d]=%d",i,j,G->e[i][j]);
+          fprintf(stdout,"\nG->e[%d][%d]=%ld",i,j,G->e[i][j]);
       }
   }
    
   for (i=0; i<no_v;i++){
-      fprintf(stdout,"\nG.v[%d]=%d",i,G->v[i]);
+      fprintf(stdout,"\nG.v[%d]=%ld",i,G->v[i]);
   }
   return 0;
 }

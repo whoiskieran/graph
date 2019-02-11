@@ -8,9 +8,9 @@
 
 int main(int argc, char *argv[]) {
   graph G;
-  int no_e =0; int no_v=0; int i,j;
-  char * IfileName[1024];
-  char * OfileName[1024];
+  int no_e =0; int no_v=0;
+  char IfileName[1024];
+  char OfileName[1024];
   
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return 0;}
   
