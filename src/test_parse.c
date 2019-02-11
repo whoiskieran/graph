@@ -14,6 +14,8 @@ int main(int argc, char *argv[]) {
   if(argc < 2){return log_error("function parse no arguments wrong");}
   if(no_e ==0){return log_error("function parse no edges is  wrong");}
   if(no_v ==0){return log_error("function parse no verticies is wrong");}
-      
+  if(strcmp(IfileName,"input.txt") !=0){return log_error("function parse input file is wrong");}      
+  if(strcmp(OfileName,"output.txt") !=0){return log_error("function parse output file is wrong");}      
+  
   return 0;
 }
