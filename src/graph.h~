@@ -69,7 +69,7 @@ int parse(char* argv[], int argc,int *no_e, int *no_v, char * IfileName, char * 
   char ch;
   extern char* optarg;
   
-  if (argc<2){return usage();}
+  if (argc<2){return -1;}
   
   while ( (ch = getopt(argc, argv, "E:V:I:O:?:"))!=-1 ) {
     switch(ch) {

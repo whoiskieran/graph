@@ -4,4 +4,8 @@ graph:graph.c
 	$(CC) $(CFLAGS) graph.c -o $@
 
 test_parse:test_parse.c 
-	$(CC) $(CFLAGS) graph.c -o $@
+	$(CC) $(CFLAGS) test_parse.c -o $@
+
+test_init:test_init.c 
+	$(CC) $(CFLAGS) test_init.c -o $@
+

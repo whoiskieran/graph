@@ -149,7 +149,7 @@ The code msut be clever enought to know that the path is the same.
 Watch https://www.youtube.com/watch?v=dQr4wZCiJJ4&t=0s&index=6&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda
 */
 
-long find_unique_hameltonain_apth(graph *G){return 0;}
+long find_unique_hameltonain_path(graph *G){return 0;}
 
 int get_degree(graph * G, int start_v){
     if (start_v >= G->no_v){return -1;}
