@@ -36,7 +36,7 @@ test_set_adj:unit_test/test_set_adj.c
 	rm unit_test/$@
 
 test_v_distance:unit_test/test_v_distance.c 
-	@echo "###### Test ONE direction and adjency matrix set to TRUE #####"
+	echo "###### Test ONE direction and adjency matrix set to TRUE #####"
 	$(CC) $(CFLAGS) unit_test/test_v_distance.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@

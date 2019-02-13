@@ -195,7 +195,8 @@ int v_distance(graph *G, int start_v, int end_v){
     * if two vertacies are adjacent the distance between them is 0
     * There is 0 nodes to traverse.  
     **/
-    if (G->use_adj==true){if (G->v_adj[start_v][end_v]==1){return 0;}}
+    if (G->v_adj[start_v][end_v]==1){return 0;}
+    
     /**
      * If the end_v is not in the matrix then edges will have to be
      * followed. Depending on the directions of ecges the search will
