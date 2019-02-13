@@ -35,6 +35,7 @@ typedef struct graph {
   bool is_bypartheid;
   bool is_connected;
   bool is_simple; // No loops or multiple edges
+  bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
 //  graph_data *gd;
 } graph;
 /**
@@ -272,6 +273,11 @@ int is_vertex_transitave(){return 0;}
 int log_error(char * msg){ fprintf(stderr,"\n%s\n",msg); return -1;}
 
 bool is_icomorph(graph G1, graph G2){return 0;}
+/**
+The set the adjacency loie OO programming don't use variable name 
+as I may change it.
+**/
+bool set_adj(graph *G, bool use_adj){ G->use_adj=use_adj; return use_adj;}
 
 int init_G(graph *G, int no_e, int no_v){
   int i=0; int j=0;
@@ -279,6 +285,7 @@ int init_G(graph *G, int no_e, int no_v){
   G->is_bypartheid=true;
   G->no_e = no_e;
   G->no_v = no_v;
+  G->use_adj = false;
   G->e = (long **) calloc(no_e, sizeof(long));
   G->v = (long*) calloc(no_v, sizeof(long));
   G->v_degree = (long*) calloc(no_v, sizeof(long));

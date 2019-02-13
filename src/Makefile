@@ -1,6 +1,6 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_parse test_init test_add_v test_add_e
+all: test_parse test_init test_add_v test_add_e test_get_degree test_set_adj
 		
 graph:graph.c 
 	$(CC) $(CFLAGS) graph.c -o $@
@@ -25,4 +25,13 @@ test_add_e:unit_test/test_add_e.c
 	./unit_test/$@
 	rm unit_test/$@
 	
-        
+test_get_degree:unit_test/test_get_degree.c 
+	$(CC) $(CFLAGS) unit_test/test_get_degree.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
+
+test_set_adj:unit_test/test_set_adj.c 
+	$(CC) $(CFLAGS) unit_test/test_set_adj.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
+	        
