@@ -1,43 +1,43 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_parse test_init test_add_v test_add_e test_get_degree test_set_adj test_v_distance
+all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance
 		
 graph:graph.c 
 	$(CC) $(CFLAGS) graph.c -o $@
 
-test_parse:unit_test/test_parse.c 
-	$(CC) $(CFLAGS) unit_test/test_parse.c -o unit_test/$@
+test_1_parse:unit_test/test_1_parse.c 
+	$(CC) $(CFLAGS) unit_test/test_1_parse.c -o unit_test/$@
 	./unit_test/$@ -E 6 -V 6 -I input.txt -O output.txt
 	rm unit_test/$@
 	
-test_init:unit_test/test_init.c 
-	$(CC) $(CFLAGS) unit_test/test_init.c -o unit_test/$@
+test_1_init:unit_test/test_1_init.c 
+	$(CC) $(CFLAGS) unit_test/test_1_init.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@
 
-test_add_v:unit_test/test_add_v.c 
-	$(CC) $(CFLAGS) unit_test/test_add_v.c -o unit_test/$@
+test_1_add_v:unit_test/test_1_add_v.c 
+	$(CC) $(CFLAGS) unit_test/test_1_add_v.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@
 
-test_add_e:unit_test/test_add_e.c 
-	$(CC) $(CFLAGS) unit_test/test_add_e.c -o unit_test/$@
+test_1_add_e:unit_test/test_1_add_e.c 
+	$(CC) $(CFLAGS) unit_test/test_1_add_e.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@
 	
-test_get_degree:unit_test/test_get_degree.c 
-	$(CC) $(CFLAGS) unit_test/test_get_degree.c -o unit_test/$@
+test_1_get_degree:unit_test/test_1_get_degree.c 
+	$(CC) $(CFLAGS) unit_test/test_1_get_degree.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@
 
-test_set_adj:unit_test/test_set_adj.c 
-	$(CC) $(CFLAGS) unit_test/test_set_adj.c -o unit_test/$@
+test_1_set_adj:unit_test/test_1_set_adj.c 
+	$(CC) $(CFLAGS) unit_test/test_1_set_adj.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@
 
-test_v_distance:unit_test/test_v_distance.c 
+test_1_v_distance:unit_test/test_1_v_distance.c 
 	@echo "###### Test ONE direction and adjency matrix set to TRUE #####"
-	$(CC) $(CFLAGS) unit_test/test_v_distance.c -o unit_test/$@
+	$(CC) $(CFLAGS) unit_test/test_1_v_distance.c -o unit_test/$@
 	./unit_test/$@
 	rm unit_test/$@
 	        
