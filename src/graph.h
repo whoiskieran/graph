@@ -174,11 +174,12 @@ int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_
     // return 0;
     return add_e(G,e_start,start_v,end_v,direction,fwd_weigh,bk_weight);
 }
+
 /**
- * This function returns the distance between two vertices but does not test if the path is pissible.
+ * This function returns the distance between two vertices but does not test if the path is possible.
  * if the possability of the path is important use the 
  * v_valid_distance function.
- * */
+**/
  
 int v_distance(graph *G, int start_v, int end_v){
     // if vertix sent down is bigger tne the number of verticies return -1
@@ -217,6 +218,35 @@ int v_distance(graph *G, int start_v, int end_v){
      } // end for i
     return 0;
 }
+
+/**
+* Graph Theory: 30. The 5 Known Vertex-Transitive Non-Hamiltonian Graphs
+* https://www.youtube.com/watch?v=FgHuQw7kb-o&t=0s&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda&index=51
+**/
+
+int make_VTNH(){return 0;}
+/**
+* Find a bridge is a good way to break up a graph into sub graphs.
+* Graph Theory: 34. Bridge edges
+* https://www.youtube.com/watch?v=zxu0dL436gI&t=0s&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda&index=54
+* 
+* Graph Theory: 35. Bridges in Connected Graphs
+* https://www.youtube.com/watch?v=SFFEc8DbO0Y&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda&index=54
+*
+* Graph Theory: 47. Subgraphs of Regular Graphs
+* https://www.youtube.com/watch?v=KFtPHoaqUaQ
+*
+**/
+
+int find_bridge() {return 0;}
+
+/**
+* Graph Theory: 48. Complement of a Graph
+* https://www.youtube.com/watch?v=VTgxv334KSU
+*
+**/
+
+int g_complement() {return 0;}
 
 int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 int read_adjency(){return 0;}
