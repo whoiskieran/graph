@@ -38,6 +38,12 @@ typedef struct graph {
   bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
 //  graph_data *gd;
 } graph;
+
+/** 
+* Explicit declaration of functions
+**/
+int log_error(char * msg);
+
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -251,7 +257,88 @@ int g_complement() {return 0;}
 int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 
 int read_adjency(graph *G, char delim,char * IfileName){
+  FILE* fd;
+  char line[2048];
+  char output_msg[1024];
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0;
+  G->use_adj = true;
+  sprintf(output_msg,"function read_adjency failed to open file %s",IfileName);  
+  if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
 
+  while (fgets(line,sizeof(line),fd)){    
+    /**
+    * The first line is the list of vertices.
+    * This number of verticies is calcualted 
+    * the delimiter is ignored.
+    **/
+    
+    if (no_l == 0){
+      l_size = sizeof(line);
+      for (i=0;i < l_size; i++){
+        if(line[i]=='\n') {l_size=i;} 
+        else {if(line[i] != delim){no_v++;}}
+      } // enf for
+      // l_size is reduced by 1 exclude line return
+      // may need to revise for windows.
+      l_size--;
+/*
+      for (j=0; j<no_v;j++) {
+        G->v[j] = -1;
+        G->v_degree[j] = 0;
+        G->v_adj[j] = (long*) calloc(no_v, sizeof(long));
+      }
+ */           
+    } else {
+      /**
+      * Initilize parts of the graph which depend on the no_v.
+      * After line 0 we have the number of vertices.
+      **/
+      
+      if (no_l==1) {
+        G->no_v = no_v;
+        G->v = (long*) calloc(no_v, sizeof(long));
+        G->v_degree = (long*) calloc(no_v, sizeof(long));
+        G->v_adj = (long**) calloc(no_v, sizeof(long));
+        G->v_incidents = (long**) calloc(no_v, sizeof(long));
+         
+        for (j=0; j<no_v;j++) {
+          G->v[j] = -1;
+          G->v_degree[j] = 0;
+          G->v_adj[j] = (long*) calloc(no_v, sizeof(long));
+        } // end for j
+      } // end if no_l ==1
+      
+      /**
+      * Line number is grater than 0 and adjacency matrix is being read.
+      **/
+      
+      for (i=0; i < l_size; i++){   
+        if(line[i] != delim){
+          // The first column is the vertix id
+          // the if statement deals with this
+          // the no_l is 1 grater than the no_v
+          // because of the header line.
+          // The else part puts the 1's or 0's into the matrix
+          // ignoring the delimiter.   
+          if (i==0){G->v[(no_l-1)] = (long) line[i];}
+          else {
+            G->v_adj[(no_l-1)][(i-1)] = (long) line[i];
+            if (G->v_adj[(no_l-1)][(i-1)]==1){no_e +=1;}
+            fprintf(stdout,"\nG->v_adj[%d][%d]",(no_l-1),(i-1));
+          } 
+        } // end if not delim
+      } // end for
+    } // end if (no_l)
+    no_l +=1;
+  } // end while
+  fprintf(stdout,"\nno_l=%d no_v=%ld no_e=%ld\n",no_l,no_v,no_e);
+  
+  /* 
+  for (j=0; j<no_v;j++) {
+    G->v_incidents[j] = (long*) calloc(no_e, sizeof(long));
+  }*/
+  
+  fclose(fd);
   return 0;
 }
 int read_incidence(){return 0;}

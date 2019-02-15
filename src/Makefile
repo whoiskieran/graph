@@ -44,6 +44,6 @@ test_1_v_distance:unit_test/test_1_v_distance.c
 test_1_read_adjency:unit_test/test_1_read_adjency.c 
 	@echo "###### Test ONE read_adjency #####"
 	$(CC) $(CFLAGS) unit_test/test_1_read_adjency.c -o unit_test/$@
-	./unit_test/$@ -I input.txt
+	./unit_test/$@ -I "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt"
 	rm unit_test/$@
 	        

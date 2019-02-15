@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   char OfileName[1024];
   
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}
-  
+  // fprintf(stdout,"\nargv[0]=%s\n",argv[0]);  
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function read_adjacency");}
   
   // write_incidence(&G,' ',OfileName);
