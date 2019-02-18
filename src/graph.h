@@ -143,6 +143,9 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     return 0;
 }
 
+long get_no_e(graph *G){return G->no_e;}
+long get_no_v(graph *G){return G->no_v;}
+
 
 int move_v(){return 0;}
 /**
@@ -256,11 +259,43 @@ int g_complement() {return 0;}
 
 int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 
+/**
+* Graph Theory: 51. Eccentricity, Radius & Diameter
+* get_diamater and get radious
+* https://www.youtube.com/watch?v=YbCn8d4Enos&list=PLoJC20gNfC2gmT_5WgwYwGMvgCjYVsIQg&index=55
+**/
+int get_diamater(graph *G){return 0;}
+int get_radious(graph *G){return 0;}
+
+/**
+* Check if there is an edge between two vertices.
+* The function takes the start and end vertixes.
+* the number of edges to search if it is too large 
+* it is set to the mamimum edges of the graph. 
+* the directions in a bio-directional graph the start and end 
+* verticies and the end and start are also tested. 
+**/
+
+int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int direction){
+
+  if (G->no_e < no_edges_to_search){no_edges_to_search=G->no_e;}
+  
+  for (long i =0; i < no_edges_to_search; i++){
+    if ((direction < 1) || (direction > 2)){direction=G->e[i][2];}
+    if (direction==2){
+      if ((G->e[i][0]==start_v && G->e[i][1]==end_v) || (G->e[i][0]==end_v && G->e[i][1]==start_v)) {return i;}
+    } else {
+      if (G->e[i][0]==start_v && G->e[i][1]==end_v) {return i;}
+    } // end if direction ==2
+  } // end for i
+  return -1;
+}
+
 int read_adjency(graph *G, char delim,char * IfileName){
   FILE* fd;
   char line[2048];
-  char output_msg[1024];
-  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0;
+  char output_msg[1024];    
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; int direction =0;
   G->use_adj = true;
   sprintf(output_msg,"function read_adjency failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
@@ -280,14 +315,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
       } // enf for
       // l_size is reduced by 1 exclude line return
       // may need to revise for windows.
-      l_size--;
-/*
-      for (j=0; j<no_v;j++) {
-        G->v[j] = -1;
-        G->v_degree[j] = 0;
-        G->v_adj[j] = (long*) calloc(no_v, sizeof(long));
-      }
- */           
+      l_size--;           
     } else {
       /**
       * Initilize parts of the graph which depend on the no_v.
@@ -303,7 +331,6 @@ int read_adjency(graph *G, char delim,char * IfileName){
          
         for (j=0; j<no_v;j++) {
           G->v[j] = -1;
-          G->v_degree[j] = 0;
           G->v_adj[j] = (long*) calloc(no_v, sizeof(long));
         } // end for j
       } // end if no_l ==1
@@ -312,35 +339,67 @@ int read_adjency(graph *G, char delim,char * IfileName){
       * Line number is grater than 0 and adjacency matrix is being read.
       **/
       
-      for (i=0; i < l_size; i++){   
+      for (i=0; i <= l_size; i++){   
         if(line[i] != delim){
           // The first column is the vertix id
           // the if statement deals with this
           // the no_l is 1 grater than the no_v
           // because of the header line.
-          // The else part puts the 1's or 0's into the matrix
+          // The else part puts the 1's into the matrix 
+          // calloc has already set them to 0
           // ignoring the delimiter.   
-          if (i==0){G->v[(no_l-1)] = (long) line[i];}
+          if (i==0){G->v[(no_l-1)] = atol(&line[i]);}
           else {
-            G->v_adj[(no_l-1)][(i-1)] = (long) line[i];
-            if (G->v_adj[(no_l-1)][(i-1)]==1){no_e +=1;}
-            fprintf(stdout,"\nG->v_adj[%d][%d]",(no_l-1),(i-1));
+            G->v_adj[(no_l-1)][(i-2)] = atol(&line[i]);
+            if (G->v_adj[(no_l-1)][(i-2)]==1){no_e +=1;}
           } 
         } // end if not delim
       } // end for
     } // end if (no_l)
     no_l +=1;
   } // end while
-  fprintf(stdout,"\nno_l=%d no_v=%ld no_e=%ld\n",no_l,no_v,no_e);
   
-  /* 
-  for (j=0; j<no_v;j++) {
-    G->v_incidents[j] = (long*) calloc(no_e, sizeof(long));
-  }*/
+  // Close file as it is not needed.
+  // if there is a crash later this will be clean.
   
   fclose(fd);
+  G->no_e = no_e; 
+
+  for (j=0; j< G->no_v;j++) {G->v_incidents[j] = (long*) calloc(no_e, sizeof(long));}
+ 
+  G->e = (long **) calloc(no_e, sizeof(long));
+ 
+  for (i=0; i < no_e; i++){
+    G->e[i]=(long*) calloc(E_ATTRIB_SIZE, sizeof(long));
+    for (j=0; j < E_ATTRIB_SIZE; j++){G->e[i][j]=-1;}
+  }
+  //no_e can be re-used here
+  // every 1 in the matrix is a new edge
+  no_e =0; 
+  
+  for (i=0; i < G->no_v; i++){
+    for (j=0; j < G->no_v; j++){
+      if (G->v_adj[i][j]==1){
+        direction=1; // Assume direction is 1
+        if (G->v_adj[j][i]==1) {direction=2;} // If there is a 1 in both positions edge is both directions.
+        if (direction ==2){
+          for (long k=0; k <= no_e; k++){
+            if (edge_exists(G,i,j,direction,no_e) !=0){
+              if (add_e(G,no_e,i,j,direction,0,0)==-1){return log_error("function read_adjency failed to add edge.");}
+              no_e++;
+            } // end if edge_exists
+          } // end for k
+        } else {
+          if (add_e(G,no_e,i,j,direction,0,0)==-1){return log_error("function read_adjency failed to add edge.");}
+          no_e++;
+        } // end if direction ==2
+      } // end if
+    } // end for j
+  } // end for i 
+   
   return 0;
 }
+
 int read_incidence(){return 0;}
 
 int write_adjency(graph *G, char delim,char * OfileName){
@@ -421,7 +480,6 @@ int init_G(graph *G, int no_e, int no_v){
   
   for (i=0; i<no_v;i++) {
       G->v[i] = -1;
-      G->v_degree[i] = 0;
       G->v_adj[i] = (long*) calloc(no_v, sizeof(long));
       G->v_incidents[i] = (long*) calloc(no_e, sizeof(long));
   }
