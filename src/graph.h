@@ -43,7 +43,7 @@ typedef struct graph {
 * Explicit declaration of functions
 **/
 int log_error(char * msg);
-
+int write_adjency(graph *G, char delim,char * OfileName);
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -295,7 +295,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
   FILE* fd;
   char line[2048];
   char output_msg[1024];    
-  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; int direction =0;
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; int direction =0; int adj_i=0;
   G->use_adj = true;
   sprintf(output_msg,"function read_adjency failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
@@ -350,13 +350,17 @@ int read_adjency(graph *G, char delim,char * IfileName){
           // ignoring the delimiter.   
           if (i==0){G->v[(no_l-1)] = atol(&line[i]);}
           else {
-            G->v_adj[(no_l-1)][(i-2)] = atol(&line[i]);
-            if (G->v_adj[(no_l-1)][(i-2)]==1){no_e +=1;}
+            G->v_adj[(no_l-1)][adj_i] = atol(&line[i]);
+            // fprintf(stdout,"\n no_l=%d line[%d]=%c\n",no_l,i,line[i]);
+            // fprintf(stdout,"\nG->v_adj[%d][%d]=%ld\n",(no_l-1),(i-2),G->v_adj[(no_l-1)][(i-2)]);
+            if (G->v_adj[(no_l-1)][adj_i]==1){no_e +=1;}
+            adj_i++;
           } 
         } // end if not delim
       } // end for
     } // end if (no_l)
     no_l +=1;
+    adj_i =0;
   } // end while
   
   // Close file as it is not needed.
@@ -364,7 +368,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
   
   fclose(fd);
   G->no_e = no_e; 
-
+/*  
   for (j=0; j< G->no_v;j++) {G->v_incidents[j] = (long*) calloc(no_e, sizeof(long));}
  
   G->e = (long **) calloc(no_e, sizeof(long));
@@ -381,22 +385,25 @@ int read_adjency(graph *G, char delim,char * IfileName){
     for (j=0; j < G->no_v; j++){
       if (G->v_adj[i][j]==1){
         direction=1; // Assume direction is 1
+        fprintf(stdout,"\nG->v_adj[%d][%d]=%ld\nG->v_adj[%d][%d]=%ld",i,j,G->v_adj[i][j],j,i,G->v_adj[j][i]);
+        fprintf(stdout,"\ntest one\n");
         if (G->v_adj[j][i]==1) {direction=2;} // If there is a 1 in both positions edge is both directions.
         if (direction ==2){
           for (long k=0; k <= no_e; k++){
-            if (edge_exists(G,i,j,direction,no_e) !=0){
-              if (add_e(G,no_e,i,j,direction,0,0)==-1){return log_error("function read_adjency failed to add edge.");}
+            if (edge_exists(G,j,k,direction,no_e) ==-1){
+              // fprintf(stdout,"\nadd_e(G, %ld, %d, %ld, %d, 0 ,0);",no_e,j,k,direction);
+              if (add_e(G,no_e,j,k,direction,0,0)==-1){return log_error("function read_adjency failed to add edge. Direction 2");}
               no_e++;
             } // end if edge_exists
           } // end for k
         } else {
-          if (add_e(G,no_e,i,j,direction,0,0)==-1){return log_error("function read_adjency failed to add edge.");}
+          if (add_e(G,no_e,i,j,direction,0,0)==-1){return log_error("function read_adjency failed to add edge. Direction 1");}
           no_e++;
         } // end if direction ==2
       } // end if
     } // end for j
   } // end for i 
-   
+ */  
   return 0;
 }
 
@@ -404,22 +411,38 @@ int read_incidence(){return 0;}
 
 int write_adjency(graph *G, char delim,char * OfileName){
   int i=0; int j=0;
-  fprintf(stdout,"%c",delim);
+  FILE* fd;
+
+  char output_msg[1024];
+  sprintf(output_msg,"function write_adjency Failed to Open File Name %s",OfileName);
+
+  if (strcmp(OfileName,"")==0){fd=stdout;} 
+  else { 
+    fclose(stdout);
+    if ((fd=fopen(OfileName,"w"))==NULL){return log_error(output_msg);}
+  }
+   
+  fprintf(fd,"%c",delim);
+  
   for (i=0;i< G->no_v;i++){
       if (G->v[i] !=-1){
-        fprintf(stdout,"%c%ld",delim,G->v[i]);
+        fprintf(fd,"%c%ld",delim,G->v[i]);
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
+  
   for (i=0;i< G->no_v;i++){
       if (G->v[i] !=-1){
-        fprintf(stdout,"\n%ld",G->v[i]);
+        fprintf(fd,"\n%ld",G->v[i]);
         for (j=0;j< G->no_v;j++){
             if (G->v[j] !=-1){
-                fprintf(stdout,"%c%ld",delim,G->v_adj[i][j]);
+                fprintf(fd,"%c%ld",delim,G->v_adj[i][j]);
             } else {j=G->no_v;}
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
+  
+  fclose(fd);
+  
   return 0;
 }
 

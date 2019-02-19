@@ -18,7 +18,9 @@ int main(int argc, char *argv[]) {
     if (add_v(&G,i,i)==-1){return log_error("function add_v failed to add a vertix");}
     if (add_v(&G1,i,i)==-1){return log_error("function add_v failed to add a vertix");}
   }
-  // Create a triangel graph v0 connects to v1, v1 connects to v2, v2 connects to v0 
+  // G is a triangel graph v0 connects to v1, v1 connects to v2, v2 connects to v0 
+  // G1 is a triangle graph but only one direction.
+  
   for (int i=0; i< no_v; i++){
     sprintf(output_str,"function add_e failed to add edge=%d start_vertix=%d end_vertix=%d",i,i,(i+1)); 
     if ((i+1)==no_v){
