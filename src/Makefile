@@ -1,6 +1,6 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_read_adjency
+all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency
 		
 graph:graph.c 
 	$(CC) $(CFLAGS) graph.c -o $@
@@ -53,13 +53,61 @@ test_1_edge_exists:unit_test/test_1_edge_exists.c
 	./unit_test/$@
 	rm unit_test/$@
 
+test_1_write_adjency:unit_test/test_1_write_adjency.c 
+	@echo "###### Test ONE write_adjency #####"
+	$(CC) $(CFLAGS) unit_test/test_1_write_adjency.c -o unit_test/$@
+		
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/out_1.txt" 
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out_1.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_3_Verticies_All_Combos.txt" -O "unit_test/out_2.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_2_3_Verticies_All_Combos.txt" "unit_test/out_2.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_3_3_Verticies_All_Combos.txt" -O "unit_test/out_3.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_3_3_Verticies_All_Combos.txt" "unit_test/out_3.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/out_4.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" "unit_test/out_4.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_binary-tree.txt" -O "unit_test/out_5.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_binary-tree.txt" "unit_test/out_5.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" -O "unit_test/out_6.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" "unit_test/out_6.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/out_7.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" "unit_test/out_7.txt"
+	
+	rm unit_test/$@
+#	rm unit_test/out.txt
+
+
 test_1_read_adjency:unit_test/test_1_read_adjency.c 
 	@echo "###### Test ONE read_adjency #####"
 	$(CC) $(CFLAGS) unit_test/test_1_read_adjency.c -o unit_test/$@
-	
-	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/out.txt" 
-	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out.txt"
+		
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/out_1.txt" 
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out_1.txt"
 
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_3_Verticies_All_Combos.txt" -O "unit_test/out_2.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_2_3_Verticies_All_Combos.txt" "unit_test/out_2.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_3_3_Verticies_All_Combos.txt" -O "unit_test/out_3.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_3_3_Verticies_All_Combos.txt" "unit_test/out_3.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/out_4.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" "unit_test/out_4.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_binary-tree.txt" -O "unit_test/out_5.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_binary-tree.txt" "unit_test/out_5.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" -O "unit_test/out_6.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" "unit_test/out_6.txt"
+
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/out_7.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" "unit_test/out_7.txt"
+	
 	rm unit_test/$@
 #	rm unit_test/out.txt
+	        
 	        

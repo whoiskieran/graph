@@ -295,7 +295,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
   FILE* fd;
   char line[2048];
   char output_msg[1024];    
-  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0;  int adj_i=0;
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; int direction =0; int adj_i=0;
   G->use_adj = true;
   sprintf(output_msg,"function read_adjency failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
