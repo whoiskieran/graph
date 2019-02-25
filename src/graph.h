@@ -44,6 +44,8 @@ typedef struct graph {
 **/
 int log_error(char * msg);
 int write_adjency(graph *G, char delim,char * OfileName);
+int init_G(graph *G, int no_e, int no_v);
+
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -109,6 +111,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     return 1;
 }
 
+
 int add_e(graph *G,int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight){
 /*
 realloc() will have to be used here.
@@ -118,7 +121,15 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     * Add validation to prevent over-flows.
     */
     
-    if (e_start >= G->no_e){return -1;}
+    if (e_start > (G->no_e-1)){
+      G->no_e++;
+      G->e = (long **) realloc(G->e, G->no_e *sizeof(long));
+      
+      for (long i=0; i < G->no_e; i++){
+        G->e[i]=(long*) realloc(G->e[i], E_ATTRIB_SIZE * sizeof(long));
+      } // end for long i
+    } // end if (e_start > (G->no_e-1)
+    
     if (start_v >= G->no_v){return -1;}
     if (end_v >= G->no_v){return -1;}
     
@@ -126,7 +137,9 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     G->e[e_start][1]=end_v;
     G->e[e_start][2]=direction;
     G->e[e_start][3]=fwd_weigh;
-    G->v_adj[start_v][end_v]=1;
+    
+    if (G->use_adj==true){G->v_adj[start_v][end_v]=1;}
+    
     G->v_degree[start_v] ++;
     G->v_incidents[start_v][e_start]++;
     G->v_incidents[end_v][e_start]++;
@@ -136,12 +149,14 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     G->v_degree[end_v] ++;
     
     if (direction==2){
-        G->e[e_start][4]=bk_weight;
-        G->v_adj[end_v][start_v]=1;
+      G->e[e_start][4]=bk_weight;
+      if (G->use_adj==true){G->v_adj[end_v][start_v]=1;}
     }
     set_connected(G,start_v,end_v);
+
     return 0;
 }
+
 
 long get_no_e(graph *G){return G->no_e;}
 long get_no_v(graph *G){return G->no_v;}
@@ -295,7 +310,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
   FILE* fd;
   char line[2048];
   char output_msg[1024];    
-  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0;  int adj_i=0;
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; int adj_i=0;
   G->use_adj = true;
   sprintf(output_msg,"function read_adjency failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
@@ -315,25 +330,13 @@ int read_adjency(graph *G, char delim,char * IfileName){
       } // enf for
       // l_size is reduced by 1 exclude line return
       // may need to revise for windows.
-      l_size--;           
+      l_size--;
     } else {
       /**
       * Initilize parts of the graph which depend on the no_v.
       * After line 0 we have the number of vertices.
-      **/
-      
-      if (no_l==1) {
-        G->no_v = no_v;
-        G->v = (long*) calloc(no_v, sizeof(long));
-        G->v_degree = (long*) calloc(no_v, sizeof(long));
-        G->v_adj = (long**) calloc(no_v, sizeof(long));
-        G->v_incidents = (long**) calloc(no_v, sizeof(long));
-         
-        for (j=0; j<no_v;j++) {
-          G->v[j] = -1;
-          G->v_adj[j] = (long*) calloc(no_v, sizeof(long));
-        } // end for j
-      } // end if no_l ==1
+      **/      
+      if (no_l==1) {init_G(G,no_e,no_v);}
       
       /**
       * Line number is grater than 0 and adjacency matrix is being read.
@@ -351,9 +354,6 @@ int read_adjency(graph *G, char delim,char * IfileName){
           if (i==0){G->v[(no_l-1)] = atol(&line[i]);}
           else {
             G->v_adj[(no_l-1)][adj_i] = atol(&line[i]);
-            // fprintf(stdout,"\n no_l=%d line[%d]=%c\n",no_l,i,line[i]);
-            // fprintf(stdout,"\nG->v_adj[%d][%d]=%ld\n",(no_l-1),(i-2),G->v_adj[(no_l-1)][(i-2)]);
-            if (G->v_adj[(no_l-1)][adj_i]==1){no_e +=1;}
             adj_i++;
           } 
         } // end if not delim
@@ -363,47 +363,74 @@ int read_adjency(graph *G, char delim,char * IfileName){
     adj_i =0;
   } // end while
   
-  // Close file as it is not needed.
-  // if there is a crash later this will be clean.
-  
+  /**
+  * Close file as it is not needed. If there is a crash later this will be clean.
+  **/
   fclose(fd);
-  G->no_e = no_e; 
-/*  
-  for (j=0; j< G->no_v;j++) {G->v_incidents[j] = (long*) calloc(no_e, sizeof(long));}
- 
-  G->e = (long **) calloc(no_e, sizeof(long));
- 
-  for (i=0; i < no_e; i++){
-    G->e[i]=(long*) calloc(E_ATTRIB_SIZE, sizeof(long));
-    for (j=0; j < E_ATTRIB_SIZE; j++){G->e[i][j]=-1;}
-  }
-  //no_e can be re-used here
-  // every 1 in the matrix is a new edge
-  no_e =0; 
-  
-  for (i=0; i < G->no_v; i++){
-    for (j=0; j < G->no_v; j++){
+
+  /**
+  * The number of edges will need to be re-calculated 
+  * in the case of bio-directional graphs 
+  **/
+    
+  for(i=0;i<no_v; i++){
+    for (j=0; j<no_v; j++){
+
+    /**
+    * if i and j are the same then a 1 at this position is
+    * a self reference node and this is an edge.
+    * Example if G->v_adj[0][0] and G->v_adj[0][0] this is an edge
+    * its direction is irrelivent as starts in the same place as it ends.
+    *
+    * A bio-directional edge is a single edge.
+    * it should only be counted once.
+    **/
+      
       if (G->v_adj[i][j]==1){
-        direction=1; // Assume direction is 1
-        fprintf(stdout,"\nG->v_adj[%d][%d]=%ld\nG->v_adj[%d][%d]=%ld",i,j,G->v_adj[i][j],j,i,G->v_adj[j][i]);
-        fprintf(stdout,"\ntest one\n");
-        if (G->v_adj[j][i]==1) {direction=2;} // If there is a 1 in both positions edge is both directions.
-        if (direction ==2){
-          for (long k=0; k <= no_e; k++){
-            if (edge_exists(G,j,k,direction,no_e) ==-1){
-              // fprintf(stdout,"\nadd_e(G, %ld, %d, %ld, %d, 0 ,0);",no_e,j,k,direction);
-              if (add_e(G,no_e,j,k,direction,0,0)==-1){return log_error("function read_adjency failed to add edge. Direction 2");}
-              no_e++;
-            } // end if edge_exists
-          } // end for k
+        if (i == j) {
+        
+        /**
+        * if i = j then this is a self referencing node.
+        * check if an edge already exists for this 
+        * if there is no edge create a new one.
+        * The direction of an edge on a self referencing noe is 2
+        * I will have to look this up but it seems obvious but as 
+        * I think self referencing nodes are pointless I am probably 
+        * wrong.
+        **/
+          if (edge_exists(G,i,j,no_e+1,2)==-1){
+            add_e(G,no_e,i,j,2,0,0);
+            no_e++;
+          }          
         } else {
-          if (add_e(G,no_e,i,j,direction,0,0)==-1){return log_error("function read_adjency failed to add edge. Direction 1");}
-          no_e++;
-        } // end if direction ==2
-      } // end if
+          if ((G->v_adj[i][j]==1) && (G->v_adj[j][i]==1)){
+          /**
+          * If there is a one at positin i,j and j,i then 
+          * this is explicitally bi-directional.
+          *
+          * Example 0,1 and 1,0 are both 1 then a bi-directional 
+          * edge exists.
+          * check if the edge exists and creat it if it does not.
+          **/
+            if (edge_exists(G,i,j,no_e+1,2)==-1){
+              add_e(G,no_e,i,j,2,0,0);
+              no_e++;
+            }
+          } else {
+          /**
+          * This is explicitally a uni-directinal edge.
+          * 
+          **/
+            if (edge_exists(G,i,j,no_e+1,1)==-1){
+              add_e(G,no_e,i,j,1,0,0);
+              no_e++;
+            }
+          } // end if ((G->v_adj[i][j]==1) && (G->v_adj[j][i]==1)){
+        } // end if i==j
+      } // if (G->v_adj[i][j]==1)
     } // end for j
-  } // end for i 
- */  
+  } // end for i
+  
   return 0;
 }
 
@@ -506,8 +533,10 @@ int init_G(graph *G, int no_e, int no_v){
       G->v_adj[i] = (long*) calloc(no_v, sizeof(long));
       G->v_incidents[i] = (long*) calloc(no_e, sizeof(long));
   }
+  
   return 0;
 }
+
 
 int disp_graph(graph *G, int no_e, int no_v){
   int i,j;
