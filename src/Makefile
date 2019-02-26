@@ -117,8 +117,8 @@ test_1_read_adjency:unit_test/test_1_read_adjency.c
 	./unit_test/$@ -E 6 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" -O "unit_test/out_6.txt"
 	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" "unit_test/out_6.txt"
 
-#	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/out_7.txt"
-#	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" "unit_test/out_7.txt"
+	./unit_test/$@ -E 4 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/out_7.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" "unit_test/out_7.txt"
 	
 	rm unit_test/$@
 	rm unit_test/out*.txt
