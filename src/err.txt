@@ -1,0 +1,2 @@
+
+read_adjency returned wrong number of edges. Edges is 9 it should be 3

@@ -20,7 +20,9 @@ int main(int argc, char *argv[]) {
   sprintf(msg,"read_adjency returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
   if (get_no_v(&G) !=no_v){return log_error(msg);}
   for (int i=0; i< no_v;i++){
-    if (get_degree(&G,i) !=2){return log_error("Degree incorrect");}
-  } 
+    if (get_degree(&G,i) !=2){return log_error("Degree incorrect");
+  }
+  
+  
   return 0;
 }

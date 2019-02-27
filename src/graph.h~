@@ -462,6 +462,7 @@ int read_incidence(){return 0;}
 
 int write_adjency(graph *G, char delim,char * OfileName){
   int i=0; int j=0;
+  int stdout_copy =0;
   FILE* fd;
 
   char output_msg[1024];
@@ -469,6 +470,7 @@ int write_adjency(graph *G, char delim,char * OfileName){
 
   if (strcmp(OfileName,"")==0){ fd=stdout;} 
   else { 
+    stdout_copy = dup(1);
     fclose(stdout);
     if ((fd=fopen(OfileName,"w"))==NULL){return log_error(output_msg);}
   }
@@ -491,7 +493,14 @@ int write_adjency(graph *G, char delim,char * OfileName){
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
-  fclose(fd);
+  
+  
+  if (strcmp(OfileName,"")==0){ 
+    fclose(fd);
+    dup2(stdout_copy, 1);
+    close(stdout_copy);
+  }
+
   
   return 0;
 }
