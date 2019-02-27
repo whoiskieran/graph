@@ -42,11 +42,11 @@ test_3_add_e:unit_test/test_3_add_e.c
 	./unit_test/$@
 	rm unit_test/$@
 	
-#test_1_get_degree:unit_test/test_1_get_degree.c 
-#	@echo "###### Test ONE get degree #####"
-#	$(CC) $(CFLAGS) unit_test/test_1_get_degree.c -o unit_test/$@
-#	./unit_test/$@
-#	rm unit_test/$@
+test_1_get_degree:unit_test/test_1_get_degree.c 
+	@echo "###### Test ONE get degree #####"
+	$(CC) $(CFLAGS) unit_test/test_1_get_degree.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
 
 test_1_set_adj:unit_test/test_1_set_adj.c 
 	@echo "###### Test ONE set adjency #####"
@@ -130,9 +130,9 @@ test_1_read_adjency:unit_test/test_1_read_adjency.c
 	rm unit_test/out*.txt
 	        
 
-test_2_get_degree:unit_test/test_1_get_degree.c 
+test_2_get_degree:unit_test/test_2_get_degree.c 
 	@echo "###### Test TWO get degree #####"
-	$(CC) $(CFLAGS) unit_test/test_1_get_degree.c -o unit_test/$@
+	$(CC) $(CFLAGS) unit_test/test_2_get_degree.c -o unit_test/$@
 
 	./unit_test/$@ -E 12 -V 12 -I "unit_test/adj_matrix/adjacency_matrix_12_Node_Graph.txt" -O "unit_test/out_8.txt"
 	
