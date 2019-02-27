@@ -491,29 +491,43 @@ int write_adjency(graph *G, char delim,char * OfileName){
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
-  fclose(fd);
+  
+  if (strcmp(OfileName,"")!=0){fclose(fd);}
   
   return 0;
 }
 
 int write_incidence(graph *G, char delim,char * OfileName){
   int i=0; int j=0;
-  fprintf(stdout,"%c",delim);
+
+  FILE* fd;
+
+  char output_msg[1024];
+  sprintf(output_msg,"function write_incidents Failed to Open File Name %s",OfileName);
+
+  if (strcmp(OfileName,"")==0){ fd=stdout;} 
+  else { 
+    fclose(stdout);
+    if ((fd=fopen(OfileName,"w"))==NULL){return log_error(output_msg);}
+  }
+
+  fprintf(fd,"%c",delim);
   for (i=0;i< G->no_e;i++){
       if (G->e[i][0] !=-1){
-        fprintf(stdout,"%c%d",delim,i);
+        fprintf(fd,"%c%d",delim,i);
       } else {i=G->no_e;} // End the loop because no more edges exist.
   }
   for (i=0;i<G->no_v;i++){
       if (G->v[i] !=-1){
-        fprintf(stdout,"\n%ld",G->v[i]);
+        fprintf(fd,"\n%ld",G->v[i]);
         for (j=0;j<G->no_e;j++){
             if (G->e[j][0] !=-1){
-                fprintf(stdout,"%c%ld",delim,G->v_incidents[i][j]);
+                fprintf(fd,"%c%ld",delim,G->v_incidents[i][j]);
             } else {j=G->no_e;}
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
+  if (strcmp(OfileName,"")!=0){fclose(fd);}
   return 0;
 }
 
