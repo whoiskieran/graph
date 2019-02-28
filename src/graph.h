@@ -36,6 +36,7 @@ typedef struct graph {
   bool is_connected;
   bool is_simple; // No loops or multiple edges
   bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
+  bool use_incident;
 //  graph_data *gd;
 } graph;
 
@@ -82,11 +83,11 @@ int parse(char* argv[], int argc,int *no_e, int *no_v, char * IfileName, char * 
   
   while ( (ch = getopt(argc, argv, "E:V:I:O:?:"))!=-1 ) {
     switch(ch) {
-	  case 'E': *no_e=atoi(optarg); break;
-	  case 'V': *no_v=atoi(optarg); break;
-	  case 'I': strncpy(IfileName, optarg, 254); break;
-	  case 'O': strncpy(OfileName, optarg, 254); break;
-	  default: return -1; 
+      case 'E': *no_e=atoi(optarg); break;
+      case 'V': *no_v=atoi(optarg); break;
+      case 'I': strncpy(IfileName, optarg, 254); break;
+      case 'O': strncpy(OfileName, optarg, 254); break;
+      default: return -1; 
     } // End switch
   } // End While
   return 0;
@@ -264,7 +265,16 @@ int make_VTNH(){return 0;}
 *
 **/
 
-int find_bridge() {return 0;}
+int find_bridge(graph *G, long start_v) {
+  long prev_deg=0; long cur_deg=0;
+  for (long i=start_v; i < G->no_v;i++){
+    cur_deg = get_degree(G,i);
+    if (cur_deg ==-1) {return -1;}
+    if (prev_deg > cur_deg) {}
+    else {prev_deg = cur_deg;}    
+  }
+  return 0;
+}
 
 /**
 * Graph Theory: 48. Complement of a Graph
@@ -281,6 +291,7 @@ int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 * get_diamater and get radious
 * https://www.youtube.com/watch?v=YbCn8d4Enos&list=PLoJC20gNfC2gmT_5WgwYwGMvgCjYVsIQg&index=55
 **/
+int get_eccentricity(graph *G){return 0;}
 int get_diamater(graph *G){return 0;}
 int get_radious(graph *G){return 0;}
 
@@ -497,6 +508,7 @@ int write_adjency(graph *G, char delim,char * OfileName){
   return 0;
 }
 
+
 int write_incidence(graph *G, char delim,char * OfileName){
   int i=0; int j=0;
 
@@ -561,7 +573,7 @@ int init_G(graph *G, int no_e, int no_v){
     for (i=0; i<no_v;i++) {
       G->v[i] = -1;
       G->v_adj[i] = (long*) calloc(no_v, sizeof(long));
-      G->v_incidents[i] = (long*) calloc(no_e, sizeof(long));
+      if (no_e >0) {G->v_incidents[i] = (long*) calloc(no_e, sizeof(long));}
     } // end for i
   } // end no_v >0
   

@@ -11,6 +11,8 @@ int main(int argc, char *argv[]) {
   int no_e =0; int no_v=0;
   char IfileName[1024];
   char OfileName[1024];
+  int degree =0;
+  int sum_degree =0;
   char msg[100];
     
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}  
@@ -20,7 +22,18 @@ int main(int argc, char *argv[]) {
   sprintf(msg,"read_adjency returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
   if (get_no_v(&G) !=no_v){return log_error(msg);}
   for (int i=0; i< no_v;i++){
-    if (get_degree(&G,i) !=2){return log_error("Degree incorrect");}
-  } 
+    degree=get_degree(&G,i);
+    sum_degree += degree;
+    if (degree !=2){return log_error("Degree incorrect");}
+  }
+  /**
+  * The sum of the degrees is alwasy twice the number of edges
+  * each edge has a start and end point 
+  * the sum of degrees will therefore count each edge twice
+  * Isn't math usefull!
+  * I didn't discover this!
+  **/
+  if ((sum_degree/2) !=G.no_e){return log_error("sum of degrees is not twice no_e.");}
+  
   return 0;
 }
