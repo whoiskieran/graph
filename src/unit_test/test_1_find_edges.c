@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
   int degree =0;
   int sum_degree =0;
   char msg[100];
+  long *edge_list;
     
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}  
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function failed read_adjacency");}
@@ -24,7 +25,6 @@ int main(int argc, char *argv[]) {
   for (int i=0; i< no_v;i++){
     degree=get_degree(&G,i);
     sum_degree += degree;
-    // if (degree !=2){return log_error("Degree incorrect");}
   }
   /**
   * The sum of the degrees is alwasy twice the number of edges
@@ -34,6 +34,14 @@ int main(int argc, char *argv[]) {
   * I didn't discover this!
   **/
   if ((sum_degree/2) !=G.no_e){return log_error("sum of degrees is not twice no_e.");}
+
+  /**
+  * search for vertix 0
+  * start at edges 0
+  * search both directions.
+  **/
+  edge_list = find_edges(&G,0,0,2);
+  if ( (sizeof(edge_list)/sizeof(long *)) == 0){return log_error("wrong number of edges returned.");}
   
   return 0;
 }

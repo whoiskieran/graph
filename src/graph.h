@@ -28,7 +28,8 @@ typedef struct graph {
 **/
 
   long *v_degree; // Number of edges a vertex has if odd then affects Uleir path.
-  long *cycles;  // list of node id's which are involved in a cycle.
+  long *e_cycles;  // list of edges which are part of cycle used for finding bridge edges.
+  long *v_cycles; // list of verticies involved in a cycle.
   bool connected; // boolean
   int g_type;
  // Each type has a number
@@ -252,6 +253,47 @@ int v_distance(graph *G, int start_v, int end_v){
 **/
 
 int make_VTNH(){return 0;}
+
+/**
+* Search for an edges that has a start or end pos that is equal to the vertix being sent down.
+* v_start is the vertix which will be at the beginning or end of an edge.
+* e_start is the edge to start at.
+* pos is either 0,1 or 2
+*   if pos is 0 search for edges that start at this vertix.
+*   if pos is 1 search for edges that end at this vertix.
+*   if pos is 2 search for edges that start and end at this vertix.
+**/
+
+long * find_edges(graph *G,long v_start,long e_start, long pos ){
+  long i = 0; long j=0;
+  long *bridge_e;
+  bridge_e = (long *) calloc(G->no_e, sizeof(long));  
+  
+
+  for (i=e_start; i< G->no_e; i++){
+    if (pos >= 2){
+      if (G->e[i][0]==v_start){
+        bridge_e[j] = i;
+        j++;
+      }
+      if (G->e[i][1]==v_start){
+        bridge_e[j] = i;
+        j++;
+      }
+    } else {
+      if (G->e[i][pos]==v_start){
+        bridge_e[j] = i;
+        j++;
+      }
+    }
+  } // end for i
+
+  bridge_e = (long *) realloc(bridge_e, j *sizeof(long));  
+  
+  return bridge_e;
+}
+
+
 /**
 * Find a bridge is a good way to break up a graph into sub graphs.
 * Graph Theory: 34. Bridge edges
@@ -265,7 +307,8 @@ int make_VTNH(){return 0;}
 *
 **/
 
-int find_bridge(graph *G, long start_v) {
+
+long find_bridge(graph *G, long start_v) {
   long prev_deg=0; long cur_deg=0;
   for (long i=start_v; i < G->no_v;i++){
     cur_deg = get_degree(G,i);
