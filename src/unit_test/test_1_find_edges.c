@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     degree=get_degree(&G,i);
     sum_degree += degree;
   }
+  
   /**
   * The sum of the degrees is alwasy twice the number of edges
   * each edge has a start and end point 
@@ -33,15 +34,21 @@ int main(int argc, char *argv[]) {
   * Isn't math usefull!
   * I didn't discover this!
   **/
+  
   if ((sum_degree/2) !=G.no_e){return log_error("sum of degrees is not twice no_e.");}
 
   /**
+  * the graph
   * search for vertix 0
   * start at edges 0
   * search both directions.
+  * returns number of elements in edge_list[0] and then the list of edges themsleves.
   **/
-  edge_list = find_edges(&G,0,0,2);
-  if ( (sizeof(edge_list)/sizeof(long *)) == 0){return log_error("wrong number of edges returned.");}
   
+  long e_size;
+  edge_list = find_edges(&G,0,0,2);
+  e_size = edge_list[0];
+  if (e_size ==0){return log_error("number of edges is 0");}
+    
   return 0;
 }

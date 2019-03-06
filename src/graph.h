@@ -28,6 +28,8 @@ typedef struct graph {
 **/
 
   long *v_degree; // Number of edges a vertex has if odd then affects Uleir path.
+  long *v_in_deg; // only the incomming degree
+  long *v_out_deg; // only the outgoing degree.
   long *e_cycles;  // list of edges which are part of cycle used for finding bridge edges.
   long *v_cycles; // list of verticies involved in a cycle.
   bool connected; // boolean
@@ -144,12 +146,15 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     if (G->use_adj==true){G->v_adj[start_v][end_v]=1;}
 
     G->v_degree[start_v] ++;
+    G->v_in_deg[start_v] ++;
+    
     G->v_incidents[start_v][e_start]++;
     G->v_incidents[end_v][e_start]++;
     // if this is self referencing then it is valid to say 
     // it has two edges added not just one.
     // I will have to research this.
     G->v_degree[end_v] ++;
+    G->v_out_deg[end_v] ++;
     
     if (direction==2){
       G->e[e_start][4]=bk_weight;
@@ -264,34 +269,43 @@ int make_VTNH(){return 0;}
 *   if pos is 2 search for edges that start and end at this vertix.
 **/
 
-long * find_edges(graph *G,long v_start,long e_start, long pos ){
+long * find_edges(graph *G, long v_start,long e_start, long pos ){
   long i = 0; long j=0;
-  long *bridge_e;
-  bridge_e = (long *) calloc(G->no_e, sizeof(long));  
+  long * e_list = (long *) calloc(G->no_e, sizeof(long));
   
-
   for (i=e_start; i< G->no_e; i++){
     if (pos >= 2){
       if (G->e[i][0]==v_start){
-        bridge_e[j] = i;
+        e_list[j] = i;
         j++;
       }
       if (G->e[i][1]==v_start){
-        bridge_e[j] = i;
+        e_list[j] = i;
         j++;
       }
     } else {
       if (G->e[i][pos]==v_start){
-        bridge_e[j] = i;
+        e_list[j] = i;
         j++;
       }
     }
   } // end for i
-
-  bridge_e = (long *) realloc(bridge_e, j *sizeof(long));  
+  e_list = (long *) realloc(e_list, j *sizeof(long));  
   
-  return bridge_e;
+  long * fin_e_list = (long *) calloc((j+1), sizeof(long));
+  fin_e_list[0]=j; //Return the number of edges along with the edges themselves.
+  for (i=1; i <= j; i++) {fin_e_list[i]=e_list[i-1];}
+  return fin_e_list;
 }
+
+/**
+* For vertix in a directed graph in degree is the number of edges 
+* going into that vertix.
+* out degree is the edges leaving the vertix.
+**/
+
+long get_in_degree(graph *G, long v){return 0;}
+long get_out_degree(graph *G, long v){return 0;}
 
 
 /**
@@ -325,7 +339,16 @@ long find_bridge(graph *G, long start_v) {
 *
 **/
 
+
 int g_complement() {return 0;}
+
+/**
+* Graph Theory: 53. Cut-Vertices
+* https://www.youtube.com/watch?v=BxAgmaLWaq4
+*
+**/
+
+long find_cut_v(){return 0;}
 
 int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 
@@ -610,6 +633,8 @@ int init_G(graph *G, int no_e, int no_v){
     G->no_v = no_v;
     G->v = (long*) calloc(no_v, sizeof(long));
     G->v_degree = (long*) calloc(no_v, sizeof(long));
+    G->v_in_deg = (long*) calloc(no_v, sizeof(long));
+    G->v_out_deg = (long*) calloc(no_v, sizeof(long));
     G->v_adj = (long**) calloc(no_v, sizeof(long));
     G->v_incidents = (long**) calloc(no_v, sizeof(long));
 
