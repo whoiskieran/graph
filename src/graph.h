@@ -333,6 +333,13 @@ long find_bridge(graph *G, long start_v) {
   return 0;
 }
 
+
+long find_cycle_e(graph *G, long v_start,long e_start, long pos){
+  G->e_cycles = (long*) calloc(G->no_e, sizeof(long));  
+  G->v_cycles = (long*) calloc(G->no_v, sizeof(long));
+
+  return 0;
+}
 /**
 * Graph Theory: 48. Complement of a Graph
 * https://www.youtube.com/watch?v=VTgxv334KSU

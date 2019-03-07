@@ -14,8 +14,6 @@ int main(int argc, char *argv[]) {
   
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function failed read_adjacency");}
-  write_adjency(&G,' ',OfileName);
-  fprintf(stdout,"\nthis should not appear\n");  
-  
+  write_incidence(&G,' ',OfileName);
   return 0;
 }
