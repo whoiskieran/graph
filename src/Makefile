@@ -1,6 +1,6 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_1_write_incidence
+all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_1_write_incidence test_1_read_incidence
 		
 test:unit_test/test.c
 	$(CC) $(CFLAGS) unit_test/test.c -o unit_test/$@
@@ -166,5 +166,20 @@ test_1_write_incidence:unit_test/test_1_write_incidence.c
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/incidence_matrix/incidence_matrix_Linked_List_Verticie.txt"
 	./unit_test/$@ -E 12 -V 12 -I "unit_test/adj_matrix/adjacency_matrix_12_Node_Graph.txt" -O "unit_test/incidence_matrix/incidence_matrix_12_Node_Graph.txt"
 	./unit_test/$@ -E 10 -V 9 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge.txt" -O "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge.txt"
-	
+	rm unit_test/$@
+
+test_1_read_incidence:unit_test/test_1_read_incidence.c 
+	@echo "###### Test ONE read_incidence #####"
+	$(CC) $(CFLAGS) unit_test/test_1_read_incidence.c -o unit_test/$@
+		
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/out_1.txt" 
+	./unit_test/$@ -E 3 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_2_3_Verticies_All_Combos.txt" -O "unit_test/out_2.txt"
+	./unit_test/$@ -E 6 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_3_3_Verticies_All_Combos.txt" -O "unit_test/out_3.txt"
+	./unit_test/$@ -E 6 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/out_4.txt"
+	./unit_test/$@ -E 6 -V 7 -I "unit_test/incidence_matrix/incidence_matrix_1_binary-tree.txt" -O "unit_test/out_5.txt"
+	./unit_test/$@ -E 6 -V 7 -I "unit_test/incidence_matrix/incidence_matrix_2_binary-tree.txt" -O "unit_test/out_6.txt"
+	./unit_test/$@ -E 4 -V 6 -I "unit_test/incidence_matrix/incidence_matrix_Linked_List_Verticie.txt" -O "unit_test/out_7.txt"
+	./unit_test/$@ -E 12 -V 12 -I "unit_test/incidence_matrix/incidence_matrix_12_Node_Graph.txt" -O "unit_test/out_8.txt"
+	./unit_test/$@ -E 10 -V 9 -I "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge.txt" -O "unit_test/out_9.txt"
+
 	rm unit_test/$@

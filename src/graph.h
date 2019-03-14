@@ -96,7 +96,7 @@ int parse(char* argv[], int argc,int *no_e, int *no_v, char * IfileName, char * 
   return 0;
 }
 
-int add_v(graph *G, long insert_v,int v_id){
+int add_v(graph *G, long insert_v,long v_id){
 /*
 realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
@@ -178,10 +178,10 @@ An articilation point is a node which prevents a hameltonain path from being fou
 long find_articilation(graph *G){return 0;}
 
 /**
-A unique path menas that even if the starting vertices are different 
-The code msut be clever enought to know that the path is the same.
-Watch https://www.youtube.com/watch?v=dQr4wZCiJJ4&t=0s&index=6&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda
-*/
+* A unique path menas that even if the starting vertices are different 
+* The code msut be clever enought to know that the path is the same.
+* Watch https://www.youtube.com/watch?v=dQr4wZCiJJ4&t=0s&index=6&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda
+**/
 
 long find_unique_hameltonain_path(graph *G){return 0;}
 
@@ -304,8 +304,8 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
 * out degree is the edges leaving the vertix.
 **/
 
-long get_in_degree(graph *G, long v){return 0;}
-long get_out_degree(graph *G, long v){return 0;}
+long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
+long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 
 
 /**
@@ -542,7 +542,54 @@ int read_adjency(graph *G, char delim,char * IfileName){
   return 0;
 }
 
-int read_incidence(){return 0;}
+int read_incidence(graph *G, char delim,char * IfileName){
+  FILE* fd;
+  char line[2048];
+  char tmp_line; // used to check if the last char is part of a number more than one digit.
+  char tmp_line_1[10]; // allow up to 10 digits for first number.
+  char output_msg[1024];    
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0;
+  
+  sprintf(output_msg,"function read_incidence failed to open file %s",IfileName);  
+  if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
+
+  while (fgets(line,sizeof(line),fd)){    
+    if (no_l == 0){
+      l_size = sizeof(line);
+      for (i=0;i < l_size; i++){        
+        if (i>0){ tmp_line = line[i-1];}
+        else {tmp_line = line[i];}
+        
+        if(line[i]=='\n') {l_size=i;} 
+        else {
+          if(line[i] != delim){
+            if (tmp_line == delim){no_e++;}
+          }
+        }
+      } // end for
+      // l_size is reduced by 1 exclude line return
+      // may need to revise for windows.
+      l_size--;
+    } else {
+    
+      /**
+      * Initalise the graph the no_v is at most twice
+      * the no_e as an edge has a start and end vetix.
+      * In reality this will be far less. 
+      **/
+      
+      if (no_l==1) {init_G(G,no_e,no_e*2);}
+    }
+    no_l +=1;  
+  } // end while
+  
+  /**
+  * Close file as it is not needed. If there is a crash later this will be clean.
+  **/
+  fclose(fd);
+  
+  return 0;
+}
 
 int write_adjency(graph *G, char delim,char * OfileName){
   int i=0; int j=0;
