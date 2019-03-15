@@ -548,7 +548,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
   char tmp_line; // used to check if the last char is part of a number more than one digit.
   char tmp_line_1[10]; // allow up to 10 digits for first number.
   char output_msg[1024];    
-  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0;
+  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; long inc_i=0;
   
   sprintf(output_msg,"function read_incidence failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
@@ -579,8 +579,36 @@ int read_incidence(graph *G, char delim,char * IfileName){
       **/
       
       if (no_l==1) {init_G(G,no_e,no_e*2);}
-    }
-    no_l +=1;  
+      /**
+      * Line number is grater than 0 and adjacency matrix is being read.
+      **/
+      for (i=0; i <= l_size; i++){   
+        if(line[i] != delim){
+          // The first column is the vertix id
+          // the if statement deals with this
+          // the no_l is 1 grater than the no_v
+          // because of the header line.
+          // The else part puts the 1's into the matrix 
+          // calloc has already set them to 0
+          // ignoring the delimiter.   
+          if (i==0){
+            while (line[i] !=delim){
+              tmp_line_1[i]=line[i];
+              i++;
+            }
+            G->v[(no_l-1)] = atol(tmp_line_1);
+          
+          } else {
+            if (inc_i < no_v){
+              G->v_incidents[(no_l-1)][inc_i] = atol(&line[i]);
+            }
+            inc_i++;
+          } 
+        } // end if not delim
+      } // end for
+    } // end if (no_l ==0)
+    no_l +=1;
+    inc_i =0;
   } // end while
   
   /**
