@@ -102,7 +102,7 @@ realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
 */
 
-    // don't insert vertices in bigger than no_v
+    // don't insert vertices if bigger than no_v
     if (insert_v >= G->no_v){return -1;}
     // do I want to make verticies id's unique
     for (int i=0; i>insert_v; i++){
@@ -484,6 +484,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
     * a self reference node and this is an edge.
     * Example if G->v_adj[0][0] and G->v_adj[0][0] this is an edge
     * its direction is irrelivent as starts in the same place as it ends.
+    * THIS MAY NOT BE CORRECT WILL HAVE TO THINK THIS THROUGH
     *
     * A bio-directional edge is a single edge.
     * it should only be counted once.
@@ -548,7 +549,8 @@ int read_incidence(graph *G, char delim,char * IfileName){
   char tmp_line; // used to check if the last char is part of a number more than one digit.
   char tmp_line_1[10]; // allow up to 10 digits for first number.
   char output_msg[1024];    
-  int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; long inc_i=0;
+  int no_l =0; int i; long row; long col; long no_e=0; long no_v =0; long l_size =0; long inc_i=0;
+  long start_v=-1; long end_v=-1;
   
   sprintf(output_msg,"function read_incidence failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
@@ -570,10 +572,11 @@ int read_incidence(graph *G, char delim,char * IfileName){
       // l_size is reduced by 1 exclude line return
       // may need to revise for windows.
       l_size--;
-    } else {
-    
+    } else { 
       /**
-      * Initalise the graph the no_v is at most twice
+      * Initalise the graph the no_v is no_e *2
+      * need to lookup what to do with graph with a lot of 
+      * non-connected verticies.
       * the no_e as an edge has a start and end vetix.
       * In reality this will be far less. 
       **/
@@ -597,7 +600,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
               i++;
             }
             G->v[(no_l-1)] = atol(tmp_line_1);
-          
+            no_v++;
           } else {
             if (inc_i < no_v){
               G->v_incidents[(no_l-1)][inc_i] = atol(&line[i]);
@@ -614,7 +617,32 @@ int read_incidence(graph *G, char delim,char * IfileName){
   /**
   * Close file as it is not needed. If there is a crash later this will be clean.
   **/
+  
   fclose(fd);
+  
+  G->no_v = no_v;
+  G->v = (long *) realloc(G->v, G->no_v *sizeof(long));  
+
+  /**
+  *
+  * Process the array column by column
+  * Edges are the columns.
+  * Each column will have two 1's or a 2 where there is a caycl.
+  * Once the start and end point are found add the edge and move on.
+  *
+  * These structures are not very good for recording direction.
+  *
+  **/
+  
+  for (col=0;col<no_e;col++){
+    for (row=0;row<no_v;row++){
+      if (G->v_incidents[col][row] > 0){
+        if(start_v==-1){start_v=col;}
+        else if(end_v==-1){end_v=col;}
+        else {row=no_v; start_v=-1; end_v=-1;}
+      }  // end if incidents <0
+    } // end for row
+  } // end for col
   
   return 0;
 }
