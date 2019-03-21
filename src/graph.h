@@ -116,7 +116,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
 }
 
 
-int add_e(graph *G,int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight){
+int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight){
 // printf("\nStart add_e %d \n",e_start);
 /*
 realloc() will have to be used here.
@@ -636,12 +636,13 @@ int read_incidence(graph *G, char delim,char * IfileName){
   
   for (col=0;col<no_e;col++){
     for (row=0;row<no_v;row++){
-      if (G->v_incidents[col][row] > 0){
-        if(start_v==-1){start_v=col;}
-        else if(end_v==-1){end_v=col;}
-        else {row=no_v; start_v=-1; end_v=-1;}
+      if (G->v_incidents[row][col] > 0){
+        if(start_v==-1){start_v=row;}
+        else if(end_v==-1){end_v=row;}
+        else {row = no_v;}
       }  // end if incidents <0
     } // end for row
+    if ((start_v >-1) && (end_v >-1)){add_e(G,col,start_v,end_v,0,0,0);}  
   } // end for col
   
   return 0;

@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
   if (get_no_e(&G) !=no_e){return log_error(msg);}
   sprintf(msg,"read_incidence returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
   if (get_no_v(&G) !=no_v){return log_error(msg);}
+  write_incidence(&G,' ',OfileName);
   // write_adjency(&G,' ',OfileName);
   
   return 0;
