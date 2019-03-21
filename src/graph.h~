@@ -645,7 +645,6 @@ int read_incidence(graph *G, char delim,char * IfileName){
     if ((start_v >-1) && (end_v >-1)){
     add_e(G,col,start_v,end_v,0,0,0);
       fprintf(stderr,"\nadd_e(G,edge=%ld,start_v=%ld,end_v=%ld)",col,start_v,end_v);
-      start_v=-1; end_v=-1;
     }
   } // end for col
   fprintf(stderr,"\n");
