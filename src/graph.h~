@@ -148,8 +148,10 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     G->v_degree[start_v] ++;
     G->v_in_deg[start_v] ++;
     
-    G->v_incidents[start_v][e_start]++;
-    G->v_incidents[end_v][e_start]++;
+    if (G->use_incident==true){
+      G->v_incidents[start_v][e_start]++;
+      G->v_incidents[end_v][e_start]++;
+    }
     // if this is self referencing then it is valid to say 
     // it has two edges added not just one.
     // I will have to research this.
@@ -549,7 +551,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
   char tmp_line; // used to check if the last char is part of a number more than one digit.
   char tmp_line_1[10]; // allow up to 10 digits for first number.
   char output_msg[1024];    
-  int no_l =0; int i; long row; long col; long no_e=0; long no_v =0; long l_size =0; long inc_i=0;
+  int no_l =0; int i; long v; long e; long no_e=0; long no_v =0; long l_size =0; long inc_i=0;
   long start_v=-1; long end_v=-1;
   
   sprintf(output_msg,"function read_incidence failed to open file %s",IfileName);  
@@ -585,7 +587,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
       /**
       * Line number is grater than 0 and adjacency matrix is being read.
       **/
-      for (i=0; i <= l_size; i++){   
+      for (i=0; i <= l_size; i++){
         if(line[i] != delim){
           // The first column is the vertix id
           // the if statement deals with this
@@ -602,11 +604,13 @@ int read_incidence(graph *G, char delim,char * IfileName){
             G->v[(no_l-1)] = atol(tmp_line_1);
             no_v++;
           } else {
-            if (inc_i < no_v){
+            //if (inc_i < no_v){
               G->v_incidents[(no_l-1)][inc_i] = atol(&line[i]);
-            }
+              // fprintf(stderr,"\nG->v_incidents[%ld][%ld] ");
+              fprintf(stderr,"\nG->v_incidents[%d][%ld]=%ld",(no_l-1),inc_i,G->v_incidents[(no_l-1)][inc_i]);
+            //}
             inc_i++;
-          } 
+          } // end if i==0
         } // end if not delim
       } // end for
     } // end if (no_l ==0)
@@ -633,21 +637,30 @@ int read_incidence(graph *G, char delim,char * IfileName){
   * These structures are not very good for recording direction.
   *
   **/
-  
-  for (col=0;col<no_e;col++){
-    for (row=0;row<no_v;row++){
-      if (G->v_incidents[row][col] > 0){
-        if(start_v==-1){start_v=row;}
-        else if(end_v==-1){end_v=row;}
-        else {row = no_v;}
+  G->use_incident=false;  // prevent add_e incrementing incidence matrix 
+  for (e=0;e<no_e;e++){
+    for (v=0;v<no_v;v++){
+      if (G->v_incidents[v][e] > 0){
+//        fprintf(stderr,"\nG->v_incidents[%ld][%ld]=%ld",v,e,G->v_incidents[v][e]);
+        if (start_v==-1){start_v=v; }
+        else if (end_v==-1){end_v=v;}
+        // Once the end vertix has been found no need to 
+        // Process the rest of the matrix as it will be 0 
       }  // end if incidents <0
     } // end for row
     if ((start_v >-1) && (end_v >-1)){
-    add_e(G,col,start_v,end_v,0,0,0);
-      fprintf(stderr,"\nadd_e(G,edge=%ld,start_v=%ld,end_v=%ld)",col,start_v,end_v);
+      add_e(G,e,start_v,end_v,0,0,0);
+      start_v=-1; end_v=-1;
     }
   } // end for col
-  fprintf(stderr,"\n");
+  
+  fprintf(stderr,"\nno_e=%ld no_v=%ld\n",no_e,no_v);
+  for (v=0; v<no_v; v++){
+    for (e=0; e<no_e; e++){
+      fprintf(stderr," %ld",G->v_incidents[v][e]);
+    }
+    fprintf(stderr,"\n");
+  }
   return 0;
 }
 

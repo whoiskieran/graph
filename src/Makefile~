@@ -173,8 +173,8 @@ test_1_read_incidence:unit_test/test_1_read_incidence.c
 	$(CC) $(CFLAGS) unit_test/test_1_read_incidence.c -o unit_test/$@
 		
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/out_1.txt" 
-#        unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out_1.txt"
-        unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out_1.txt" 
+        ./unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out_1.txt"
+#        unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_1_3_Verticies_All_Combos.txt" "unit_test/out_1.txt" 
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_2_3_Verticies_All_Combos.txt" -O "unit_test/out_2.txt"
 	./unit_test/$@ -E 6 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_3_3_Verticies_All_Combos.txt" -O "unit_test/out_3.txt"
 	./unit_test/$@ -E 6 -V 3 -I "unit_test/incidence_matrix/incidence_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/out_4.txt"
