@@ -1,5 +1,3 @@
-
-
 int E_ATTRIB_SIZE = 5; // This is a constant;
 
 typedef struct graph {
@@ -117,7 +115,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
 
 
 int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight){
-// printf("\nStart add_e %d \n",e_start);
+// fprintf(stderr,"\nStart add_e %ld \n",e_start);
 /*
 realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
@@ -402,6 +400,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
   char output_msg[1024];    
   int no_l =0; int i; int j; long no_e=0; long no_v =0; long l_size =0; int adj_i=0;
   G->use_adj = true;
+  G->use_incident = true;
   sprintf(output_msg,"function read_adjency failed to open file %s",IfileName);  
   if ((fd=fopen(IfileName,"r"))==NULL){return log_error(output_msg);}
 
@@ -637,8 +636,15 @@ int read_incidence(graph *G, char delim,char * IfileName){
   for (e=0;e<no_e;e++){
     for (v=0;v<no_v;v++){
       if (G->v_incidents[v][e] > 0){
-        if (start_v==-1){start_v=v; }
-        else if (end_v==-1){end_v=v;}
+      // If the incience is 1 then 
+      // there is no cycle and the start and end
+      // vertix will be different
+        if (G->v_incidents[v][e]==1){
+          if (start_v==-1){start_v=v; }
+          else if (end_v==-1){end_v=v; v=no_v;}
+        } else {
+          start_v=v; end_v=v; v=no_v;
+        }
         // Once the end vertix has been found no need to 
         // Process the rest of the matrix as it will be 0 
       }  // end if incidents <0
@@ -780,12 +786,12 @@ int disp_graph(graph *G, int no_e, int no_v){
   int i,j;
   for (i=0; i < no_e; i++){
       for (j=0; j < E_ATTRIB_SIZE; j++){
-          fprintf(stdout,"\nG->e[%d][%d]=%ld",i,j,G->e[i][j]);
+          fprintf(stderr,"\nG->e[%d][%d]=%ld",i,j,G->e[i][j]);
       }
   }
    
   for (i=0; i<no_v;i++){
-      fprintf(stdout,"\nG.v[%d]=%ld",i,G->v[i]);
+      fprintf(stderr,"\nG.v[%d]=%ld",i,G->v[i]);
   }
   return 0;
 }

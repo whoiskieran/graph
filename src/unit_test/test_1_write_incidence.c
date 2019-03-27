@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
   
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function failed read_adjacency");}
+//  disp_graph(&G,G.no_e,G.no_v);
   write_incidence(&G,' ',OfileName);
   return 0;
 }

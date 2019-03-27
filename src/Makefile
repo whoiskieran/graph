@@ -160,7 +160,7 @@ test_1_write_incidence:unit_test/test_1_write_incidence.c
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/incidence_matrix/incidence_matrix_1_3_Verticies_All_Combos.txt" 
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_3_Verticies_All_Combos.txt" -O "unit_test/incidence_matrix/incidence_matrix_2_3_Verticies_All_Combos.txt"
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_3_3_Verticies_All_Combos.txt" -O "unit_test/incidence_matrix/incidence_matrix_3_3_Verticies_All_Combos.txt"
-	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/incidence_matrix/incidence_matrix_4_3_Verticies_All_Combos.txt"
+	./unit_test/$@ -E 6 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/incidence_matrix/incidence_matrix_4_3_Verticies_All_Combos.txt"
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_binary-tree.txt" -O "unit_test/incidence_matrix/incidence_matrix_1_binary-tree.txt"
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" -O "unit_test/incidence_matrix/incidence_matrix_2_binary-tree.txt"
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/incidence_matrix/incidence_matrix_Linked_List_Verticie.txt"
@@ -199,4 +199,5 @@ test_1_read_incidence:unit_test/test_1_read_incidence.c
 	./unit_test/$@ -E 10 -V 9 -I "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge.txt" -O "unit_test/out_9.txt"
 	unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge.txt" "unit_test/out_9.txt"
 
+	rm unit_test/out*.txt
 	rm unit_test/$@
