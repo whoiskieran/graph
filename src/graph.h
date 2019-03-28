@@ -1,4 +1,10 @@
 int E_ATTRIB_SIZE = 5; // This is a constant;
+/**
+* https://snap.stanford.edu/snap/download.html
+* Standord SNAP C++ graph library is also usefull 
+* it will be used for testing benchmarking this project.
+* It is planned that this will be a C version of the SNAP code.
+**/
 
 typedef struct graph {
   long *v; 
@@ -185,7 +191,7 @@ long find_articilation(graph *G){return 0;}
 
 long find_unique_hameltonain_path(graph *G){return 0;}
 
-int get_degree(graph * G, int start_v){
+long get_degree(graph * G, int start_v){
     if (start_v >= G->no_v){return -1;}
     return G->v_degree[start_v];
 }
@@ -319,18 +325,46 @@ long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 * Graph Theory: 47. Subgraphs of Regular Graphs
 * https://www.youtube.com/watch?v=KFtPHoaqUaQ
 *
+* A bridge edge is an edge which when removed breaks the graph
+* into two graphs.  
+* The degree of the node at the start of bridge will be grater than or euqal to
+* the average degree.
+* This will find potential bridges not guaranteed ones.
+* The final test is that removing the edge creates more valid graphs.
 **/
+long * find_bridge(graph *G, long start_v, long end_v) {
+  long *r_err;
+  r_err = (long*) calloc(1,sizeof(long));
+  r_err[0] =-1;
+  
+  if (start_v > end_v){return r_err;}
+  if (start_v < 0){return r_err;}
+  if (end_v > G->no_v){return r_err;}
+  if (end_v==start_v){r_err[0]++; return r_err;}
 
+  float avg_deg=0.00;
+  long tot_deg =0; long i=0; long *bridges; long no_bridges=0; long bridg_ofset=1;
+  long * edge_list;
+  // The first element (bridges[0]) of the array will contain the number of potential bridges
 
-long find_bridge(graph *G, long start_v) {
-  long prev_deg=0; long cur_deg=0;
-  for (long i=start_v; i < G->no_v;i++){
-    cur_deg = get_degree(G,i);
-    if (cur_deg ==-1) {return -1;}
-    if (prev_deg > cur_deg) {}
-    else {prev_deg = cur_deg;}    
-  }
-  return 0;
+  bridges = (long*) calloc(G->no_e+1, sizeof(long));
+  
+  for (i=start_v; i < end_v;i++){tot_deg += get_degree(G,i);}
+  avg_deg = tot_deg / (end_v - start_v);
+  for (i=start_v; i < end_v;i++){
+    if (avg_deg > (float) get_degree(G,i)){
+    // Search for the edges that start at this vertix.
+    // Maybe find a way to exclude edges that have already been tested.
+    // do not start at edges 0.
+      edge_list = find_edges(G,i,0,0);
+      if (edge_list[0]>0){
+        bridges[bridg_ofset]=0;
+        bridg_ofset++; no_bridges++;
+      }
+    } // end if avg_deg > get_degree
+  } // end for i=start_v
+  bridges[0]=no_bridges;
+  return bridges;
 }
 
 
