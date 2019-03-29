@@ -364,6 +364,7 @@ long * find_bridge(graph *G, long start_v, long end_v) {
     } // end if avg_deg > get_degree
   } // end for i=start_v
   bridges[0]=no_bridges;
+  free(r_err);
   return bridges;
 }
 
