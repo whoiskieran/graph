@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
     
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}  
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function failed read_adjacency");}
+  disp_graph(&G,no_e,no_v);
   sprintf(msg,"read_adjency returned wrong number of edges. Edges is %ld it should be %d",get_no_e(&G),no_e);
   if (get_no_e(&G) !=no_e){return log_error(msg);}
   sprintf(msg,"read_adjency returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);

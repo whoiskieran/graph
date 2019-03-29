@@ -332,6 +332,7 @@ long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 * This will find potential bridges not guaranteed ones.
 * The final test is that removing the edge creates more valid graphs.
 **/
+
 long * find_bridge(graph *G, long start_v, long end_v) {
   long *r_err;
   r_err = (long*) calloc(1,sizeof(long));
