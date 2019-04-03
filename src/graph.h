@@ -1,7 +1,7 @@
 int E_ATTRIB_SIZE = 5; // This is a constant;
 /**
 * https://snap.stanford.edu/snap/download.html
-* Standord SNAP C++ graph library is also usefull 
+* Stanford SNAP C++ graph library is also usefull 
 * it will be used for testing benchmarking this project.
 * It is planned that this will be a C version of the SNAP code.
 **/
@@ -286,9 +286,9 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
         j++;
       }
       if (G->e[i][1]==v_start){
-        e_list[j] = i;
+        e_list[j] = i;        
         j++;
-      }
+      }      
     } else {
       if (G->e[i][pos]==v_start){
         e_list[j] = i;
@@ -296,11 +296,12 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
       }
     }
   } // end for i
+  
   e_list = (long *) realloc(e_list, j *sizeof(long));  
   
   long * fin_e_list = (long *) calloc((j+1), sizeof(long));
   fin_e_list[0]=j; //Return the number of edges along with the edges themselves.
-  for (i=1; i <= j; i++) {fin_e_list[i]=e_list[i-1];}
+  for (i=1; i <=j; i++) {fin_e_list[i]=e_list[i-1]; }
   return fin_e_list;
 }
 
@@ -328,9 +329,11 @@ long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 * A bridge edge is an edge which when removed breaks the graph
 * into two graphs.  
 * The degree of the node at the start of bridge will be grater than or euqal to
-* the average degree.
+* the degree of the node at the end of the bridge edge.
+*.
 * This will find potential bridges not guaranteed ones.
 * The final test is that removing the edge creates more valid graphs.
+* This huristic has a problem with a line of connected nodes 
 **/
 
 long * find_bridge(graph *G, long start_v, long end_v) {
@@ -343,30 +346,21 @@ long * find_bridge(graph *G, long start_v, long end_v) {
   if (end_v > G->no_v){return r_err;}
   if (end_v==start_v){r_err[0]++; return r_err;}
 
-  float avg_deg=0.00;
-  long tot_deg =0; long i=0; long *bridges; long no_bridges=0; long bridg_ofset=1;
+  long i=0; long prev_deg=0; long cur_deg=0;
   long * edge_list;
-  // The first element (bridges[0]) of the array will contain the number of potential bridges
-
-  bridges = (long*) calloc(G->no_e+1, sizeof(long));
   
-  for (i=start_v; i < end_v;i++){tot_deg += get_degree(G,i);}
-  avg_deg = tot_deg / (end_v - start_v);
   for (i=start_v; i < end_v;i++){
-    if (avg_deg > (float) get_degree(G,i)){
-    // Search for the edges that start at this vertix.
-    // Maybe find a way to exclude edges that have already been tested.
-    // do not start at edges 0.
-      edge_list = find_edges(G,i,0,0);
-      if (edge_list[0]>0){
-        bridges[bridg_ofset]=0;
-        bridg_ofset++; no_bridges++;
-      }
-    } // end if avg_deg > get_degree
+    cur_deg = get_degree(G,i);
+    
+    if (i>start_v){
+      if (cur_deg>prev_deg){
+        edge_list = find_edges(G,i,0,2);
+        if (edge_list[0]>0){return edge_list;}
+      } // if (cur_dep>prev_deg)
+    } // if (i>start_v)
+    else {prev_deg = cur_deg;}
   } // end for i=start_v
-  bridges[0]=no_bridges;
-  free(r_err);
-  return bridges;
+  return r_err;
 }
 
 

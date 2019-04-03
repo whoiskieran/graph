@@ -35,18 +35,14 @@ int main(int argc, char *argv[]) {
   **/
   
   if ((sum_degree/2) !=G.no_e){return log_error("sum of degrees is not twice no_e.");}
-
-  /**
-  * the graph
-  * search for vertix 0
-  * start at edges 0
-  * search both directions.
-  * returns number of elements in edge_list[0] and then the list of edges themsleves.
-  **/
   
   long b_size;
   bridge_list = find_bridge(&G,0,G.no_v);
   b_size = bridge_list[0];
-      
+  
+  for (long i =1; i <= b_size; i++){
+    fprintf(stderr,"\nbridge_list[%ld]=%ld\n",i,bridge_list[i]);
+  }
+  
   return 0;
 }
