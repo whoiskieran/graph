@@ -37,11 +37,11 @@ int main(int argc, char *argv[]) {
   if ((sum_degree/2) !=G.no_e){return log_error("sum of degrees is not twice no_e.");}
   
   long b_size;
-  bridge_list = find_bridge(&G,0,G.no_v);
+  bridge_list = find_first_bridge_e(&G,0,G.no_v);
   b_size = bridge_list[0];
   
   for (long i =1; i <= b_size; i++){
-    fprintf(stderr,"\nbridge_list[%ld]=%ld\n",i,bridge_list[i]);
+    fprintf(stderr,"%ld,",bridge_list[i]);
   }
   
   return 0;

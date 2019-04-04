@@ -336,10 +336,11 @@ long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 * This huristic has a problem with a line of connected nodes 
 **/
 
-long * find_bridge(graph *G, long start_v, long end_v) {
+long * find_first_bridge_e(graph *G, long start_v, long end_v) {
   long *r_err;
   r_err = (long*) calloc(1,sizeof(long));
   r_err[0] =-1;
+  long t_deg =0;  //float avg_deg =0;
   
   if (start_v > end_v){return r_err;}
   if (start_v < 0){return r_err;}
@@ -348,18 +349,42 @@ long * find_bridge(graph *G, long start_v, long end_v) {
 
   long i=0; long prev_deg=0; long cur_deg=0;
   long * edge_list;
+  // Do a quick search to fine the most obvious potential edges.
+  // Return the first one found.
   
   for (i=start_v; i < end_v;i++){
     cur_deg = get_degree(G,i);
+    t_deg += cur_deg;
+    // any vertix with a single edge is a bridge.
+    // it is a pendent node.
+    
+    if (cur_deg ==1){
+      edge_list = find_edges(G,i,0,2);
+      if (edge_list[0]>0){return edge_list;}
+    }
     
     if (i > start_v){
       if (cur_deg > prev_deg){
         edge_list = find_edges(G,i,0,2);
         if (edge_list[0]>0){return edge_list;}
       } // if (cur_dep>prev_deg)
-    } // if (i>start_v)
-    else {prev_deg = cur_deg;}
+    } // if (i > start_v)
+    
+    if (i==(start_v+1)) {
+      // Test the start vertix which could not be tested 
+      // as there was nothing to compare it with
+      if (cur_deg < prev_deg) {
+      // Find the edges of the first vertix (start_v)
+        edge_list = find_edges(G,start_v,0,2);
+        if (edge_list[0]>0){return edge_list;}
+      } 
+    } // if (i==(start_v+1))
+    prev_deg = cur_deg;
   } // end for i=start_v
+  // Check the degree of the first vertix against the previous degree
+  // this can only be done at this pint as there was nothing to chekc at
+  // the start of the loop.  
+  
   return r_err;
 }
 
