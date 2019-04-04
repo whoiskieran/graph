@@ -352,8 +352,8 @@ long * find_bridge(graph *G, long start_v, long end_v) {
   for (i=start_v; i < end_v;i++){
     cur_deg = get_degree(G,i);
     
-    if (i>start_v){
-      if (cur_deg>prev_deg){
+    if (i > start_v){
+      if (cur_deg > prev_deg){
         edge_list = find_edges(G,i,0,2);
         if (edge_list[0]>0){return edge_list;}
       } // if (cur_dep>prev_deg)
