@@ -12,14 +12,15 @@ int main(int argc, char *argv[]) {
   char OfileName[1024];
   int degree =0;
   int sum_degree =0;
-  char msg[100];
+  char msg[1024];
   long *bridge_list;
-    
+  FILE* fd;
+  
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}  
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function failed read_adjacency");}
-  sprintf(msg,"read_adjency returned wrong number of edges. Edges is %ld it should be %d",get_no_e(&G),no_e);
+  sprintf(msg,"find_first_bridge returned wrong number of edges. Edges is %ld it should be %d",get_no_e(&G),no_e);
   if (get_no_e(&G) !=no_e){return log_error(msg);}
-  sprintf(msg,"read_adjency returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
+  sprintf(msg,"find_first_bridge returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
   if (get_no_v(&G) !=no_v){return log_error(msg);}
   for (int i=0; i< no_v;i++){
     degree=get_degree(&G,i);
@@ -40,8 +41,15 @@ int main(int argc, char *argv[]) {
   bridge_list = find_first_bridge_e(&G,0,G.no_v);
   b_size = bridge_list[0];
   
+  sprintf(msg,"function find_first_bridge Failed to Open File Name %s",OfileName);
+  if (strcmp(OfileName,"")==0){ fd=stdout;}
+  else {
+     fclose(stdout);
+     if ((fd=fopen(OfileName,"w"))==NULL){return log_error(msg);}
+  }
+     
   for (long i =1; i <= b_size; i++){
-    fprintf(stderr,"%ld,",bridge_list[i]);
+    fprintf(fd,"%ld,",bridge_list[i]);
   }
   
   return 0;

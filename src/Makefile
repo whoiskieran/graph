@@ -254,8 +254,8 @@ test_1_find_first_bridge_e:unit_test/test_1_find_first_bridge_e.c
 	./unit_test/$@ -E 10 -V 9 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge.txt" -O "unit_test/out_9.txt"
 	./unit_test/$@ -E 5 -V 5 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_1.txt" -O "unit_test/out_10.txt"
 	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_11.txt"
-#	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
-#	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
+	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
+	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 
 	rm unit_test/$@
 

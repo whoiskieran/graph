@@ -53,7 +53,7 @@ typedef struct graph {
 int log_error(char * msg);
 int write_adjency(graph *G, char delim,char * OfileName);
 int init_G(graph *G, int no_e, int no_v);
-
+long * find_common_elem(long * arr_1, long * arr_2, long len_1, long len_2, long ofset_1, long ofset_2);
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -314,6 +314,31 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
 long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 
+/**
+* search array_1 against array_2
+* pass down the size of both arays makes the function a bit more re-useable.
+* start at a particular point in each array offset can be different for each array.
+* the function returns the common elements and the number of elements in common.
+**/
+
+long * find_common_elem(long * arr_1, long * arr_2, long len_1, long len_2, long ofset_1, long ofset_2){
+
+  long i=0; long j=0; 
+  long t_found=0;
+  long * found_l = (long*) calloc((len_1+len_2),sizeof(long));
+     
+  for (i=ofset_1; i <=len_1; i++){
+    for(j=ofset_2; j <=len_2; j++){
+      if (arr_1[i] == arr_2[j]){found_l[t_found+1]=arr_1[i];t_found++;}
+    } // end for j
+  }  // end for i
+
+  found_l[0] = t_found;
+  found_l =(long *) realloc(found_l,(t_found+1) *sizeof(long));
+
+  return found_l;
+}
+
 
 /**
 * Find a bridge is a good way to break up a graph into sub graphs.
@@ -336,7 +361,9 @@ long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 * This huristic has a problem with a line of connected nodes 
 **/
 
+
 long * find_first_bridge_e(graph *G, long start_v, long end_v) {
+
   long *r_err;
   r_err = (long*) calloc(1,sizeof(long));
   r_err[0] =-1;
@@ -348,7 +375,7 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
   if (end_v==start_v){r_err[0]++; return r_err;}
 
   long i=0; long prev_deg=0; long cur_deg=0;
-  long * edge_list;
+  long * edge_list; long * edge_list_1; long * edge_list_2;
   // Do a quick search to fine the most obvious potential edges.
   // Return the first one found.
   
@@ -366,7 +393,9 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
     if (i > start_v){
       if (cur_deg > prev_deg){
         edge_list = find_edges(G,i,0,2);
-        if (edge_list[0]>0){return edge_list;}
+        if (edge_list[0]>0){
+          return edge_list;
+        } // if (edge_list[0]>0
       } // if (cur_dep>prev_deg)
     } // if (i > start_v)
     
@@ -376,7 +405,9 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
       if (cur_deg < prev_deg) {
       // Find the edges of the first vertix (start_v)
         edge_list = find_edges(G,start_v,0,2);
-        if (edge_list[0]>0){return edge_list;}
+        if (edge_list[0]>0){        
+          return edge_list;
+        } // end if edg_list[0]>0
       } 
     } // if (i==(start_v+1))
     prev_deg = cur_deg;
