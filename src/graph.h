@@ -375,7 +375,7 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
   if (end_v==start_v){r_err[0]++; return r_err;}
 
   long i=0; long prev_deg=0; long cur_deg=0;
-  long * edge_list; long * edge_list_1; long * edge_list_2;
+  long * edge_list; // long * edge_list_1; long * edge_list_2;
   // Do a quick search to fine the most obvious potential edges.
   // Return the first one found.
   
@@ -420,9 +420,15 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
 }
 
 
-long find_cycle_e(graph *G, long v_start,long e_start, long pos){
+long find_cycle_e(graph *G, long v_start,long e_start, long pos, long direction){
   G->e_cycles = (long*) calloc(G->no_e, sizeof(long));  
   G->v_cycles = (long*) calloc(G->no_v, sizeof(long));
+  G->v_cycles[0] = v_start;
+  G->e_cycles[0] = e_start;
+  
+  for (long i = v_start; i< G->no_v;i++) {
+  
+  } // end for long i= v_start
 
   return 0;
 }
@@ -844,7 +850,7 @@ int init_G(graph *G, int no_e, int no_v){
     G->v_out_deg = (long*) calloc(no_v, sizeof(long));
     G->v_adj = (long**) calloc(no_v, sizeof(long));
     G->v_incidents = (long**) calloc(no_v, sizeof(long));
-
+    
     for (i=0; i<no_v;i++) {
       G->v[i] = -1;
       G->v_adj[i] = (long*) calloc(no_v, sizeof(long));
@@ -855,7 +861,7 @@ int init_G(graph *G, int no_e, int no_v){
   if(no_e > 0){  
     G->no_e = no_e;
     G->e = (long **) calloc(no_e, sizeof(long));
-  
+    
     for (i=0; i < no_e; i++){
       G->e[i]=(long*) calloc(E_ATTRIB_SIZE, sizeof(long));
       for (j=0; j < E_ATTRIB_SIZE; j++){
