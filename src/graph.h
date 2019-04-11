@@ -50,10 +50,46 @@ typedef struct graph {
 /** 
 * Explicit declaration of functions
 **/
-int log_error(char * msg);
-int write_adjency(graph *G, char delim,char * OfileName);
+
 int init_G(graph *G, int no_e, int no_v);
+int add_v(graph *G, long insert_v,long v_id);
+int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight);
+long get_no_e(graph *G);
+long get_no_v(graph *G);
+int move_v();
+long find_articilation(graph *G);
+long find_unique_hameltonain_path(graph *G);
+long get_degree(graph * G, int start_v);
+long get_in_degree(graph *G, long v);
+long get_out_degree(graph *G, long v);
+int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight);
+int v_distance(graph *G, int start_v, int end_v);
+int make_VTNH();
+long * find_edges(graph *G, long v_start,long e_start, long pos);
+long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction);
 long * find_common_elem(long * arr_1, long * arr_2, long len_1, long len_2, long ofset_1, long ofset_2);
+long * find_first_bridge_e(graph *G, long start_v, long end_v);
+long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction);
+int g_complement();
+long find_cut_v(graph *G);
+int v_valid_distance(graph *G, int start_v, int end_v, int direction);
+int get_eccentricity(graph *G);
+int get_diamater(graph *G);
+int get_radious(graph *G);
+long * get_vertix(graph *G, long e);
+int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int direction);
+int read_adjency(graph *G, char delim,char * IfileName);
+int read_incidence(graph *G, char delim,char * IfileName);
+int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int direction);
+int write_adjency(graph *G, char delim,char * OfileName);
+int write_incidence(graph *G, char delim,char * OfileName);
+int make_sub_g(graph G, int start_v,int end_v,int no_of_v);
+int is_vertex_transitave();
+int log_error(char * msg);
+bool is_icomorph(graph G1, graph G2);
+bool set_adj(graph *G, bool use_adj);
+int disp_graph(graph *G, int no_e, int no_v);
+
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -100,6 +136,7 @@ int parse(char* argv[], int argc,int *no_e, int *no_v, char * IfileName, char * 
   return 0;
 }
 
+
 int add_v(graph *G, long insert_v,long v_id){
 /*
 realloc() will have to be used here.
@@ -118,7 +155,6 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     set_connected(G, -1, -1);
     return 1;
 }
-
 
 int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight){
 // fprintf(stderr,"\nStart add_e %ld \n",e_start);
@@ -172,15 +208,16 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     return 0;
 }
 
-
 long get_no_e(graph *G){return G->no_e;}
 long get_no_v(graph *G){return G->no_v;}
-
 
 int move_v(){return 0;}
 /**
 An articilation point is a node which prevents a hameltonain path from being found.
 */
+
+
+
 long find_articilation(graph *G){return 0;}
 
 /**
@@ -189,12 +226,28 @@ long find_articilation(graph *G){return 0;}
 * Watch https://www.youtube.com/watch?v=dQr4wZCiJJ4&t=0s&index=6&list=PLQ3WsqGOBztQQxp7Nw1svSn0Y9Hi6isda
 **/
 
+
 long find_unique_hameltonain_path(graph *G){return 0;}
+
+/**
+* get_degree of the vertix.
+**/
 
 long get_degree(graph * G, int start_v){
     if (start_v >= G->no_v){return -1;}
     return G->v_degree[start_v];
 }
+
+/**
+* For vertix in a directed graph in degree is the number of edges 
+* going into that vertix.
+* out degree is the edges leaving the vertix.
+**/
+
+
+long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
+long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
+
 
 int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight){
     // Remove edges
@@ -275,6 +328,7 @@ int make_VTNH(){return 0;}
 *   if pos is 2 search for edges that start and end at this vertix.
 **/
 
+
 long * find_edges(graph *G, long v_start,long e_start, long pos ){
   long i = 0; long j=0;
   long * e_list = (long *) calloc(G->no_e, sizeof(long));
@@ -305,14 +359,6 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
   return fin_e_list;
 }
 
-/**
-* For vertix in a directed graph in degree is the number of edges 
-* going into that vertix.
-* out degree is the edges leaving the vertix.
-**/
-
-long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
-long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 
 /**
 * search array_1 against array_2
@@ -419,19 +465,55 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
   return r_err;
 }
 
+/**
+* {Graph g} - 
+* {Start_v} - the start vertix to search from.
+* {edte_list} - the list of edges to search the start vertix has if a vertix has no edges 
+*              this function is pointless and should not be used 
+* {fwd_bk_nut} - Direction of search values -1, 0, 1
+*              -1 is backword search start at lowest adjacent vertix to start_v
+*              0 allow function to decide which will be based on how close the vertix is 
+*                to the end of the graph.
+*              1 start at the highest connected vertix to the start vertix.
+* {direction} - used to check the direction of edges.
+**/
 
-long find_cycle_e(graph *G, long v_start,long e_start, long pos, long direction){
+long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction){
   G->e_cycles = (long*) calloc(G->no_e, sizeof(long));  
   G->v_cycles = (long*) calloc(G->no_v, sizeof(long));
-  G->v_cycles[0] = v_start;
-  G->e_cycles[0] = e_start;
+  long * edge_list_1;
+  long first_v =0;
+  if (G->no_v < v_start) {return -1;}
+  if ((fwd_bk_nut !=-1) && (fwd_bk_nut !=0) &&  (fwd_bk_nut !=1)){return -1;}
+  // IF the search is nutral then use the start_v if it is more than half the size of the 
+  // no_v the start searching from the vertix to the end of the graph.
+  // if it is less then half then search from the end of the graph.
+  if (fwd_bk_nut ==0) {fwd_bk_nut = ((v_start *2 > G->no_v) ? 1 :-1); }
+  long i=0; // long j=0;
+  // Put the edges into the cycle
+  // These will be searched to find cycles.
+  for (i=1; i <= edge_list[0]; i++){ 
+    G->e_cycles[(i-1)] = edge_list[i]; 
+  }
   
-  for (long i = v_start; i< G->no_v;i++) {
+  G->e_cycles[edge_list[0]+1]=-1; // use this to mark the end of the sequence.
   
-  } // end for long i= v_start
-
+  G->v_cycles[0] = v_start; 
+  
+  if (fwd_bk_nut == 1){  
+    for (i = v_start; i< G->no_v;i++) {
+  
+    } // end for long i= v_start  
+  } else {
+  
+    for (i =0; i <= v_start; i++) {
+  
+    } // end for long i= v_start
+  } // end if (fwd_bk_nut ==1)
+  
   return 0;
 }
+
 /**
 * Graph Theory: 48. Complement of a Graph
 * https://www.youtube.com/watch?v=VTgxv334KSU
@@ -447,7 +529,9 @@ int g_complement() {return 0;}
 *
 **/
 
-long find_cut_v(){return 0;}
+
+
+long find_cut_v(graph *G){return 0;}
 
 int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 
@@ -456,9 +540,18 @@ int v_valid_distance(graph *G, int start_v, int end_v, int direction){return 0;}
 * get_diamater and get radious
 * https://www.youtube.com/watch?v=YbCn8d4Enos&list=PLoJC20gNfC2gmT_5WgwYwGMvgCjYVsIQg&index=55
 **/
+
+
 int get_eccentricity(graph *G){return 0;}
 int get_diamater(graph *G){return 0;}
 int get_radious(graph *G){return 0;}
+
+/**
+* get the vertix at the start and end of an edge
+**/
+
+long * get_vertix(graph *G, long e){ return 0;
+}
 
 /**
 * Check if there is an edge between two vertices.
@@ -468,6 +561,8 @@ int get_radious(graph *G){return 0;}
 * the directions in a bio-directional graph the start and end 
 * verticies and the end and start are also tested. 
 **/
+
+
 
 int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int direction){
 
@@ -483,6 +578,8 @@ int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int
   } // end for i
   return -1;
 }
+
+
 
 int read_adjency(graph *G, char delim,char * IfileName){
   FILE* fd;
@@ -750,6 +847,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
   return 0;
 }
 
+
 int write_adjency(graph *G, char delim,char * OfileName){
   int i=0; int j=0;
   FILE* fd;
@@ -823,6 +921,7 @@ int write_incidence(graph *G, char delim,char * OfileName){
 }
 
 // this is a Decomposition
+
 int make_sub_g(graph G, int start_v,int end_v,int no_of_v){return 0;}
 
 int is_vertex_transitave(){return 0;}
@@ -834,6 +933,8 @@ bool is_icomorph(graph G1, graph G2){return 0;}
 The set the adjacency loie OO programming don't use variable name 
 as I may change it.
 **/
+
+
 bool set_adj(graph *G, bool use_adj){ G->use_adj=use_adj; return use_adj;}
 
 int init_G(graph *G, int no_e, int no_v){
