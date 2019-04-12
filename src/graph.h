@@ -66,7 +66,6 @@ int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_
 int v_distance(graph *G, int start_v, int end_v);
 int make_VTNH();
 long * find_edges(graph *G, long v_start,long e_start, long pos);
-long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction);
 long * find_common_elem(long * arr_1, long * arr_2, long len_1, long len_2, long ofset_1, long ofset_2);
 long * find_first_bridge_e(graph *G, long start_v, long end_v);
 long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction);
@@ -481,7 +480,6 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
 long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction){
   G->e_cycles = (long*) calloc(G->no_e, sizeof(long));  
   G->v_cycles = (long*) calloc(G->no_v, sizeof(long));
-  long * edge_list_1;
   long first_v =0; // First is the vertix start the walk on.
   if (G->no_v < v_start) {return -1;}
   if ((fwd_bk_nut !=-1) && (fwd_bk_nut !=0) &&  (fwd_bk_nut !=1)){return -1;}
@@ -498,13 +496,21 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
   for (i=1; i <= edge_list[0]; i++){ 
     G->e_cycles[(i-1)] = edge_list[i]; 
     vertix_list = get_vertix(G, edge_list[i]);
-  }
+    if (i==1){first_v=vertix_list[0];}
+    if (fwd_bk_nut==-1){
+      if (first_v > vertix_list[0]) {first_v = vertix_list[0];}
+      if (first_v > vertix_list[1]) {first_v = vertix_list[1];}
+    } else {
+      if (first_v < vertix_list[0]) {first_v = vertix_list[0];}
+      if (first_v < vertix_list[1]) {first_v = vertix_list[1];}
+    } // end if (fwd_bk_nut==-1)    
+  } // end for i=1
   
   G->e_cycles[edge_list[0]+1]=-1; // use this to mark the end of the sequence.
   
   G->v_cycles[0] = v_start; 
   
-  if (fwd_bk_nut == 1){  
+  if (fwd_bk_nut == 1){
     for (i = v_start; i< G->no_v;i++) {
   
     } // end for long i= v_start  
