@@ -482,9 +482,12 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
   G->e_cycles = (long*) calloc(G->no_e, sizeof(long));  
   G->v_cycles = (long*) calloc(G->no_v, sizeof(long));
   long * edge_list_1;
-  long first_v =0;
+  long first_v =0; // First is the vertix start the walk on.
   if (G->no_v < v_start) {return -1;}
   if ((fwd_bk_nut !=-1) && (fwd_bk_nut !=0) &&  (fwd_bk_nut !=1)){return -1;}
+  long * vertix_list;
+  
+  
   // IF the search is nutral then use the start_v if it is more than half the size of the 
   // no_v the start searching from the vertix to the end of the graph.
   // if it is less then half then search from the end of the graph.
@@ -494,6 +497,7 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
   // These will be searched to find cycles.
   for (i=1; i <= edge_list[0]; i++){ 
     G->e_cycles[(i-1)] = edge_list[i]; 
+    vertix_list = get_vertix(G, edge_list[i]);
   }
   
   G->e_cycles[edge_list[0]+1]=-1; // use this to mark the end of the sequence.
@@ -550,7 +554,13 @@ int get_radious(graph *G){return 0;}
 * get the vertix at the start and end of an edge
 **/
 
-long * get_vertix(graph *G, long e){ return 0;
+long * get_vertix(graph *G, long e){ 
+  long * v_arr;
+  v_arr = (long*) calloc(2, sizeof(long));
+  v_arr[0]=-1; v_arr[1]=-1;
+  if (e > G->no_e){return v_arr;}
+  v_arr[0] = G->e[e][0]; v_arr[1] = G->e[e][1];
+  return v_arr;
 }
 
 /**
