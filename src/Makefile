@@ -255,7 +255,7 @@ test_1_get_vertix:unit_test/test_1_get_vertix.c
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_1_3_Verticies_All_Combos.txt" -O "unit_test/test_1_get_vertix_data/e_v_1_3_Verticies_All_Combos.txt" 
 	./unit_test/$@ -E 3 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_2_3_Verticies_All_Combos.txt" -O "unit_test/test_1_get_vertix_data/e_v_2_3_Verticies_All_Combos.txt"
 	./unit_test/$@ -E 6 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_3_3_Verticies_All_Combos.txt" -O "unit_test/test_1_get_vertix_data/e_v_3_3_Verticies_All_Combos.txt"
-	./unit_test/$@ -E 6 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/test_1_get_vertix_data/e_v_43_3_Verticies_All_Combos.txt"
+	./unit_test/$@ -E 6 -V 3 -I "unit_test/adj_matrix/adjacency_matrix_4_3_Verticies_All_Combos.txt" -O "unit_test/test_1_get_vertix_data/e_v_4_3_Verticies_All_Combos.txt"
 	./unit_test/$@ -E 6 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_1_binary-tree.txt" -O "unit_test/test_1_get_vertix_data/e_v_1_binary-tree.txt"
 	./unit_test/$@ -E 6 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_2_binary-tree.txt" -O "unit_test/test_1_get_vertix_data/e_v_2_binary-tree.txt"
 	./unit_test/$@ -E 4 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Linked_List_Verticie.txt" -O "unit_test/test_1_get_vertix_data/e_v_Linked_List_Verticie.txt"
