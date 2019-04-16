@@ -432,15 +432,13 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
     
     if (cur_deg ==1){
       edge_list = find_edges(G,i,0,2);
-      if (edge_list[0]>0){return edge_list;}
+      if (edge_list[0]>0){find_cycle_e(G,i, edge_list, -1, 0); return edge_list;}
     }
     
     if (i > start_v){
       if (cur_deg > prev_deg){
         edge_list = find_edges(G,i,0,2);
-        if (edge_list[0]>0){
-          return edge_list;
-        } // if (edge_list[0]>0
+        if (edge_list[0]>0){find_cycle_e(G,i, edge_list, -1, 0); return edge_list;}
       } // if (cur_dep>prev_deg)
     } // if (i > start_v)
     
@@ -450,9 +448,7 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
       if (cur_deg < prev_deg) {
       // Find the edges of the first vertix (start_v)
         edge_list = find_edges(G,start_v,0,2);
-        if (edge_list[0]>0){        
-          return edge_list;
-        } // end if edg_list[0]>0
+        if (edge_list[0]>0){find_cycle_e(G,start_v, edge_list, -1, 0); return edge_list;}
       } 
     } // if (i==(start_v+1))
     prev_deg = cur_deg;
@@ -484,8 +480,7 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
   if (G->no_v < v_start) {return -1;}
   if ((fwd_bk_nut !=-1) && (fwd_bk_nut !=0) &&  (fwd_bk_nut !=1)){return -1;}
   long * vertix_list;
-  
-  
+   
   // IF the search is nutral then use the start_v if it is more than half the size of the 
   // no_v the start searching from the vertix to the end of the graph.
   // if it is less then half then search from the end of the graph.
@@ -506,20 +501,16 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
     } // end if (fwd_bk_nut==-1)    
   } // end for i=1
   
+  fprintf(stderr,"\nfirst_v=%ld v_start=%ld\n",first_v,v_start);
   G->e_cycles[edge_list[0]+1]=-1; // use this to mark the end of the sequence.
   
   G->v_cycles[0] = v_start; 
+  if (G->no_v > 1) {G->v_cycles[1] = first_v;}  
+  if (fwd_bk_nut==-1){
   
-  if (fwd_bk_nut == 1){
-    for (i = v_start; i< G->no_v;i++) {
-  
-    } // end for long i= v_start  
   } else {
   
-    for (i =0; i <= v_start; i++) {
-  
-    } // end for long i= v_start
-  } // end if (fwd_bk_nut ==1)
+  }  
   
   return 0;
 }
