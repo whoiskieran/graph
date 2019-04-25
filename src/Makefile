@@ -1,6 +1,6 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_1_write_incidence test_1_read_incidence test_1_get_vertix test_1_find_first_bridge_e
+all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_1_write_incidence test_1_read_incidence test_1_get_vertix test_1_find_first_bridge_e test_1_combine_g
 		
 test:unit_test/test.c
 	$(CC) $(CFLAGS) unit_test/test.c -o unit_test/$@
@@ -292,5 +292,12 @@ test_1_find_first_bridge_e:unit_test/test_1_find_first_bridge_e.c
 
 	rm unit_test/out*.txt
 	rm unit_test/$@
+
+test_1_combine_g:unit_test/test_1_combine_g.c 
+	@echo "###### Test ONE Combine G #####"
+	$(CC) $(CFLAGS) unit_test/test_1_combine_g.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
+
         
 	@echo "USE THE ERROR MATRIX FOR TESTING"

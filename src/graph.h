@@ -69,6 +69,7 @@ long * find_edges(graph *G, long v_start,long e_start, long pos);
 long * find_common_elem(long * arr_1, long * arr_2, long len_1, long len_2, long ofset_1, long ofset_2);
 long * find_first_bridge_e(graph *G, long start_v, long end_v);
 long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, long direction);
+graph combine_g(graph * G1, graph * G2, long bridge_v1, long bridge_v2,int direction,int fwd_weigh, int bk_weight);
 int g_complement();
 long find_cut_v(graph *G);
 int v_valid_distance(graph *G, int start_v, int end_v, int direction);
@@ -230,23 +231,21 @@ long find_unique_hameltonain_path(graph *G){return 0;}
 
 /**
 * get_degree of the vertix.
+* this is the total degree both in and out
 **/
 
-long get_degree(graph * G, int start_v){
-    if (start_v >= G->no_v){return -1;}
-    return G->v_degree[start_v];
-}
+long get_degree(graph * G, int start_v){return (start_v < G->no_v ? G->v_degree[start_v]:-1);}
 
 /**
+*
 * For vertix in a directed graph in degree is the number of edges 
 * going into that vertix.
 * out degree is the edges leaving the vertix.
+*
 **/
 
-
 long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
-long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
-
+long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_out_deg[v]:-1);}
 
 int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight){
     // Remove edges
@@ -432,7 +431,9 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
     
     if (cur_deg ==1){
       edge_list = find_edges(G,i,0,2);
-      if (edge_list[0]>0){find_cycle_e(G,i, edge_list, -1, 0); return edge_list;}
+      // There is no need to use the find_cycle function here.
+      // A vertix with a single edge cannot be on a cycle.
+      if (edge_list[0]>0){return edge_list;}
     }
     
     if (i > start_v){
@@ -445,6 +446,10 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
     if (i==(start_v+1)) {
       // Test the start vertix which could not be tested 
       // as there was nothing to compare it with
+      // Check the degree of the first vertix against the previous degree
+      // this can only be done at this pint as there was nothing to chekc at
+      // the start of the loop.  
+
       if (cur_deg < prev_deg) {
       // Find the edges of the first vertix (start_v)
         edge_list = find_edges(G,start_v,0,2);
@@ -453,9 +458,6 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
     } // if (i==(start_v+1))
     prev_deg = cur_deg;
   } // end for i=start_v
-  // Check the degree of the first vertix against the previous degree
-  // this can only be done at this pint as there was nothing to chekc at
-  // the start of the loop.  
   
   return r_err;
 }
@@ -477,11 +479,13 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
   G->e_cycles = (long*) calloc(G->no_e, sizeof(long));  
   G->v_cycles = (long*) calloc(G->no_v, sizeof(long));
   long first_v =0; // First is the vertix start the walk on.
+  long cur_v=0; long e_count =0;
   if (G->no_v < v_start) {return -1;}
   if ((fwd_bk_nut !=-1) && (fwd_bk_nut !=0) &&  (fwd_bk_nut !=1)){return -1;}
   long * vertix_list;
+  long * edge_list_1;
    
-  // IF the search is nutral then use the start_v if it is more than half the size of the 
+  // If the search is nutral then use the start_v if it is more than half the size of the 
   // no_v the start searching from the vertix to the end of the graph.
   // if it is less then half then search from the end of the graph.
   if (fwd_bk_nut ==0) {fwd_bk_nut = ((v_start *2 > G->no_v) ? 1 :-1); }
@@ -501,18 +505,95 @@ long find_cycle_e(graph *G, long v_start, long * edge_list, long fwd_bk_nut, lon
     } // end if (fwd_bk_nut==-1)    
   } // end for i=1
   
-  fprintf(stderr,"\nfirst_v=%ld v_start=%ld\n",first_v,v_start);
+  fprintf(stderr,"\nfirst_v=%ld v_start=%ld",first_v,v_start);
+  for (i=1; i <= edge_list[0]; i++){
+    fprintf(stderr,"\nedge_list[%ld]=%ld",i,edge_list[i]);
+  }
+  fprintf (stderr,"\n");
+  
   G->e_cycles[edge_list[0]+1]=-1; // use this to mark the end of the sequence.
   
   G->v_cycles[0] = v_start; 
-  if (G->no_v > 1) {G->v_cycles[1] = first_v;}  
-  if (fwd_bk_nut==-1){
+  if (G->no_v > 1) {G->v_cycles[1] = first_v;}
+  cur_v=-1; 
+  // Walk until the start vertix is returned to
+  // or all the edges have been walked.
+  // Start at the start vertix
+  edge_list_1 = find_edges(G,v_start,0,2);
   
-  } else {
+  while ((v_start != cur_v) || (e_count > G->no_e)){
+    e_count ++;
+    if (edge_list_1[0]>0){}
+    
+    if (fwd_bk_nut==-1){
   
-  }  
+    } else {
   
+    } // end if
+  } // end while
+      
   return 0;
+}
+
+/**
+* This funciton takes two graphs and returns a combination of them.
+* whether this combination makes sense as a graph is up to the user to decide.
+* To combine the graoh a link will have to be created between two graphs.
+* to passs doen the bridge vetix form graph 1 and graph 2.
+**/
+graph combine_g(graph * G1, graph * G2, long bridge_v1, long bridge_v2,int direction,int fwd_weigh, int bk_weight){
+  graph G3;
+  long no_e; long no_v; long i=0; long j=0; long v_offset=0; long e_offset=0;
+  no_e = G1->no_e + G2->no_e;
+  no_v = G1->no_v + G2->no_v;
+  if (init_G(&G3,no_e,no_v) !=-1){
+  // Start copying over the first graph edges
+    for (i=0; i < G1->no_e; i++){
+      for (j=0; j< E_ATTRIB_SIZE; j++){G3.e[i][j] = G1->e[i][j];}
+    } // end for i
+    
+    for (i=0; i < G1->no_v; i++){
+      G3.v[i] = G1->v[i];
+      G3.v_degree[i] = G1->v_degree[i];
+      G3.v_in_deg[i] = G1->v_in_deg[i];
+      G3.v_out_deg[i] = G1->v_out_deg[i];
+    } // end for i=0
+    
+    // Calculate the off-set to increment the vertix id.
+    // and the edged offset.
+    v_offset = no_v - G1->no_v;
+    e_offset = no_e - G1->no_e;
+    
+    for (i=0; i < G2->no_v; i++){
+      G3.v[(i+v_offset)] = G2->v[i]+v_offset;
+      G3.v_degree[(i+v_offset)] = G2->v_degree[i];
+      G3.v_in_deg[(i+v_offset)] = G2->v_in_deg[i];
+      G3.v_out_deg[(i+v_offset)] = G2->v_out_deg[i];
+    } // end for i=0
+    
+    // Add edges and increment the verticies by the offset.
+    // when combining two graphs G1={v0,v1,v2} G2={v0,v1.v2}.
+    // G3={v0,v1,v2,v3,v4,v5}
+    // Edges on G2 must be changed to point at the incremented verticies.
+    
+    for (i=0; i < G2->no_e; i++){
+      for (j=0; j< E_ATTRIB_SIZE; j++){
+        if (j==0 || j==1){
+          G3.e[(i+e_offset)][j] = (G2->e[i][j]+v_offset); 
+        } else {
+          G3.e[(i+e_offset)][j] = G2->e[i][j];
+        }  // end if
+      } // end for j
+    } // end for i
+  } // end if init_G
+  
+  if ((bridge_v1 > -1) && (bridge_v2 > -1)){
+    if ((bridge_v1 < G1->no_v) && (bridge_v2 < G2->no_v)){
+      add_e(&G3,no_e, bridge_v1, (bridge_v2+v_offset),direction,fwd_weigh, bk_weight);    
+    }
+  }
+  
+  return G3;
 }
 
 /**

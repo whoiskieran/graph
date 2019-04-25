@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   for (int i=0; i< no_v; i++){
     degree = get_degree(&G,i);
     sprintf(output_str,"function get_degree failed to get correct degree for vertix %d it should be 2 it is %d",i,degree); 
-    if(degree !=2){return log_error(""); }
+    if(degree !=2){return log_error(output_str); }
   }
   
   return 0;
