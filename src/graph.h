@@ -6,6 +6,51 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 * It is planned that this will be a C version of the SNAP code.
 **/
 
+/*
+// The graph
+// the start_v 0 to start from the beginning.
+
+find_path(Graph G, start_v [shortest|longest]){
+  // Inatalize values
+  e_path=0
+  v_path=start_v
+  tmp_v = -1;
+  counter =0;
+
+  do {
+    // get only the valid edges
+    // from the e_list look for those which have a start point euqla to start_v
+    // for directed graphs the valid list will be smaller than the list sent down.
+
+    if (G.IsDirected==true) {e_list = get_val_edge(e_list, start_v)}
+    else {e_list = get_edges(start_v);}
+
+    //  e_list[0] is the number of edges
+ 
+    for (i=1; i < e_list[0]; i++){
+      if (longest){
+        if(get_weight(e_list[i]) > get_weight(e_list[i+1])){
+          tmp_e_path = tmp_e_path +","+e_list[i];
+        } else {
+          tmp_e_path = tmp_e_path +","+e_list[i+1];
+        }
+      } else {
+        if(get_weight(e_list[i]) < get_weight(e_list[i+1])){
+          tmp_e_path = tmp_e_path +","+e_list[i];
+        } else {
+          tmp_e_path = tmp_e_path +","+e_list[i+1];
+        }
+      } // if (longest)
+    } // for i = 1;
+    //once gone through tall the valid paths set the e_path to tmp_e_path
+    e_path[counter] = tmp_e_patrh;
+    tmp_e_path =-1;
+    counter ++;
+  } while tmp_v != start_v || counter = G.no_e
+} // end find_path
+
+*/
+
 typedef struct graph {
   long *v; 
 /**
