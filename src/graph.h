@@ -124,7 +124,6 @@ int get_eccentricity(graph *G);
 int get_diamater(graph *G);
 int get_radious(graph *G);
 long * get_vertix(graph *G, long e);
-int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int direction);
 int read_adjency(graph *G, char delim,char * IfileName);
 int read_incidence(graph *G, char delim,char * IfileName);
 int edge_exists(graph *G, long start_v, long end_v, long no_edges_to_search, int direction);
@@ -136,6 +135,8 @@ int log_error(char * msg);
 bool is_icomorph(graph G1, graph G2);
 bool set_adj(graph *G, bool use_adj);
 int disp_graph(graph *G, int no_e, int no_v);
+long get_fwd_weight(graph *G, long e_start);
+long get_bk_weight(graph *G, long e_start);
 
 /**
  * @Author Kieran O'Sullivan
@@ -1123,4 +1124,10 @@ int disp_graph(graph *G, int no_e, int no_v){
   }
   return 0;
 }
+
+long get_fwd_weight(graph *G, long e_start)
+{ return (e_start < G->no_e ? G->e[e_start][3] : -1);}
+
+long get_bk_weight(graph *G, long e_start)
+{ return (e_start < G->no_e ? G->e[e_start][4] : -1);}
 
