@@ -16,14 +16,16 @@ find_path(Graph G, start_v [shortest|longest]){
   v_path=start_v
   tmp_v = -1;
   counter =0;
-
+  long *edge_list;
+  
   do {
-    // get only the valid edges
-    // from the e_list look for those which have a start point euqla to start_v
-    // for directed graphs the valid list will be smaller than the list sent down.
-
-    if (G.IsDirected==true) {e_list = get_val_edge(e_list, start_v)}
-    else {e_list = get_edges(start_v);}
+    /**
+* Start at edge 0
+* A directed graph will only need to search for edges that start at the start vertix of v_start
+* In an undirected graph the edge list contains the edges which start or end at v_start
+    
+    if (G.IsDirected==true) {e_list = find_edges(G,v_start,0, 0 );}
+    else {e_list = find_edges(G,v_start,0, 2 );}
 
     //  e_list[0] is the number of edges
  
