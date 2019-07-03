@@ -6,25 +6,29 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 * It is planned that this will be a C version of the SNAP code.
 **/
 
-/*
+
 // The graph
 // the start_v 0 to start from the beginning.
-
-find_path(Graph G, start_v [shortest|longest]){
-  // Inatalize values
-  e_path=0
-  v_path=start_v
-  tmp_v = -1;
-  counter =0;
+/*
+long * find_path(graph *G, long start_v, int l_or_s){
+  // Inatalize e_path and v_path to a maximun  
+  long * e_path = (long *) calloc(G->no_e, sizeof(long)); 
+  long * v_path = (long *) calloc(G->no_v, sizeof(long)); 
+  
+  long tmp_v = -1; long counter =0;
   long *edge_list;
   
   do {
-    /**
+
+**
+*
 * Start at edge 0
 * A directed graph will only need to search for edges that start at the start vertix of v_start
 * In an undirected graph the edge list contains the edges which start or end at v_start
+*
+**
     
-    if (G.IsDirected==true) {e_list = find_edges(G,v_start,0, 0 );}
+    if (G->IsDirected==true) {e_list = find_edges(G,v_start,0, 0 );}
     else {e_list = find_edges(G,v_start,0, 2 );}
 
     //  e_list[0] is the number of edges
@@ -48,9 +52,8 @@ find_path(Graph G, start_v [shortest|longest]){
     e_path[counter] = tmp_e_patrh;
     tmp_e_path =-1;
     counter ++;
-  } while tmp_v != start_v || counter = G.no_e
+  } while (tmp_v != start_v || counter = G->no_e)
 } // end find_path
-
 */
 
 typedef struct graph {
@@ -91,6 +94,7 @@ typedef struct graph {
   bool is_simple; // No loops or multiple edges
   bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
   bool use_incident;
+  bool IsDirected;
 //  graph_data *gd;
 } graph;
 
@@ -137,7 +141,8 @@ bool set_adj(graph *G, bool use_adj);
 int disp_graph(graph *G, int no_e, int no_v);
 long get_fwd_weight(graph *G, long e_start);
 long get_bk_weight(graph *G, long e_start);
-
+long set_fwd_weight(graph *G, long e_start, long w);
+long set_bk_weight(graph *G, long e_start, long w);
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -1130,4 +1135,17 @@ long get_fwd_weight(graph *G, long e_start)
 
 long get_bk_weight(graph *G, long e_start)
 { return (e_start < G->no_e ? G->e[e_start][4] : -1);}
+
+
+long set_fwd_weight(graph *G, long e_start, long w){ 
+  if (e_start < G->no_e){G->e[e_start][3] = w;}
+  else {return -1;} 
+  return G->e[e_start][3];
+}
+
+long set_bk_weight(graph *G, long e_start, long w){ 
+  if (e_start < G->no_e){G->e[e_start][4] = w;}
+  else {return -1;} 
+  return G->e[e_start][4];
+}
 
