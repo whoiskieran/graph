@@ -11,6 +11,7 @@
 * these tests are run against the adjacency matrix files
 * which all have edges so if the number of edges returned is 0
 * throw an error.
+* this test tests for the vertix at the end of the edge
 **/
 
 int main(int argc, char *argv[]) {
@@ -53,7 +54,7 @@ int main(int argc, char *argv[]) {
   **/
   
   long e_size;
-  edge_list = find_edges(&G,0,0,2);
+  edge_list = find_edges(&G,0,0,1);
   e_size = edge_list[0];
   if (e_size ==0){return log_error("number of edges is 0");}
     

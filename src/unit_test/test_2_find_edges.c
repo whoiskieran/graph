@@ -6,11 +6,8 @@
 #include "graph.h"
 
 /**
-* Test on find the edges 
-* check if there are any edges only.
-* these tests are run against the adjacency matrix files
-* which all have edges so if the number of edges returned is 0
-* throw an error.
+* Test to see if the function behaves correctly
+* when the vertix to search for is not there.
 **/
 
 int main(int argc, char *argv[]) {
@@ -53,9 +50,9 @@ int main(int argc, char *argv[]) {
   **/
   
   long e_size;
-  edge_list = find_edges(&G,0,0,2);
+  edge_list = find_edges(&G,no_v+1,0,2);
   e_size = edge_list[0];
-  if (e_size ==0){return log_error("number of edges is 0");}
+  if (e_size !=0){return log_error("number of edges is NOT 0");}
     
   return 0;
 }

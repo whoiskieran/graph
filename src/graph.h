@@ -7,54 +7,6 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 **/
 
 
-// The graph
-// the start_v 0 to start from the beginning.
-/*
-long * find_path(graph *G, long start_v, int l_or_s){
-  // Inatalize e_path and v_path to a maximun  
-  long * e_path = (long *) calloc(G->no_e, sizeof(long)); 
-  long * v_path = (long *) calloc(G->no_v, sizeof(long)); 
-  
-  long tmp_v = -1; long counter =0;
-  long *edge_list;
-  
-  do {
-
-**
-*
-* Start at edge 0
-* A directed graph will only need to search for edges that start at the start vertix of v_start
-* In an undirected graph the edge list contains the edges which start or end at v_start
-*
-**
-    
-    if (G->IsDirected==true) {e_list = find_edges(G,v_start,0, 0 );}
-    else {e_list = find_edges(G,v_start,0, 2 );}
-
-    //  e_list[0] is the number of edges
- 
-    for (i=1; i < e_list[0]; i++){
-      if (longest){
-        if(get_weight(e_list[i]) > get_weight(e_list[i+1])){
-          tmp_e_path = tmp_e_path +","+e_list[i];
-        } else {
-          tmp_e_path = tmp_e_path +","+e_list[i+1];
-        }
-      } else {
-        if(get_weight(e_list[i]) < get_weight(e_list[i+1])){
-          tmp_e_path = tmp_e_path +","+e_list[i];
-        } else {
-          tmp_e_path = tmp_e_path +","+e_list[i+1];
-        }
-      } // if (longest)
-    } // for i = 1;
-    //once gone through tall the valid paths set the e_path to tmp_e_path
-    e_path[counter] = tmp_e_patrh;
-    tmp_e_path =-1;
-    counter ++;
-  } while (tmp_v != start_v || counter = G->no_e)
-} // end find_path
-*/
 
 typedef struct graph {
   long *v; 
@@ -94,7 +46,6 @@ typedef struct graph {
   bool is_simple; // No loops or multiple edges
   bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
   bool use_incident;
-  bool IsDirected;
 //  graph_data *gd;
 } graph;
 
@@ -148,6 +99,65 @@ long set_bk_weight(graph *G, long e_start, long w);
  * 
  * 
  */
+
+// The graph
+// the start_v 0 to start from the beginning.
+
+long * find_path(graph *G, long v_start, int long_path){
+  // Inatalize e_path and v_path to a maximun  
+  long * e_path = (long *) calloc(G->no_e, sizeof(long)); 
+  long * v_path = (long *) calloc(G->no_v, sizeof(long)); 
+  long counter =0; long i;
+  long *e_list;
+  long e_start =0;
+  long * vertix_list;
+  long weight =-1; long t_weight=-1;
+  e_path[0]=-1; v_path[0]=-1;
+  
+  do {
+  /**
+  * get the edge list for the vertix.
+  * if there is no edges return e_list which 
+  * is set by the function to 0.if the counter is 0.
+  * if the counter > 0 then spme path has been found
+  * so backtrack to another position.
+  **/
+    if (counter==0) {
+      e_list = find_edges(G,v_start,e_start, 0);
+      if (e_list[0]==0){return e_list;}
+
+    } else {
+      // get the edge with the lowest or highest weight
+      // get the next vertix
+      // get the edges for this vertix.
+      // add to the e_path and v_path
+      // 
+    }
+    
+    for (i=1; i < e_list[0]; i++){
+      if (G->e[ e_list[i] ][2] < 2){
+        t_weight=get_fwd_weight(G, e_list[i]);
+      } else {
+        t_weight=get_fwd_weight(G, e_list[i]);
+        t_weight=get_bk_weight(G, e_list[i]);
+      }
+    } // end for i
+    
+    if (long_path==1){
+    }
+    vertix_list = get_vertix(G, e_start);
+    e_start = e_list[1]; // the first edge.
+    
+    counter ++;
+  } while (counter < G->no_e);
+  
+  int X =0;
+  e_path[0] =X; // number of edges found
+  v_path[0] =X; // number of vertixes found.
+  
+  return e_list;
+} // end find_path
+
 
 int set_connected(graph *G, int start_v, int end_v){
   if (start_v ==-1){G->is_connected = false; }
@@ -381,6 +391,13 @@ int make_VTNH(){return 0;}
 
 
 long * find_edges(graph *G, long v_start,long e_start, long pos ){
+  
+  // Validation 
+  if (e_start < 0){long * fin_e_list = (long *) calloc((1), sizeof(long)); return fin_e_list;}
+  if (v_start < 0){long * fin_e_list = (long *) calloc((1), sizeof(long)); return fin_e_list;}
+  if (v_start > G->no_v){long * fin_e_list = (long *) calloc((1), sizeof(long)); return fin_e_list;}
+  if (e_start > G->no_e){long * fin_e_list = (long *) calloc((1), sizeof(long)); return fin_e_list;}
+  
   long i = 0; long j=0;
   long * e_list = (long *) calloc(G->no_e, sizeof(long));
   
@@ -394,12 +411,30 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
         e_list[j] = i;        
         j++;
       }      
-    } else {
-      if (G->e[i][pos]==v_start){
-        e_list[j] = i;
-        j++;
-      }
-    }
+    } else { 
+      /**
+      * if the direction of the edge is 1 then return only 
+      * the position requested.
+      * if the edge runs in both directions then the concept of
+      * a start point is not relivent so return both start and end points.
+      **/
+      
+      if (G->e[i][2] < 2){
+        if (G->e[i][pos]==v_start){
+          e_list[j] = i;
+          j++;
+        }
+      } else {
+        if (G->e[i][0]==v_start){
+          e_list[j] = i;
+          j++;
+        }
+        if (G->e[i][1]==v_start){
+          e_list[j] = i;        
+          j++;
+        }   
+      } // end if G->e[i][2]==1
+    } // end if pos else
   } // end for i
   
   e_list = (long *) realloc(e_list, j *sizeof(long));  
