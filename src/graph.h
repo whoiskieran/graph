@@ -101,9 +101,11 @@ long set_bk_weight(graph *G, long e_start, long w);
  */
 
 // The graph
-// the start_v 0 to start from the beginning.
+// the v_start - 0 to start from the beginning.
+// the v_end - the end vetix if v_start and v_end the same then look for cycle.
+// long_path 1 longerst 0 shortest.
 
-long * find_path(graph *G, long v_start, int long_path){
+long * find_path(graph *G, long v_start, long v_end, int long_path){
   // Inatalize e_path and v_path to a maximun  
   long * e_path = (long *) calloc(G->no_e, sizeof(long)); 
   long * v_path = (long *) calloc(G->no_v, sizeof(long)); 
@@ -111,9 +113,20 @@ long * find_path(graph *G, long v_start, int long_path){
   long *e_list;
   long e_start =0;
   long * vertix_list;
-  long weight =-1; long t_weight=-1;
+  long weight[2]; // [0] is the weight [1] is the edge no
+  long t_weight=-1;
+  weight[0]=-1; weight[1]=-1;
   e_path[0]=-1; v_path[0]=-1;
+
+  /**
+  * If the start or end vertix have no edges this is a pointless search.
+  **/
   
+  if (get_degree(G,v_start)==0){e_path[0]=0; return e_path;}
+  if (get_degree(G,v_end)==0){e_path[0]=0; return e_path;}
+  
+  
+
   do {
   /**
   * get the edge list for the vertix.
@@ -125,28 +138,48 @@ long * find_path(graph *G, long v_start, int long_path){
     if (counter==0) {
       e_list = find_edges(G,v_start,e_start, 0);
       if (e_list[0]==0){return e_list;}
-
     } else {
-      // get the edge with the lowest or highest weight
-      // get the next vertix
-      // get the edges for this vertix.
-      // add to the e_path and v_path
-      // 
+      e_list = find_edges(G,v_path[counter],e_path[counter], 0);
+      if (e_list[0]==0){return e_list;}
     }
+    
+    /**
+      * get the edge with the lowest or highest weight
+      * get the next vertix
+      * get the edges for this vertix.
+      * add to the e_path and v_path
+    */ 
     
     for (i=1; i < e_list[0]; i++){
       if (G->e[ e_list[i] ][2] < 2){
         t_weight=get_fwd_weight(G, e_list[i]);
+        if (long_path ==1) {
+          if (t_weight > weight[0]){weight[0]=t_weight; weight[1]=e_list[i];}
+        } else {
+          if (t_weight < weight[0]){weight[0]=t_weight; weight[1]=e_list[i];}
+        }        
       } else {
         t_weight=get_fwd_weight(G, e_list[i]);
+        if (long_path ==1) {
+          if (t_weight > weight[0]){weight[0]=t_weight; weight[1]=e_list[i];}
+        } else {
+          if (t_weight < weight[0]){weight[0]=t_weight; weight[1]=e_list[i];}
+        }
         t_weight=get_bk_weight(G, e_list[i]);
-      }
+        if (long_path ==1) {
+          if (t_weight > weight[0]){weight[0]=t_weight; weight[1]=e_list[i];}
+        } else {
+          if (t_weight < weight[0]){weight[0]=t_weight; weight[1]=e_list[i];}
+        }
+      } // if (G->e[ e_list[i] ][2] < 2){
     } // end for i
     
-    if (long_path==1){
-    }
-    vertix_list = get_vertix(G, e_start);
-    e_start = e_list[1]; // the first edge.
+    vertix_list = get_vertix(G, weight[1]);
+    if (vertix_list[0]==v_start){v_start=vertix_list[1];}
+    else {v_start=vertix_list[0];}
+
+    e_path[counter+1]=weight[1];
+    v_path[counter+1]=v_start;
     
     counter ++;
   } while (counter < G->no_e);
@@ -400,7 +433,8 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
   
   long i = 0; long j=0;
   long * e_list = (long *) calloc(G->no_e, sizeof(long));
-  
+  long degree =0;
+    
   for (i=e_start; i< G->no_e; i++){
     if (pos >= 2){
       if (G->e[i][0]==v_start){
@@ -436,6 +470,53 @@ long * find_edges(graph *G, long v_start,long e_start, long pos ){
       } // end if G->e[i][2]==1
     } // end if pos else
   } // end for i
+
+  /**
+  * If start_e too large then edges may be missed.  Get the degree and compare it.
+  * If the degree is wrong then start at the beginning of edges and search.
+  **/
+  
+  if (pos >= 2){degree = get_degree(G,v_start);}
+  else if (pos ==0){degree = get_in_degree(G,v_start);}
+  else {degree = get_in_degree(G,v_start);}
+
+  if (j != degree){
+    for (i=0; i < e_start; i++){
+      if (pos >= 2){
+        if (G->e[i][0]==v_start){
+          e_list[j] = i;
+          j++;
+        }
+        if (G->e[i][1]==v_start){
+          e_list[j] = i;        
+          j++;
+        }      
+      } else { 
+        /**
+        * if the direction of the edge is 1 then return only 
+        * the position requested.
+        * if the edge runs in both directions then the concept of
+        * a start point is not relivent so return both start and end points.
+        **/
+      
+        if (G->e[i][2] < 2){
+          if (G->e[i][pos]==v_start){
+            e_list[j] = i;
+            j++;
+          }
+        } else {
+          if (G->e[i][0]==v_start){
+            e_list[j] = i;
+            j++;
+          }
+          if (G->e[i][1]==v_start){
+            e_list[j] = i;        
+            j++;
+          }   
+        } // end if G->e[i][2]==1
+      } // end if pos else
+    } // end for i  
+  } // END if (j != degree)
   
   e_list = (long *) realloc(e_list, j *sizeof(long));  
   

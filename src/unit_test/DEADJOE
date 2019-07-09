@@ -1,0 +1,28 @@
+
+*** These modified files were found in JOE when it aborted on Mon Jul  8 13:27:24 2019
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+find_edges
+
+read_adj
+find_edg
+get_vert
+get_wei
+get_f
+find_edg
+get_deg
+find_edg
+
+*** File '(Unnamed)'
+graph.h
+graph.h
+graph.h
+graph.h
+graph.h
+graph.h
+graph.h
+graph.h
+graph.h
+graph.h
+test_5_find_edges.c

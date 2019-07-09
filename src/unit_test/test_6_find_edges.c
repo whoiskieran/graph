@@ -46,16 +46,16 @@ int main(int argc, char *argv[]) {
 
   /**
   * the graph
-  * search for vertix 0
-  * start at edges 0
+  * search for vertix 2
+  * start at edges 2
   * search both directions.
   * returns number of elements in edge_list[0] and then the list of edges themsleves.
   **/
   
   long e_size;
-  edge_list = find_edges(&G,0,0,2);
+  edge_list = find_edges(&G,2,2,2);
   e_size = edge_list[0];
-  degree=get_degree(&G,0);
+  degree=get_degree(&G,2);
   if (e_size ==0){return log_error("number of edges is 0");}
   sprintf(msg,"degree=%d != size=%ld",degree,e_size);
   if (degree != e_size){return log_error(msg);} 
