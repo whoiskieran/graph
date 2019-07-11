@@ -117,16 +117,19 @@ long * find_path(graph *G, long v_start, long v_end, int long_path){
   long t_weight=-1;
   weight[0]=-1; weight[1]=-1;
   e_path[0]=-1; v_path[0]=-1;
+  // Validation
+  if (v_start < 0){e_path[0]=0; return e_path;}
+  if (v_end < 0){e_path[0]=0; return e_path;}
+  if (v_start > G->no_v){e_path[0]=0; return e_path;}
+  if (v_end > G->no_v){e_path[0]=0; return e_path;}
 
   /**
   * If the start or end vertix have no edges this is a pointless search.
   **/
-  
+
   if (get_degree(G,v_start)==0){e_path[0]=0; return e_path;}
   if (get_degree(G,v_end)==0){e_path[0]=0; return e_path;}
   
-  
-
   do {
   /**
   * get the edge list for the vertix.
@@ -148,9 +151,17 @@ long * find_path(graph *G, long v_start, long v_end, int long_path){
       * get the next vertix
       * get the edges for this vertix.
       * add to the e_path and v_path
-    */ 
+    **/ 
     
     for (i=1; i < e_list[0]; i++){
+    /** 
+    * This if ststement tests the direction of the edge
+    * A non directed path is treated differently.
+    * A non directed path allows two way travel.
+    * it is possible that traveling one way on the path is less
+    * expensive than traveling back on the same path. A walking 
+    * ruit up-hill is slower than a down-hill walk on the same path.
+    **/
       if (G->e[ e_list[i] ][2] < 2){
         t_weight=get_fwd_weight(G, e_list[i]);
         if (long_path ==1) {
