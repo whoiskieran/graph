@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   
   if ((sum_degree/2) !=G.no_e){return log_error("sum of degrees is not twice no_e.");}
     
-  sprintf(msg,"function find_first_bridge Failed to Open File Name %s",OfileName);
+  sprintf(msg,"function Failed to Open File Name %s",OfileName);
   if (strcmp(OfileName,"")==0){ fd=stdout;}
   else {
      fclose(stdout);

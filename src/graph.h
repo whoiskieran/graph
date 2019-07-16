@@ -46,6 +46,8 @@ typedef struct graph {
   bool is_simple; // No loops or multiple edges
   bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
   bool use_incident;
+  long G_id; // The id of this graph
+  long *G_related_id; //Related Graphs used when braking a graph up into sub graphs.
 //  graph_data *gd;
 } graph;
 
@@ -105,13 +107,12 @@ long set_bk_weight(graph *G, long e_start, long w);
 // the v_end - the end vetix if v_start and v_end the same then look for cycle.
 // long_path 1 longerst 0 shortest.
 
-long * find_path(graph *G, long v_start, long v_end, int long_path){
+long * find_path(graph *G, long v_start, long v_end, long e_start, int long_path){
   // Inatalize e_path and v_path to a maximun  
   long * e_path = (long *) calloc(G->no_e, sizeof(long)); 
   long * v_path = (long *) calloc(G->no_v, sizeof(long)); 
-  long counter =0; long i;
+  long v_counter =0; long i;
   long *e_list;
-  long e_start =0;
   long * vertix_list;
   long weight[2]; // [0] is the weight [1] is the edge no
   long t_weight=-1;
@@ -129,23 +130,27 @@ long * find_path(graph *G, long v_start, long v_end, int long_path){
 
   if (get_degree(G,v_start)==0){e_path[0]=0; return e_path;}
   if (get_degree(G,v_end)==0){e_path[0]=0; return e_path;}
-  
+
+  /**
+  * get the edge list of the start v
+  * get the vertix of these edges
+  * test if the vertix vertix of these matches the end_v
+  * 
+  **/
+
+  v_counter =1; e_counter=1;
+  v_path[v_counter]=v_start; // The first element [0] is the no of elements.
+  e_path[e_counter]=e_start; // The first element [0] is the no of elements.
+
   do {
   /**
-  * get the edge list for the vertix.
-  * if there is no edges return e_list which 
-  * is set by the function to 0.if the counter is 0.
-  * if the counter > 0 then spme path has been found
-  * so backtrack to another position.
+  * get the edge list of the start v
+  * get the vertix of these edges
+  * test if the vertix vertix of these matches the end_v
+  * 
   **/
-    if (counter==0) {
-      e_list = find_edges(G,v_start,e_start, 0);
-      if (e_list[0]==0){return e_list;}
-    } else {
-      e_list = find_edges(G,v_path[counter],e_path[counter], 0);
-      if (e_list[0]==0){return e_list;}
-    }
-    
+    e_list = find_edges(G,v_path[v_counter],e_path[e_counter], 0);
+          
     /**
       * get the edge with the lowest or highest weight
       * get the next vertix
@@ -155,12 +160,12 @@ long * find_path(graph *G, long v_start, long v_end, int long_path){
     
     for (i=1; i < e_list[0]; i++){
     /** 
-    * This if ststement tests the direction of the edge
-    * A non directed path is treated differently.
-    * A non directed path allows two way travel.
-    * it is possible that traveling one way on the path is less
-    * expensive than traveling back on the same path. A walking 
-    * ruit up-hill is slower than a down-hill walk on the same path.
+      * This if ststement tests the direction of the edge
+      * A non directed path is treated differently.
+      * A non directed path allows two way travel.
+      * it is possible that traveling one way on the path is less
+      * expensive than traveling back on the same path. A walking 
+      * ruit up-hill is slower than a down-hill walk on the same path.
     **/
       if (G->e[ e_list[i] ][2] < 2){
         t_weight=get_fwd_weight(G, e_list[i]);
@@ -189,11 +194,11 @@ long * find_path(graph *G, long v_start, long v_end, int long_path){
     if (vertix_list[0]==v_start){v_start=vertix_list[1];}
     else {v_start=vertix_list[0];}
 
-    e_path[counter+1]=weight[1];
-    v_path[counter+1]=v_start;
+    e_path[e_counter]=weight[1];
+    v_path[v_counter]=v_start;
     
-    counter ++;
-  } while (counter < G->no_e);
+    v_counter++;e_counter++;
+  } while ((v_counter < G->no_v) && (e_counter < G->no_e));
   
   int X =0;
   e_path[0] =X; // number of edges found
