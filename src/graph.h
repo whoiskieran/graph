@@ -6,7 +6,19 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 * It is planned that this will be a C version of the SNAP code.
 **/
 
+/**
+* A property is on an edger or vertix
+* Edges and Verticies can have multiple properties.
+* If it is a vertix then set the v_id otherwise set the e_id
+* prop_n and prop_v store the name and value of the property.
+**/
 
+typedef struct property {
+	long *e_id;
+	long *v_id;
+	char **prop_n;
+	char **prop_v;
+}
 
 typedef struct graph {
   long *v; 
