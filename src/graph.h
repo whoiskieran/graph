@@ -142,7 +142,11 @@ long * find_path(graph *G, long v_start, long v_end, long e_start, int long_path
 
   if (get_degree(G,v_start)==0){e_path[0]=0; return e_path;}
   if (get_degree(G,v_end)==0){e_path[0]=0; return e_path;}
-
+  /**
+  Find the bridge don't cross it unless necessary.
+  **/
+  // find_first_bridge_e(G, v_start, v_end);
+	
   /**
   * get the edge list of the start v
   * get the vertix of these edges
@@ -617,7 +621,7 @@ long * find_first_bridge_e(graph *G, long start_v, long end_v) {
 
   long i=0; long prev_deg=0; long cur_deg=0;
   long * edge_list; // long * edge_list_1; long * edge_list_2;
-  // Do a quick search to fine the most obvious potential edges.
+  // Do a quick search to find the most obvious potential edges.
   // Return the first one found.
   
   for (i=start_v; i < end_v;i++){
