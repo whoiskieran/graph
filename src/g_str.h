@@ -13,17 +13,12 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 * prop_n and prop_v store the name and value of the property.
 **/
 
-/*
-typedef struct property {
-	long *e_id;
-	long *v_id;
-	char **prop_n;
-	char **prop_v;
-}
-*/
 
 typedef struct graph {
-  long *v; 
+  long *v;
+  long **v_adj_v;// A list of all the v adjacent to this v. 
+                 // this is not an adjacency matrix.
+                 // v_adj_v[vertix_sequenc_number][degree_of_this_vertix + 1]
 /**
 * vertix this number will be used as an external ID.
 * this also can be used to store a sub graph.
@@ -282,13 +277,14 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     }
     G->v[insert_v]=v_id;
     G->v_degree[insert_v]=0;
+    // This will be a list of verticies adj to this vertix
+    
     // Force graph to be non-connected
     set_connected(G, -1, -1);
     return 1;
 }
 
 int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight){
-// fprintf(stderr,"\nStart add_e %ld \n",e_start);
 /*
 realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
@@ -325,7 +321,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     }
     // if this is self referencing then it is valid to say 
     // it has two edges added not just one.
-    // I will have to research this.
+    // This is the convention for the graph theory.
     G->v_degree[end_v] ++;
     G->v_out_deg[end_v] ++;
     
@@ -333,7 +329,20 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
       G->e[e_start][4]=bk_weight;
       if (G->use_adj==true){G->v_adj[end_v][start_v]=1;}
     }
-
+    /**
+    * use the degree to set the size of the nodes adjacent to the start and end nodes.
+    * The start and end v are both set.
+    **/
+    G->v_adj_v[start_v] = (long *) realloc(G->v_adj_v[start_v], (G->v_degree[start_v]+1) * sizeof(long));
+    G->v_adj_v[start_v] = (long *) malloc( (G->v_degree[start_v]+1) * sizeof(long));
+    G->v_adj_v[start_v][G->v_degree[start_v]] = start_v;
+    
+    if (direction==2){
+      G->v_adj_v[end_v] = (long *) realloc(G->v_adj_v[end_v], (G->v_degree[end_v]+1) * sizeof(long));
+      G->v_adj_v[end_v] = (long *) malloc( (G->v_degree[end_v]+1) * sizeof(long));
+      G->v_adj_v[end_v][G->v_degree[end_v]] = end_v;
+    }
+    
     set_connected(G,start_v,end_v);
 
     return 0;
@@ -1222,7 +1231,7 @@ int log_error(char * msg){ fprintf(stderr,"\n%s\n",msg); return -1;}
 
 bool is_icomorph(graph G1, graph G2){return 0;}
 /**
-The set the adjacency loie OO programming don't use variable name 
+The set the adjacency like OO programming don't use variable name 
 as I may change it.
 **/
 
@@ -1243,6 +1252,7 @@ int init_G(graph *G, int no_e, int no_v){
     G->v_out_deg = (long*) calloc(no_v, sizeof(long));
     G->v_adj = (long**) calloc(no_v, sizeof(long));
     G->v_incidents = (long**) calloc(no_v, sizeof(long));
+    G->v_adj_v = (long **) calloc(no_v, sizeof(long));
     
     for (i=0; i<no_v;i++) {
       G->v[i] = -1;
