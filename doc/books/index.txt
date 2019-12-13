@@ -1,1 +1,8 @@
-Uesfull books
+Neo4j_Top5_UseCases_Graph Databases.pdf
+This is just an Neo4j 5 use cases not that interesting.
+
+Graph_Databases_2e_Neo4j.pdf
+The Neo4j Manual
+
+Graph_Algorithms_Neo4j.pdf
+Graph algorithms various search methadologies.
