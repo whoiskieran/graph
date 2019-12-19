@@ -1,6 +1,6 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_2_find_edges test_3_find_edges test_4_find_edges test_5_find_edges test_6_find_edges test_1_write_incidence test_1_read_incidence test_1_get_vertix test_1_find_first_bridge_e test_1_set_fwd_weight test_1_set_bk_weight test_1_get_bk_weight test_1_get_fwd_weight test_1_combine_g
+all: test_1_parse test_1_init test_1_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_2_find_edges test_3_find_edges test_4_find_edges test_5_find_edges test_6_find_edges test_1_write_incidence test_1_read_incidence test_1_get_vertix test_1_find_first_bridge_e test_1_set_fwd_weight test_1_set_bk_weight test_1_get_bk_weight test_1_get_fwd_weight test_1_combine_g test_1_get_no_regions
 		
 test:unit_test/test.c
 	$(CC) $(CFLAGS) unit_test/test.c -o unit_test/$@
@@ -103,6 +103,10 @@ test_1_write_adjency:unit_test/test_1_write_adjency.c
 	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" "unit_test/out_13.txt"	
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
 	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" "unit_test/out_14.txt"
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" "unit_test/out_16.txt"
 
 	rm unit_test/$@
 	rm unit_test/out*.txt
@@ -140,7 +144,11 @@ test_1_read_adjency:unit_test/test_1_read_adjency.c
 	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
 	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" "unit_test/out_16.txt"
+
 	rm unit_test/$@
 	rm unit_test/out*.txt
 
@@ -162,7 +170,10 @@ test_2_get_degree:unit_test/test_2_get_degree.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
 	
+	# rm unit_test/out*.txt
 	rm unit_test/$@
 
 test_1_set_fwd_weight:unit_test/test_1_set_fwd_weight.c 
@@ -183,7 +194,10 @@ test_1_set_fwd_weight:unit_test/test_1_set_fwd_weight.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_1_set_bk_weight:unit_test/test_1_set_bk_weight.c 
@@ -204,7 +218,10 @@ test_1_set_bk_weight:unit_test/test_1_set_bk_weight.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 	
 
@@ -226,7 +243,11 @@ test_1_get_bk_weight:unit_test/test_1_get_bk_weight.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_1_get_fwd_weight:unit_test/test_1_get_fwd_weight.c 
@@ -247,7 +268,10 @@ test_1_get_fwd_weight:unit_test/test_1_get_fwd_weight.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 
@@ -269,7 +293,10 @@ test_1_find_edges:unit_test/test_1_find_edges.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+	# rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_2_find_edges:unit_test/test_2_find_edges.c 
@@ -290,7 +317,10 @@ test_2_find_edges:unit_test/test_2_find_edges.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_3_find_edges:unit_test/test_3_find_edges.c 
@@ -311,7 +341,10 @@ test_3_find_edges:unit_test/test_3_find_edges.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_4_find_edges:unit_test/test_4_find_edges.c 
@@ -332,7 +365,10 @@ test_4_find_edges:unit_test/test_4_find_edges.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_5_find_edges:unit_test/test_5_find_edges.c 
@@ -354,7 +390,10 @@ test_5_find_edges:unit_test/test_5_find_edges.c
 #	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+#	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 test_6_find_edges:unit_test/test_6_find_edges.c 
@@ -375,7 +414,10 @@ test_6_find_edges:unit_test/test_6_find_edges.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/out_12.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
-	
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+
+#	rm unit_test/out*.txt	
 	rm unit_test/$@
 
 	
@@ -397,7 +439,10 @@ test_1_write_incidence:unit_test/test_1_write_incidence.c
 	./unit_test/$@ -E 3 -V 4 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_3.txt" -O "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_3.txt"
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_4.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/incidence_matrix/incidence_matrix_Articulation_Point.txt"
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_2_Error.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_2.txt"
 
+#	rm unit_test/out*.txt
 	rm unit_test/$@
 
 
@@ -442,8 +487,12 @@ test_1_read_incidence:unit_test/test_1_read_incidence.c
 	unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_4.txt" "unit_test/out_13.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/incidence_matrix/incidence_matrix_Articulation_Point.txt" -O "unit_test/out_14.txt"
 	unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_Articulation_Point.txt" "unit_test/out_14.txt"
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/out_15.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_2_Error.txt" "unit_test/out_15.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/out_16.txt"
+	unit_test/test_1_read_adjency.sh "unit_test/incidence_matrix/incidence_matrix_Find_Bridge_Edge_2.txt" "unit_test/out_16.txt"
 
-
+	rm unit_test/out*.txt
 	rm unit_test/$@
 
 test_1_get_vertix:unit_test/test_1_get_vertix.c 
@@ -465,8 +514,11 @@ test_1_get_vertix:unit_test/test_1_get_vertix.c
 	./unit_test/$@ -E 9 -V 8 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_4.txt" -O "unit_test/test_1_get_vertix_data/e_v_Find_Bridge_Edge_4.txt"
 	./unit_test/$@ -E 7 -V 6 -I "unit_test/adj_matrix/adjacency_matrix_Articulation_Point.txt" -O "unit_test/test_1_get_vertix_data/e_v_Articulation_Point.txt"
 
+	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/test_1_get_vertix_data/e_v__Find_Bridge_Edge_2_Error.txt"
+	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/test_1_get_vertix_data/e_v__Find_Bridge_Edge_2.txt"
+
 	rm unit_test/$@
-#        rm unit_test/*.txt
+#	rm unit_test/out*.txt
 
 
 test_1_find_first_bridge_e:unit_test/test_1_find_first_bridge_e.c 
@@ -497,5 +549,8 @@ test_1_combine_g:unit_test/test_1_combine_g.c
 	./unit_test/$@
 	rm unit_test/$@
 
-        
-	@echo "USE THE ERROR MATRIX FOR TESTING"
+test_1_get_no_regions:unit_test/test_1_get_no_regions.c
+	@echo "###### Test ONE get_no_regions #####"
+	$(CC) $(CFLAGS) unit_test/test_1_get_no_regions.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
