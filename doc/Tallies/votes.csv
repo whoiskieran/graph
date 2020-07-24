@@ -1,0 +1,751 @@
+bname,cname,no_votes
+Ballygall A 1,Conroy,22
+Ballygall A 2,Conroy,14
+Ballygall A 3,Conroy,23
+Ballygall B 1,Conroy,22
+Ballygall B 2,Conroy,30
+Finglas Nth 1,Conroy,11
+Charlestwn 1,Conroy,20
+Lanesbro 1,Conroy,13
+Lanesbro 2,Conroy,11
+Ballygall C 1,Conroy,60
+Ballygall C 2,Conroy,55
+Ballygall C 3,Conroy,52
+Ballygall C/D 1,Conroy,59
+Ballygall D 1,Conroy,37
+Ballygall D 2,Conroy,35
+Ballymun A 1,Conroy,13
+Ballymun A 2,Conroy,5
+Ballymun A 3,Conroy,14
+Ballymun A/B 1,Conroy,6
+Ballymun B 1,Conroy,9
+Ballymun B 2,Conroy,3
+Ballymun B/D 1,Conroy,7
+Ballymun D 1,Conroy,5
+Ballymun D 2,Conroy,5
+Ballymun C1 1,Conroy,1
+Ballymun C1 2,Conroy,8
+Ballymun C1 3,Conroy,7
+Ballymun C1 4,Conroy,7
+Ballymun E 1,Conroy,51
+Ballymun E 2,Conroy,41
+Ballymun C2 1,Conroy,23
+Finglas Nth B 1,Conroy,3
+Finglas Nth B 2,Conroy,9
+Finglas Nth B 3,Conroy,5
+Finglas Nth A 1,Conroy,5
+Finglas Nth A 2,Conroy,11
+Finglas Nth A 3,Conroy,7
+Finglas Nth C 1,Conroy,27
+Finglas Nth C 2,Conroy,22
+Finglas Nth C 3,Conroy,21
+Ballymun F/Fing Nth C/Bmun F 1,Conroy,28
+Ballymun F 1,Conroy,25
+Ballymun F 2,Conroy,22
+Finglas Sth A 1,Conroy,9
+Finglas Sth A 2,Conroy,13
+Finglas Sth A 3,Conroy,12
+Cappagh/Ballycoolen 1,Conroy,7
+Finglas Sth B 1,Conroy,10
+Finglas Sth B 2,Conroy,9
+Finglas Sth B 3,Conroy,16
+Finglas Sth C 1,Conroy,2
+Finglas Sth C 2,Conroy,1
+Finglas Sth C 3,Conroy,4
+Finglas Sth D 1,Conroy,4
+Finglas Sth D 2,Conroy,8
+Whitehall A1 1,Conroy,81
+Whitehall A1/D1 1,Conroy,53
+Whitehall D1 1,Conroy,43
+Whitehall A2 1,Conroy,38
+Whitehall A2 2,Conroy,48
+Whitehall B1 1,Conroy,29
+Whitehall B2 2,Conroy,32
+Whitehall B2 3,Conroy,17
+Whitehall B2 4,Conroy,14
+Whitehall B2/C 1,Conroy,32
+Whitehll C pt 1,Conroy,21
+Airport 3 1,Conroy,29
+Turnapin 1,Conroy,22
+NorthWood/Santry 1,Conroy,30
+Whitehall C pt 1,Conroy,8
+Beaumont A 1,Conroy,32
+Beaumont A 2,Conroy,22
+Beaumont A/WH D2 1,Conroy,20
+Whitehall D2 1,Conroy,24
+Postal 1,Conroy,6
+Ballygall A 1,Croft,4
+Ballygall A 2,Croft,1
+Ballygall A 3,Croft,6
+Ballygall B 1,Croft,1
+Ballygall B 2,Croft,4
+Finglas Nth 1,Croft,5
+Charlestwn 1,Croft,4
+Lanesbro 1,Croft,2
+Lanesbro 2,Croft,0
+Ballygall C 1,Croft,1
+Ballygall C 2,Croft,0
+Ballygall C 3,Croft,2
+Ballygall C/D 1,Croft,2
+Ballygall D 1,Croft,1
+Ballygall D 2,Croft,5
+Ballymun A 1,Croft,1
+Ballymun A 2,Croft,0
+Ballymun A 3,Croft,1
+Ballymun A/B 1,Croft,4
+Ballymun B 1,Croft,1
+Ballymun B 2,Croft,1
+Ballymun B/D 1,Croft,1
+Ballymun D 1,Croft,0
+Ballymun D 2,Croft,4
+Ballymun C1 1,Croft,4
+Ballymun C1 2,Croft,1
+Ballymun C1 3,Croft,2
+Ballymun C1 4,Croft,2
+Ballymun E 1,Croft,1
+Ballymun E 2,Croft,4
+Ballymun C2 1,Croft,3
+Finglas Nth B 1,Croft,6
+Finglas Nth B 2,Croft,3
+Finglas Nth B 3,Croft,1
+Finglas Nth A 1,Croft,3
+Finglas Nth A 2,Croft,1
+Finglas Nth A 3,Croft,0
+Finglas Nth C 1,Croft,3
+Finglas Nth C 2,Croft,2
+Finglas Nth C 3,Croft,3
+Ballymun F/Fing Nth C/Bmun F 1,Croft,4
+Ballymun F 1,Croft,0
+Ballymun F 2,Croft,1
+Finglas Sth A 1,Croft,1
+Finglas Sth A 2,Croft,1
+Finglas Sth A 3,Croft,0
+Cappagh/Ballycoolen 1,Croft,2
+Finglas Sth B 1,Croft,3
+Finglas Sth B 2,Croft,2
+Finglas Sth B 3,Croft,0
+Finglas Sth C 1,Croft,1
+Finglas Sth C 2,Croft,1
+Finglas Sth C 3,Croft,0
+Finglas Sth D 1,Croft,4
+Finglas Sth D 2,Croft,1
+Whitehall A1 1,Croft,0
+Whitehall A1/D1 1,Croft,3
+Whitehall D1 1,Croft,1
+Whitehall A2 1,Croft,2
+Whitehall A2 2,Croft,2
+Whitehall B1 1,Croft,2
+Whitehall B2 2,Croft,3
+Whitehall B2 3,Croft,4
+Whitehall B2 4,Croft,2
+Whitehall B2/C 1,Croft,5
+Whitehll C pt 1,Croft,4
+Airport 3 1,Croft,7
+Turnapin 1,Croft,15
+NorthWood/Santry 1,Croft,23
+Whitehall C pt 1,Croft,12
+Beaumont A 1,Croft,2
+Beaumont A 2,Croft,5
+Beaumont A/WH D2 1,Croft,7
+Whitehall D2 1,Croft,5
+Postal 1,Croft,1
+Ballygall A 1,Ellis,332
+Ballygall A 2,Ellis,213
+Ballygall A 3,Ellis,208
+Ballygall B 1,Ellis,115
+Ballygall B 2,Ellis,208
+Finglas Nth 1,Ellis,152
+Charlestwn 1,Ellis,163
+Lanesbro 1,Ellis,163
+Lanesbro 2,Ellis,99
+Ballygall C 1,Ellis,107
+Ballygall C 2,Ellis,57
+Ballygall C 3,Ellis,63
+Ballygall C/D 1,Ellis,134
+Ballygall D 1,Ellis,155
+Ballygall D 2,Ellis,216
+Ballymun A 1,Ellis,414
+Ballymun A 2,Ellis,260
+Ballymun A 3,Ellis,200
+Ballymun A/B 1,Ellis,254
+Ballymun B 1,Ellis,278
+Ballymun B 2,Ellis,283
+Ballymun B/D 1,Ellis,178
+Ballymun D 1,Ellis,241
+Ballymun D 2,Ellis,272
+Ballymun C1 1,Ellis,357
+Ballymun C1 2,Ellis,340
+Ballymun C1 3,Ellis,343
+Ballymun C1 4,Ellis,255
+Ballymun E 1,Ellis,66
+Ballymun E 2,Ellis,62
+Ballymun C2 1,Ellis,154
+Finglas Nth B 1,Ellis,271
+Finglas Nth B 2,Ellis,323
+Finglas Nth B 3,Ellis,338
+Finglas Nth A 1,Ellis,321
+Finglas Nth A 2,Ellis,309
+Finglas Nth A 3,Ellis,292
+Finglas Nth C 1,Ellis,208
+Finglas Nth C 2,Ellis,170
+Finglas Nth C 3,Ellis,181
+Ballymun F/Fing Nth C/Bmun F 1,Ellis,109
+Ballymun F 1,Ellis,123
+Ballymun F 2,Ellis,127
+Finglas Sth A 1,Ellis,238
+Finglas Sth A 2,Ellis,271
+Finglas Sth A 3,Ellis,303
+Cappagh/Ballycoolen 1,Ellis,259
+Finglas Sth B 1,Ellis,331
+Finglas Sth B 2,Ellis,296
+Finglas Sth B 3,Ellis,252
+Finglas Sth C 1,Ellis,323
+Finglas Sth C 2,Ellis,261
+Finglas Sth C 3,Ellis,320
+Finglas Sth D 1,Ellis,334
+Finglas Sth D 2,Ellis,385
+Whitehall A1 1,Ellis,24
+Whitehall A1/D1 1,Ellis,22
+Whitehall D1 1,Ellis,32
+Whitehall A2 1,Ellis,51
+Whitehall A2 2,Ellis,39
+Whitehall B1 1,Ellis,90
+Whitehall B2 2,Ellis,59
+Whitehall B2 3,Ellis,120
+Whitehall B2 4,Ellis,118
+Whitehall B2/C 1,Ellis,60
+Whitehll C pt 1,Ellis,55
+Airport 3 1,Ellis,104
+Turnapin 1,Ellis,125
+NorthWood/Santry 1,Ellis,89
+Whitehall C pt 1,Ellis,139
+Beaumont A 1,Ellis,110
+Beaumont A 2,Ellis,102
+Beaumont A/WH D2 1,Ellis,103
+Whitehall D2 1,Ellis,133
+Postal 1,Ellis,61
+Ballygall A 1,Fitzgerald,0
+Ballygall A 2,Fitzgerald,0
+Ballygall A 3,Fitzgerald,0
+Ballygall B 1,Fitzgerald,0
+Ballygall B 2,Fitzgerald,1
+Finglas Nth 1,Fitzgerald,2
+Charlestwn 1,Fitzgerald,0
+Lanesbro 1,Fitzgerald,2
+Lanesbro 2,Fitzgerald,0
+Ballygall C 1,Fitzgerald,3
+Ballygall C 2,Fitzgerald,3
+Ballygall C 3,Fitzgerald,2
+Ballygall C/D 1,Fitzgerald,5
+Ballygall D 1,Fitzgerald,3
+Ballygall D 2,Fitzgerald,2
+Ballymun A 1,Fitzgerald,2
+Ballymun A 2,Fitzgerald,1
+Ballymun A 3,Fitzgerald,1
+Ballymun A/B 1,Fitzgerald,2
+Ballymun B 1,Fitzgerald,0
+Ballymun B 2,Fitzgerald,0
+Ballymun B/D 1,Fitzgerald,2
+Ballymun D 1,Fitzgerald,0
+Ballymun D 2,Fitzgerald,1
+Ballymun C1 1,Fitzgerald,0
+Ballymun C1 2,Fitzgerald,4
+Ballymun C1 3,Fitzgerald,1
+Ballymun C1 4,Fitzgerald,2
+Ballymun E 1,Fitzgerald,2
+Ballymun E 2,Fitzgerald,4
+Ballymun C2 1,Fitzgerald,3
+Finglas Nth B 1,Fitzgerald,0
+Finglas Nth B 2,Fitzgerald,3
+Finglas Nth B 3,Fitzgerald,1
+Finglas Nth A 1,Fitzgerald,0
+Finglas Nth A 2,Fitzgerald,0
+Finglas Nth A 3,Fitzgerald,3
+Finglas Nth C 1,Fitzgerald,0
+Finglas Nth C 2,Fitzgerald,1
+Finglas Nth C 3,Fitzgerald,3
+Ballymun F/Fing Nth C/Bmun F 1,Fitzgerald,2
+Ballymun F 1,Fitzgerald,1
+Ballymun F 2,Fitzgerald,3
+Finglas Sth A 1,Fitzgerald,2
+Finglas Sth A 2,Fitzgerald,1
+Finglas Sth A 3,Fitzgerald,1
+Cappagh/Ballycoolen 1,Fitzgerald,3
+Finglas Sth B 1,Fitzgerald,2
+Finglas Sth B 2,Fitzgerald,1
+Finglas Sth B 3,Fitzgerald,1
+Finglas Sth C 1,Fitzgerald,0
+Finglas Sth C 2,Fitzgerald,0
+Finglas Sth C 3,Fitzgerald,0
+Finglas Sth D 1,Fitzgerald,0
+Finglas Sth D 2,Fitzgerald,1
+Whitehall A1 1,Fitzgerald,2
+Whitehall A1/D1 1,Fitzgerald,1
+Whitehall D1 1,Fitzgerald,2
+Whitehall A2 1,Fitzgerald,1
+Whitehall A2 2,Fitzgerald,0
+Whitehall B1 1,Fitzgerald,0
+Whitehall B2 2,Fitzgerald,10
+Whitehall B2 3,Fitzgerald,2
+Whitehall B2 4,Fitzgerald,1
+Whitehall B2/C 1,Fitzgerald,4
+Whitehll C pt 1,Fitzgerald,1
+Airport 3 1,Fitzgerald,0
+Turnapin 1,Fitzgerald,2
+NorthWood/Santry 1,Fitzgerald,0
+Whitehall C pt 1,Fitzgerald,2
+Beaumont A 1,Fitzgerald,3
+Beaumont A 2,Fitzgerald,3
+Beaumont A/WH D2 1,Fitzgerald,0
+Whitehall D2 1,Fitzgerald,5
+Postal 1,Fitzgerald,0
+Ballygall A 1,McAuliffe,48
+Ballygall A 2,McAuliffe,43
+Ballygall A 3,McAuliffe,50
+Ballygall B 1,McAuliffe,52
+Ballygall B 2,McAuliffe,69
+Finglas Nth 1,McAuliffe,38
+Charlestwn 1,McAuliffe,44
+Lanesbro 1,McAuliffe,25
+Lanesbro 2,McAuliffe,17
+Ballygall C 1,McAuliffe,90
+Ballygall C 2,McAuliffe,110
+Ballygall C 3,McAuliffe,116
+Ballygall C/D 1,McAuliffe,92
+Ballygall D 1,McAuliffe,81
+Ballygall D 2,McAuliffe,69
+Ballymun A 1,McAuliffe,17
+Ballymun A 2,McAuliffe,34
+Ballymun A 3,McAuliffe,29
+Ballymun A/B 1,McAuliffe,26
+Ballymun B 1,McAuliffe,22
+Ballymun B 2,McAuliffe,25
+Ballymun B/D 1,McAuliffe,12
+Ballymun D 1,McAuliffe,17
+Ballymun D 2,McAuliffe,17
+Ballymun C1 1,McAuliffe,18
+Ballymun C1 2,McAuliffe,15
+Ballymun C1 3,McAuliffe,13
+Ballymun C1 4,McAuliffe,11
+Ballymun E 1,McAuliffe,84
+Ballymun E 2,McAuliffe,123
+Ballymun C2 1,McAuliffe,38
+Finglas Nth B 1,McAuliffe,48
+Finglas Nth B 2,McAuliffe,51
+Finglas Nth B 3,McAuliffe,45
+Finglas Nth A 1,McAuliffe,49
+Finglas Nth A 2,McAuliffe,37
+Finglas Nth A 3,McAuliffe,49
+Finglas Nth C 1,McAuliffe,104
+Finglas Nth C 2,McAuliffe,109
+Finglas Nth C 3,McAuliffe,135
+Ballymun F/Fing Nth C/Bmun F 1,McAuliffe,152
+Ballymun F 1,McAuliffe,162
+Ballymun F 2,McAuliffe,103
+Finglas Sth A 1,McAuliffe,23
+Finglas Sth A 2,McAuliffe,39
+Finglas Sth A 3,McAuliffe,51
+Cappagh/Ballycoolen 1,McAuliffe,27
+Finglas Sth B 1,McAuliffe,50
+Finglas Sth B 2,McAuliffe,71
+Finglas Sth B 3,McAuliffe,42
+Finglas Sth C 1,McAuliffe,23
+Finglas Sth C 2,McAuliffe,16
+Finglas Sth C 3,McAuliffe,29
+Finglas Sth D 1,McAuliffe,29
+Finglas Sth D 2,McAuliffe,29
+Whitehall A1 1,McAuliffe,51
+Whitehall A1/D1 1,McAuliffe,75
+Whitehall D1 1,McAuliffe,57
+Whitehall A2 1,McAuliffe,52
+Whitehall A2 2,McAuliffe,51
+Whitehall B1 1,McAuliffe,64
+Whitehall B2 2,McAuliffe,44
+Whitehall B2 3,McAuliffe,17
+Whitehall B2 4,McAuliffe,29
+Whitehall B2/C 1,McAuliffe,32
+Whitehll C pt 1,McAuliffe,43
+Airport 3 1,McAuliffe,32
+Turnapin 1,McAuliffe,36
+NorthWood/Santry 1,McAuliffe,40
+Whitehall C pt 1,McAuliffe,39
+Beaumont A 1,McAuliffe,58
+Beaumont A 2,McAuliffe,78
+Beaumont A/WH D2 1,McAuliffe,73
+Whitehall D2 1,McAuliffe,55
+Postal 1,McAuliffe,19
+Ballygall A 1,Montague,3
+Ballygall A 2,Montague,3
+Ballygall A 3,Montague,9
+Ballygall B 1,Montague,8
+Ballygall B 2,Montague,4
+Finglas Nth 1,Montague,5
+Charlestwn 1,Montague,6
+Lanesbro 1,Montague,3
+Lanesbro 2,Montague,5
+Ballygall C 1,Montague,8
+Ballygall C 2,Montague,9
+Ballygall C 3,Montague,16
+Ballygall C/D 1,Montague,13
+Ballygall D 1,Montague,13
+Ballygall D 2,Montague,19
+Ballymun A 1,Montague,4
+Ballymun A 2,Montague,8
+Ballymun A 3,Montague,6
+Ballymun A/B 1,Montague,7
+Ballymun B 1,Montague,13
+Ballymun B 2,Montague,14
+Ballymun B/D 1,Montague,5
+Ballymun D 1,Montague,14
+Ballymun D 2,Montague,14
+Ballymun C1 1,Montague,16
+Ballymun C1 2,Montague,15
+Ballymun C1 3,Montague,24
+Ballymun C1 4,Montague,26
+Ballymun E 1,Montague,23
+Ballymun E 2,Montague,18
+Ballymun C2 1,Montague,31
+Finglas Nth B 1,Montague,2
+Finglas Nth B 2,Montague,3
+Finglas Nth B 3,Montague,0
+Finglas Nth A 1,Montague,4
+Finglas Nth A 2,Montague,1
+Finglas Nth A 3,Montague,5
+Finglas Nth C 1,Montague,5
+Finglas Nth C 2,Montague,9
+Finglas Nth C 3,Montague,4
+Ballymun F/Fing Nth C/Bmun F 1,Montague,23
+Ballymun F 1,Montague,7
+Ballymun F 2,Montague,13
+Finglas Sth A 1,Montague,2
+Finglas Sth A 2,Montague,11
+Finglas Sth A 3,Montague,4
+Cappagh/Ballycoolen 1,Montague,5
+Finglas Sth B 1,Montague,3
+Finglas Sth B 2,Montague,3
+Finglas Sth B 3,Montague,6
+Finglas Sth C 1,Montague,0
+Finglas Sth C 2,Montague,2
+Finglas Sth C 3,Montague,3
+Finglas Sth D 1,Montague,2
+Finglas Sth D 2,Montague,4
+Whitehall A1 1,Montague,28
+Whitehall A1/D1 1,Montague,12
+Whitehall D1 1,Montague,24
+Whitehall A2 1,Montague,15
+Whitehall A2 2,Montague,19
+Whitehall B1 1,Montague,23
+Whitehall B2 2,Montague,9
+Whitehall B2 3,Montague,15
+Whitehall B2 4,Montague,18
+Whitehall B2/C 1,Montague,31
+Whitehll C pt 1,Montague,33
+Airport 3 1,Montague,17
+Turnapin 1,Montague,8
+NorthWood/Santry 1,Montague,12
+Whitehall C pt 1,Montague,17
+Beaumont A 1,Montague,24
+Beaumont A 2,Montague,44
+Beaumont A/WH D2 1,Montague,26
+Whitehall D2 1,Montague,23
+Postal 1,Montague,4
+Ballygall A 1,Reddy,25
+Ballygall A 2,Reddy,36
+Ballygall A 3,Reddy,13
+Ballygall B 1,Reddy,6
+Ballygall B 2,Reddy,24
+Finglas Nth 1,Reddy,20
+Charlestwn 1,Reddy,13
+Lanesbro 1,Reddy,17
+Lanesbro 2,Reddy,12
+Ballygall C 1,Reddy,24
+Ballygall C 2,Reddy,27
+Ballygall C 3,Reddy,17
+Ballygall C/D 1,Reddy,26
+Ballygall D 1,Reddy,17
+Ballygall D 2,Reddy,23
+Ballymun A 1,Reddy,15
+Ballymun A 2,Reddy,23
+Ballymun A 3,Reddy,19
+Ballymun A/B 1,Reddy,15
+Ballymun B 1,Reddy,18
+Ballymun B 2,Reddy,18
+Ballymun B/D 1,Reddy,15
+Ballymun D 1,Reddy,23
+Ballymun D 2,Reddy,17
+Ballymun C1 1,Reddy,19
+Ballymun C1 2,Reddy,20
+Ballymun C1 3,Reddy,21
+Ballymun C1 4,Reddy,23
+Ballymun E 1,Reddy,19
+Ballymun E 2,Reddy,10
+Ballymun C2 1,Reddy,17
+Finglas Nth B 1,Reddy,15
+Finglas Nth B 2,Reddy,25
+Finglas Nth B 3,Reddy,19
+Finglas Nth A 1,Reddy,22
+Finglas Nth A 2,Reddy,27
+Finglas Nth A 3,Reddy,22
+Finglas Nth C 1,Reddy,23
+Finglas Nth C 2,Reddy,14
+Finglas Nth C 3,Reddy,29
+Ballymun F/Fing Nth C/Bmun F 1,Reddy,27
+Ballymun F 1,Reddy,14
+Ballymun F 2,Reddy,14
+Finglas Sth A 1,Reddy,7
+Finglas Sth A 2,Reddy,11
+Finglas Sth A 3,Reddy,14
+Cappagh/Ballycoolen 1,Reddy,11
+Finglas Sth B 1,Reddy,16
+Finglas Sth B 2,Reddy,23
+Finglas Sth B 3,Reddy,19
+Finglas Sth C 1,Reddy,13
+Finglas Sth C 2,Reddy,10
+Finglas Sth C 3,Reddy,2
+Finglas Sth D 1,Reddy,14
+Finglas Sth D 2,Reddy,13
+Whitehall A1 1,Reddy,15
+Whitehall A1/D1 1,Reddy,5
+Whitehall D1 1,Reddy,7
+Whitehall A2 1,Reddy,11
+Whitehall A2 2,Reddy,8
+Whitehall B1 1,Reddy,15
+Whitehall B2 2,Reddy,4
+Whitehall B2 3,Reddy,7
+Whitehall B2 4,Reddy,11
+Whitehall B2/C 1,Reddy,13
+Whitehll C pt 1,Reddy,26
+Airport 3 1,Reddy,13
+Turnapin 1,Reddy,17
+NorthWood/Santry 1,Reddy,10
+Whitehall C pt 1,Reddy,12
+Beaumont A 1,Reddy,11
+Beaumont A 2,Reddy,11
+Beaumont A/WH D2 1,Reddy,3
+Whitehall D2 1,Reddy,9
+Postal 1,Reddy,6
+Ballygall A 1,Redmond,2
+Ballygall A 2,Redmond,10
+Ballygall A 3,Redmond,15
+Ballygall B 1,Redmond,4
+Ballygall B 2,Redmond,2
+Finglas Nth 1,Redmond,4
+Charlestwn 1,Redmond,15
+Lanesbro 1,Redmond,2
+Lanesbro 2,Redmond,6
+Ballygall C 1,Redmond,4
+Ballygall C 2,Redmond,6
+Ballygall C 3,Redmond,1
+Ballygall C/D 1,Redmond,18
+Ballygall D 1,Redmond,10
+Ballygall D 2,Redmond,6
+Ballymun A 1,Redmond,6
+Ballymun A 2,Redmond,8
+Ballymun A 3,Redmond,6
+Ballymun A/B 1,Redmond,7
+Ballymun B 1,Redmond,3
+Ballymun B 2,Redmond,2
+Ballymun B/D 1,Redmond,5
+Ballymun D 1,Redmond,2
+Ballymun D 2,Redmond,13
+Ballymun C1 1,Redmond,5
+Ballymun C1 2,Redmond,4
+Ballymun C1 3,Redmond,16
+Ballymun C1 4,Redmond,8
+Ballymun E 1,Redmond,5
+Ballymun E 2,Redmond,3
+Ballymun C2 1,Redmond,5
+Finglas Nth B 1,Redmond,22
+Finglas Nth B 2,Redmond,10
+Finglas Nth B 3,Redmond,7
+Finglas Nth A 1,Redmond,11
+Finglas Nth A 2,Redmond,8
+Finglas Nth A 3,Redmond,11
+Finglas Nth C 1,Redmond,8
+Finglas Nth C 2,Redmond,5
+Finglas Nth C 3,Redmond,7
+Ballymun F/Fing Nth C/Bmun F 1,Redmond,4
+Ballymun F 1,Redmond,9
+Ballymun F 2,Redmond,3
+Finglas Sth A 1,Redmond,15
+Finglas Sth A 2,Redmond,7
+Finglas Sth A 3,Redmond,3
+Cappagh/Ballycoolen 1,Redmond,1
+Finglas Sth B 1,Redmond,7
+Finglas Sth B 2,Redmond,5
+Finglas Sth B 3,Redmond,11
+Finglas Sth C 1,Redmond,6
+Finglas Sth C 2,Redmond,6
+Finglas Sth C 3,Redmond,6
+Finglas Sth D 1,Redmond,2
+Finglas Sth D 2,Redmond,23
+Whitehall A1 1,Redmond,8
+Whitehall A1/D1 1,Redmond,3
+Whitehall D1 1,Redmond,0
+Whitehall A2 1,Redmond,2
+Whitehall A2 2,Redmond,2
+Whitehall B1 1,Redmond,8
+Whitehall B2 2,Redmond,4
+Whitehall B2 3,Redmond,3
+Whitehall B2 4,Redmond,2
+Whitehall B2/C 1,Redmond,6
+Whitehll C pt 1,Redmond,6
+Airport 3 1,Redmond,4
+Turnapin 1,Redmond,2
+NorthWood/Santry 1,Redmond,0
+Whitehall C pt 1,Redmond,1
+Beaumont A 1,Redmond,5
+Beaumont A 2,Redmond,6
+Beaumont A/WH D2 1,Redmond,8
+Whitehall D2 1,Redmond,3
+Postal 1,Redmond,3
+Ballygall A 1,Rock,24
+Ballygall A 2,Rock,39
+Ballygall A 3,Rock,37
+Ballygall B 1,Rock,34
+Ballygall B 2,Rock,61
+Finglas Nth 1,Rock,19
+Charlestwn 1,Rock,24
+Lanesbro 1,Rock,22
+Lanesbro 2,Rock,25
+Ballygall C 1,Rock,94
+Ballygall C 2,Rock,121
+Ballygall C 3,Rock,111
+Ballygall C/D 1,Rock,80
+Ballygall D 1,Rock,83
+Ballygall D 2,Rock,64
+Ballymun A 1,Rock,10
+Ballymun A 2,Rock,16
+Ballymun A 3,Rock,25
+Ballymun A/B 1,Rock,13
+Ballymun B 1,Rock,9
+Ballymun B 2,Rock,15
+Ballymun B/D 1,Rock,5
+Ballymun D 1,Rock,8
+Ballymun D 2,Rock,6
+Ballymun C1 1,Rock,5
+Ballymun C1 2,Rock,14
+Ballymun C1 3,Rock,9
+Ballymun C1 4,Rock,7
+Ballymun E 1,Rock,90
+Ballymun E 2,Rock,95
+Ballymun C2 1,Rock,106
+Finglas Nth B 1,Rock,10
+Finglas Nth B 2,Rock,10
+Finglas Nth B 3,Rock,21
+Finglas Nth A 1,Rock,12
+Finglas Nth A 2,Rock,14
+Finglas Nth A 3,Rock,21
+Finglas Nth C 1,Rock,43
+Finglas Nth C 2,Rock,27
+Finglas Nth C 3,Rock,28
+Ballymun F/Fing Nth C/Bmun F 1,Rock,59
+Ballymun F 1,Rock,76
+Ballymun F 2,Rock,60
+Finglas Sth A 1,Rock,16
+Finglas Sth A 2,Rock,20
+Finglas Sth A 3,Rock,11
+Cappagh/Ballycoolen 1,Rock,15
+Finglas Sth B 1,Rock,16
+Finglas Sth B 2,Rock,18
+Finglas Sth B 3,Rock,30
+Finglas Sth C 1,Rock,10
+Finglas Sth C 2,Rock,18
+Finglas Sth C 3,Rock,12
+Finglas Sth D 1,Rock,23
+Finglas Sth D 2,Rock,31
+Whitehall A1 1,Rock,106
+Whitehall A1/D1 1,Rock,133
+Whitehall D1 1,Rock,102
+Whitehall A2 1,Rock,74
+Whitehall A2 2,Rock,93
+Whitehall B1 1,Rock,101
+Whitehall B2 2,Rock,82
+Whitehall B2 3,Rock,47
+Whitehall B2 4,Rock,61
+Whitehall B2/C 1,Rock,107
+Whitehll C pt 1,Rock,76
+Airport 3 1,Rock,84
+Turnapin 1,Rock,92
+NorthWood/Santry 1,Rock,69
+Whitehall C pt 1,Rock,39
+Beaumont A 1,Rock,102
+Beaumont A 2,Rock,87
+Beaumont A/WH D2 1,Rock,120
+Whitehall D2 1,Rock,59
+Postal 1,Rock,7
+Ballygall A 1,Shortall,58
+Ballygall A 2,Shortall,111
+Ballygall A 3,Shortall,82
+Ballygall B 1,Shortall,80
+Ballygall B 2,Shortall,116
+Finglas Nth 1,Shortall,43
+Charlestwn 1,Shortall,48
+Lanesbro 1,Shortall,47
+Lanesbro 2,Shortall,47
+Ballygall C 1,Shortall,133
+Ballygall C 2,Shortall,152
+Ballygall C 3,Shortall,132
+Ballygall C/D 1,Shortall,132
+Ballygall D 1,Shortall,135
+Ballygall D 2,Shortall,142
+Ballymun A 1,Shortall,37
+Ballymun A 2,Shortall,32
+Ballymun A 3,Shortall,39
+Ballymun A/B 1,Shortall,35
+Ballymun B 1,Shortall,21
+Ballymun B 2,Shortall,45
+Ballymun B/D 1,Shortall,30
+Ballymun D 1,Shortall,23
+Ballymun D 2,Shortall,31
+Ballymun C1 1,Shortall,30
+Ballymun C1 2,Shortall,43
+Ballymun C1 3,Shortall,26
+Ballymun C1 4,Shortall,47
+Ballymun E 1,Shortall,102
+Ballymun E 2,Shortall,130
+Ballymun C2 1,Shortall,138
+Finglas Nth B 1,Shortall,31
+Finglas Nth B 2,Shortall,56
+Finglas Nth B 3,Shortall,81
+Finglas Nth A 1,Shortall,52
+Finglas Nth A 2,Shortall,63
+Finglas Nth A 3,Shortall,58
+Finglas Nth C 1,Shortall,89
+Finglas Nth C 2,Shortall,117
+Finglas Nth C 3,Shortall,94
+Ballymun F/Fing Nth C/Bmun F 1,Shortall,104
+Ballymun F 1,Shortall,164
+Ballymun F 2,Shortall,106
+Finglas Sth A 1,Shortall,39
+Finglas Sth A 2,Shortall,55
+Finglas Sth A 3,Shortall,60
+Cappagh/Ballycoolen 1,Shortall,28
+Finglas Sth B 1,Shortall,50
+Finglas Sth B 2,Shortall,59
+Finglas Sth B 3,Shortall,67
+Finglas Sth C 1,Shortall,21
+Finglas Sth C 2,Shortall,21
+Finglas Sth C 3,Shortall,26
+Finglas Sth D 1,Shortall,44
+Finglas Sth D 2,Shortall,59
+Whitehall A1 1,Shortall,77
+Whitehall A1/D1 1,Shortall,101
+Whitehall D1 1,Shortall,85
+Whitehall A2 1,Shortall,117
+Whitehall A2 2,Shortall,201
+Whitehall B1 1,Shortall,141
+Whitehall B2 2,Shortall,119
+Whitehall B2 3,Shortall,108
+Whitehall B2 4,Shortall,99
+Whitehall B2/C 1,Shortall,130
+Whitehll C pt 1,Shortall,130
+Airport 3 1,Shortall,111
+Turnapin 1,Shortall,123
+NorthWood/Santry 1,Shortall,126
+Whitehall C pt 1,Shortall,85
+Beaumont A 1,Shortall,148
+Beaumont A 2,Shortall,138
+Beaumont A/WH D2 1,Shortall,140
+Whitehall D2 1,Shortall,124
+Postal 1,Shortall,22

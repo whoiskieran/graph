@@ -1,0 +1,11 @@
+Party <-- [HAS] --> Candidates -- [GETS] --> Votes <-- [CONTAINS] -- Box -- [FROM] --> Poling Station -- [IN] --> Constituancies <-- [HAS] -- Elections
+Candidates -- [RUN_IN] --> Elections
+Votes -- [CAST] --> PolingStation
+
+
+MATCH (c:Candidate),(v:Vote)
+WHERE v.cname=c.name
+CREATE (c)-[:GETS]->(v)
+RETURN c,v
+
+CREATE (b)-[:CONTAINS]->(v)
