@@ -16,6 +16,8 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 
 typedef struct graph {
   long *v;
+  long **start_e_to_v; // the edges that start at this vertix.
+  long **end_e_to_v; // the edges thst end at this vertix.
   long **v_adj_v;// A list of all the v adjacent to this v. 
                  // this is not an adjacency matrix.
                  // v_adj_v[vertix_sequenc_number][degree_of_this_vertix + 1]

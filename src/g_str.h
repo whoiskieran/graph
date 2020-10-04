@@ -21,6 +21,10 @@ typedef struct graph {
   long **v_adj_v;// A list of all the v adjacent to this v. 
                  // this is not an adjacency matrix.
                  // v_adj_v[vertix_sequenc_number][degree_of_this_vertix + 1]
+  long *v_llv; // The low link vlaue of the vertix.
+               // LLV is used in finding articulation ponts of a graph.
+  long *v_hlv; // The high link value not sure what I will do with this but
+               // will give it a go. 
 /**
 * vertix this number will be used as an external ID.
 * this also can be used to store a sub graph.
