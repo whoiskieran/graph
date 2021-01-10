@@ -113,6 +113,8 @@ long get_bk_weight(graph *G, long e_start);
 long set_fwd_weight(graph *G, long e_start, long w);
 long set_bk_weight(graph *G, long e_start, long w);
 long get_no_regions(graph *G);
+long * get_adj_lst(graph *G, long star_v);
+
 /**
  * @Author Kieran O'Sullivan
  * 
@@ -227,6 +229,12 @@ long * find_path(graph *G, long v_start, long v_end, long e_start, int long_path
   
   return e_list;
 } // end find_path
+
+
+long * get_adj_lst(graph *G, long start_v){
+  long * adj_list;
+  return adj_list;
+} // end get_adj_lst
 
 
 int set_connected(graph *G, int start_v, int end_v){
