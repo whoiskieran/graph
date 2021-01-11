@@ -230,10 +230,23 @@ long * find_path(graph *G, long v_start, long v_end, long e_start, int long_path
   return e_list;
 } // end find_path
 
-
+/**
+get the adjacency list
+if the start vertix is < 0 then return the adjacency list.
+if the start vertix is > 0 then return the adjacency for that vertix only
+*/
 long * get_adj_lst(graph *G, long start_v){
-  long * adj_list;
-  return adj_list;
+  // Validation
+  if (G->no_v > start_v) {long * adj_list = (long *) calloc((1), sizeof(long)); adj_list[0]=0; return adj_list;}
+  if (start_v < 0) {long * adj_list = (long *) calloc((1), sizeof(long)); adj_list[0]=0; return adj_list;}
+  long i = 0;
+  long degree =0;
+  degree=get_degree(G,start_v);
+  
+  long * adj_list = (long *) calloc((degree+1), sizeof(long));
+  adj_list[0]=degree; //Return the number of adjacent verices  along with the verticies themselves.
+  for (i=1; i < degree; i++) {adj_list[i]=G->v_adj_v[start_v][i-1];}
+  return adj_list; 
 } // end get_adj_lst
 
 

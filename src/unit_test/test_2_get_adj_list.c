@@ -8,8 +8,9 @@
 
 int main(int argc, char *argv[]) {
   graph G;
-  int no_e =3; int no_v=3; long no_regions=0;
-  char output_str[512];  
+  int no_e =3; int no_v=3;
+  char output_str[512];
+  long * adj_list;  
   if (init_G(&G,no_e,no_v)==-1){return log_error("function init_G failed to create graph.");}
   
   for (int i=0;i < no_v;i++){   
@@ -25,7 +26,14 @@ int main(int argc, char *argv[]) {
       if (add_e(&G,i, i, (i+1), 2, 17, 17)==-1){return log_error(output_str);}
     } // end if ((i+1)==no_v)   
   }
-  no_regions=get_no_regions(&G);
-fprintf(stderr,"\nno_regions=%ld",no_regions);   
+
+  for (int i=0;i < no_v;i++){
+    adj_list = get_adj_lst(&G,i);
+
+    if (adj_list[0] !=2){
+      sprintf(output_str,"failed to get 2 adjacent vertices for %d instead got %ld ",i,adj_list[0]);
+      return log_error(output_str);
+    }
+  }   
   return 0;
 }
