@@ -1,0 +1,34 @@
+
+*** These modified files were found in JOE when it aborted on Mon Jan 18 14:30:58 2021
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+main
+\
+.csf
+.csv
+#
+v_adj_v
+find_edges
+find_edg
+get_adj_l
+v_adj_v
+
+*** File '(Unnamed)'
+g_str.h
+g_str.h
+g_str.h
+g_str.h
+/sdf/arpa/af/b/blindpng/git/graph/.git/COMMIT_EDITMSG
+gen_vtuh.c
+g_str.h
+Makefile
+out_83.txt
+gen_vtuh.c
+Makefile
+
+*** File '* Startup Log *'
+Processing '/usr/pkg/etc/joe/joerc'...
+Processing '/usr/pkg/etc/joe/ftyperc'...
+Finished processing /usr/pkg/etc/joe/ftyperc
+Finished processing /usr/pkg/etc/joe/joerc

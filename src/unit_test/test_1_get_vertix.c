@@ -18,9 +18,9 @@ int main(int argc, char *argv[]) {
   
   if (parse(argv, argc,&no_e,&no_v,IfileName,OfileName)==-1) {return log_error("function parse failed");}  
   if (read_adjency(&G,' ',IfileName)==-1){return log_error("function failed read_adjacency");}
-  sprintf(msg,"find_first_bridge returned wrong number of edges. Edges is %ld it should be %d",get_no_e(&G),no_e);
+  sprintf(msg,"get_no_e returned wrong number of edges. Edges is %ld it should be %d",get_no_e(&G),no_e);
   if (get_no_e(&G) !=no_e){return log_error(msg);}
-  sprintf(msg,"find_first_bridge returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
+  sprintf(msg,"get_no_v returned wrong number of verticies. Verticies is %ld it should be %d",get_no_v(&G),no_v);
   if (get_no_v(&G) !=no_v){return log_error(msg);}
   for (int i=0; i< no_v;i++){
     degree=get_degree(&G,i);
@@ -48,6 +48,6 @@ int main(int argc, char *argv[]) {
     vertix_list = get_vertix(&G,j);
     fprintf(fd,"e=%ld v=%ld,%ld\n",j,vertix_list[0],vertix_list[1]);
   }
-  
+  fclose(fd);  
   return 0;
 }

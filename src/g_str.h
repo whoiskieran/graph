@@ -414,6 +414,7 @@ long get_degree(graph * G, int start_v){return (start_v < G->no_v ? G->v_degree[
 long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_out_deg[v]:-1);}
 
+
 int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight){
     // Remove edges
     if(e_start >= G->no_e){return -1;}

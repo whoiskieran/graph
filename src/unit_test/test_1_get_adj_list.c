@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   for (int i=0;i < no_v;i++){
     adj_list = get_adj_lst(&G,i);
     if (adj_list[0] !=0){
-      sprintf(output_msg,"failed to bet 0 adjacent vertices for %d",i);
+      sprintf(output_msg,"failed to get 0 adjacent vertices for %d",i);
       return log_error(output_msg);
     }
   }
