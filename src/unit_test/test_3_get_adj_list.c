@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
     
   for (long i=0;i < no_v;i++){
     adj_list = get_adj_lst(&G,i);
-    fprintf(fd,"V[%ld]=",i);
-    for (long j=1;j<adj_list[0];j++) {fprintf(fd," V%ld",adj_list[j]);} 
+    fprintf(fd,"%ld",i);
+    for (long j=1;j <= adj_list[0]; j++) {fprintf(fd,",%ld",adj_list[j]);} 
     fprintf(fd,"\n");
   } // end for i
   fclose(fd);

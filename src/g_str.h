@@ -56,7 +56,7 @@ typedef struct graph {
   bool connected; // boolean
   int g_type;
  // Each type has a number
-  bool is_bypartheid;
+  bool n_partheid; // For exampel if this is 2 it is bi-partheid
   bool is_connected;
   bool is_simple; // No loops or multiple edges
   bool use_adj;  // Not recommended as adjency matrixes use a lot of memory and most graphs are sparse so a lot of 0 in this matrix.
@@ -244,7 +244,10 @@ long * get_adj_lst(graph *G, long start_v){
   degree=get_degree(G,start_v);  
   long * adj_list = (long *) calloc((degree+1), sizeof(long));
   adj_list[0]=degree; //Return the number of adjacent verices  along with the verticies themselves.
-  for (i=1; i < degree; i++) {adj_list[i]=G->v_adj_v[start_v][i-1];}
+  for (i=1; i <= degree; i++) {adj_list[i]=G->v_adj_v[start_v][i-1];
+  fprintf (stderr,"\nG->v_adj_v[%ld][%ld]=%ld",start_v,(i-1),G->v_adj_v[start_v][i-1]);
+  // fprintf(stderr, "\nadj_list[%ld]=%ld",i,adj_list[i]);
+  }
   return adj_list; 
 } // end get_adj_lst
 
@@ -360,10 +363,19 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     * use the degree to set the size of the nodes adjacent to the start and end nodes.
     * The start and end v are both set.
     **/
-    G->v_adj_v[start_v] = (long *) realloc(G->v_adj_v[start_v], (G->v_degree[start_v]+1) * sizeof(long));
-    G->v_adj_v[start_v] = (long *) malloc( (G->v_degree[start_v]+1) * sizeof(long));
-    G->v_adj_v[start_v][G->v_degree[start_v]] = start_v;
+
+    G->v_adj_v = (long **) realloc(G->v_adj_v, G->no_v * sizeof(long));
     
+    for (long i=0; i < G->no_v; i++){
+      G->v_adj_v[i] = (long *) realloc(G->v_adj_v[i], (G->v_degree[i]) * sizeof(long));
+//      fprintf(stderr,"\nG->v_adj_v[%ld] = (long *) realloc(G->v_adj_v[%ld], (G->v_degree[%ld])=%ld * sizeof(long))",i,i,i,(G->v_degree[i]));
+    }
+    
+    G->v_adj_v[start_v][G->v_degree[start_v]-1] = end_v;
+    G->v_adj_v[end_v][G->v_degree[end_v]-1] = start_v;
+
+//    fprintf(stderr,"\nG->v_adj_v[%ld][%ld]=%ld",start_v,(G->v_degree[start_v]-1),end_v);    
+ 
     if (direction==2){
       G->v_adj_v[end_v] = (long *) realloc(G->v_adj_v[end_v], (G->v_degree[end_v]+1) * sizeof(long));
       G->v_adj_v[end_v] = (long *) malloc( (G->v_degree[end_v]+1) * sizeof(long));
@@ -1268,7 +1280,6 @@ bool set_adj(graph *G, bool use_adj){ G->use_adj=use_adj; return use_adj;}
 int init_G(graph *G, int no_e, int no_v){
   int i=0; int j=0;
   G->g_type = 1;
-  G->is_bypartheid=true;
   G->use_adj = false;
   
   if(no_v > 0){
