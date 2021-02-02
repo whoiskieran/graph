@@ -245,7 +245,7 @@ long * get_adj_lst(graph *G, long start_v){
   long * adj_list = (long *) calloc((degree+1), sizeof(long));
   adj_list[0]=degree; //Return the number of adjacent verices  along with the verticies themselves.
   for (i=1; i <= degree; i++) {adj_list[i]=G->v_adj_v[start_v][i-1];
-  fprintf (stderr,"\nG->v_adj_v[%ld][%ld]=%ld",start_v,(i-1),G->v_adj_v[start_v][i-1]);
+  // fprintf (stderr,"\nG->v_adj_v[%ld][%ld]=%ld",start_v,(i-1),G->v_adj_v[start_v][i-1]);
   // fprintf(stderr, "\nadj_list[%ld]=%ld",i,adj_list[i]);
   }
   return adj_list; 
@@ -323,17 +323,19 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     * Add validation to prevent over-flows.
     */
     
+    if (start_v >= G->no_v){return -1;}
+    if (end_v >= G->no_v){return -1;}
+    // if (e_start > (G->no_e-1)){return -1;}
+ 
+    
     if (e_start > (G->no_e-1)){
       G->no_e++;
       G->e = (long **) realloc(G->e, G->no_e *sizeof(long));
+
       for (long i=0; i < G->no_e; i++){
         G->e[i]=(long*) realloc(G->e[i], E_ATTRIB_SIZE * sizeof(long));
       } // end for long i
     } // end if (e_start > (G->no_e-1)
-
-
-    if (start_v >= G->no_v){return -1;}
-    if (end_v >= G->no_v){return -1;}
 
     G->e[e_start][0]=start_v;
     G->e[e_start][1]=end_v;
@@ -359,22 +361,18 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
       G->e[e_start][4]=bk_weight;
       if (G->use_adj==true){G->v_adj[end_v][start_v]=1;}
     }
+
     /**
     * use the degree to set the size of the nodes adjacent to the start and end nodes.
     * The start and end v are both set.
     **/
 
     G->v_adj_v = (long **) realloc(G->v_adj_v, G->no_v * sizeof(long));
-    
-    for (long i=0; i < G->no_v; i++){
-      G->v_adj_v[i] = (long *) realloc(G->v_adj_v[i], (G->v_degree[i]) * sizeof(long));
-//      fprintf(stderr,"\nG->v_adj_v[%ld] = (long *) realloc(G->v_adj_v[%ld], (G->v_degree[%ld])=%ld * sizeof(long))",i,i,i,(G->v_degree[i]));
-    }
-    
+    G->v_adj_v[start_v] = (long *) realloc(G->v_adj_v[start_v], (G->v_degree[start_v]) * sizeof(long));
+    G->v_adj_v[end_v] = (long *) realloc(G->v_adj_v[end_v], (G->v_degree[end_v]) * sizeof(long));
+
     G->v_adj_v[start_v][G->v_degree[start_v]-1] = end_v;
     G->v_adj_v[end_v][G->v_degree[end_v]-1] = start_v;
-
-//    fprintf(stderr,"\nG->v_adj_v[%ld][%ld]=%ld",start_v,(G->v_degree[start_v]-1),end_v);    
  
     if (direction==2){
       G->v_adj_v[end_v] = (long *) realloc(G->v_adj_v[end_v], (G->v_degree[end_v]+1) * sizeof(long));
