@@ -1,4 +1,6 @@
-int E_ATTRIB_SIZE = 5; // This is a constant;
+#define E_ATTRIB_SIZE 6 // The size of the edge attibute array
+#define V_ATTRIB_SIZE 4 // The size of the vertix attibut array
+
 /**
 * https://snap.stanford.edu/snap/download.html
 * Stanford SNAP C++ graph library is also usefull 
@@ -15,7 +17,13 @@ int E_ATTRIB_SIZE = 5; // This is a constant;
 
 
 typedef struct graph {
-  long *v;
+  long **v;
+  /**
+  * v[dynamic][0] Vertix ID
+  * v[dynamic][1] Type
+  * v[dynamic][2] in degree
+  * v[dynamic][3] out degree
+  **/
   long **start_e_to_v; // the edges that start at this vertix.
   long **end_e_to_v; // the edges thst end at this vertix.
   long **v_adj_v;// A list of all the v adjacent to this v. 
@@ -43,7 +51,8 @@ typedef struct graph {
 * e[dynamic][1] = end cordinate = vertix id
 * e[dynamic][2] = direction 1 one direction 2 both directions
 * e[dynamic][3] = foreword edge weight 0 no weight 1..n whatever you want.
-* e[dynamic][4] = backowrd edge weight (only applicable to bio directional graphs) -0 no weight 1..n whatever you want.
+* e[dynamic][4] = backowrd edge weight (only applicable to bi directional graphs) -0 no weight 1..n whatever you want.
+* e[dynamic][5] = edge id sequencial number calculated when edge is created.
 * when creating sub graphs edges have to be removed.
 * will have to look hard at creating subgraphs.
 **/
@@ -244,10 +253,7 @@ long * get_adj_lst(graph *G, long start_v){
   degree=get_degree(G,start_v);  
   long * adj_list = (long *) calloc((degree+1), sizeof(long));
   adj_list[0]=degree; //Return the number of adjacent verices  along with the verticies themselves.
-  for (i=1; i <= degree; i++) {adj_list[i]=G->v_adj_v[start_v][i-1];
-  // fprintf (stderr,"\nG->v_adj_v[%ld][%ld]=%ld",start_v,(i-1),G->v_adj_v[start_v][i-1]);
-  // fprintf(stderr, "\nadj_list[%ld]=%ld",i,adj_list[i]);
-  }
+  for (i=1; i <= degree; i++) {adj_list[i]=G->v_adj_v[start_v][i-1];}
   return adj_list; 
 } // end get_adj_lst
 
@@ -298,14 +304,21 @@ int add_v(graph *G, long insert_v,long v_id){
 realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
 */
-
-    // don't insert vertices if bigger than no_v
-    if (insert_v >= G->no_v){return -1;}
-    // do I want to make verticies id's unique
-    for (int i=0; i>insert_v; i++){
-        if(G->v[i]==v_id){return -1;}
+    if ((insert_v) > (G->no_v-1)){
+      G->no_v++;
+      G->v = (long **) realloc(G->v, G->no_v *sizeof(long));
+      G->v[insert_v] = (long *) realloc(G->v[insert_v], V_ATTRIB_SIZE *sizeof(long));
     }
-    G->v[insert_v]=v_id;
+ 
+    if (insert_v >= G->no_v){return -1;}
+    // make verticies id's unique
+    for (long i=0; i < G->no_v; i++){if(G->v[i][0]==v_id){return -1;}}
+
+    G->v[insert_v][0]=v_id;
+    G->v[insert_v][1]=-1; // Type
+    G->v[insert_v][2]=-1; // In Degree
+    G->v[insert_v][3]=-1; // Out Degree
+    
     G->v_degree[insert_v]=0;
     // This will be a list of verticies adj to this vertix
     
@@ -341,7 +354,8 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     G->e[e_start][1]=end_v;
     G->e[e_start][2]=direction;
     G->e[e_start][3]=fwd_weigh;
-
+    G->e[e_start][5]=G->no_e; //This is the id.
+    
     if (G->use_adj==true){G->v_adj[start_v][end_v]=1;}
 
     G->v_degree[start_v] ++;
@@ -353,7 +367,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     }
     // if this is self referencing then it is valid to say 
     // it has two edges added not just one.
-    // This is the convention for the graph theory.
+    // This is the convention for graph theory.
     G->v_degree[end_v] ++;
     G->v_out_deg[end_v] ++;
     
@@ -980,7 +994,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
               tmp_line_1[i]=line[i];
               i++;
             }
-            G->v[(no_l-1)] = atol(tmp_line_1);
+            G->v[(no_l-1)][0] = atol(tmp_line_1);
           
           } else {
             if (adj_i < no_v){
@@ -1127,7 +1141,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
               tmp_line_1[i]=line[i];
               i++;
             }
-            G->v[(no_l-1)] = atol(tmp_line_1);
+            G->v[(no_l-1)][0] = atol(tmp_line_1);
             no_v++;
           } else {
             G->v_incidents[(no_l-1)][inc_i] = atol(&line[i]);
@@ -1147,8 +1161,9 @@ int read_incidence(graph *G, char delim,char * IfileName){
   fclose(fd);
   
   G->no_v = no_v;
-  G->v = (long *) realloc(G->v, G->no_v *sizeof(long));  
+  G->v = (long **) realloc(G->v, G->no_v *sizeof(long));  
 
+  for (long x=0; x < no_v; x++){G->v[x] = (long *) realloc(G->v[x], V_ATTRIB_SIZE *sizeof(long));}
   /**
   *
   * Process the array column by column
@@ -1202,18 +1217,16 @@ int write_adjency(graph *G, char delim,char * OfileName){
   fprintf(fd,"%c",delim);
   
   for (i=0;i< G->no_v;i++){
-      if (G->v[i] !=-1){
-        fprintf(fd,"%c%ld",delim,G->v[i]);
-      } else {i=G->no_v;} // End the loop because no more verticies exist.
+    if (G->v[i][0] !=-1){fprintf(fd,"%c%ld",delim,G->v[i][0]);} 
+    else {i=G->no_v;} // End the loop because no more verticies exist.
   }
   
   for (i=0;i< G->no_v;i++){
-      if (G->v[i] !=-1){
-        fprintf(fd,"\n%ld",G->v[i]);
+      if (G->v[i][0] !=-1){
+        fprintf(fd,"\n%ld",G->v[i][0]);
         for (j=0;j< G->no_v;j++){
-            if (G->v[j] !=-1){
-                fprintf(fd,"%c%ld",delim,G->v_adj[i][j]);
-            } else {j=G->no_v;}
+            if (G->v[j][0] !=-1){fprintf(fd,"%c%ld",delim,G->v_adj[i][j]);} 
+            else {j=G->no_v;}
         }
       } else {i=G->no_v;} // End the loop because no more verticies exist.
   }
@@ -1245,8 +1258,8 @@ int write_incidence(graph *G, char delim,char * OfileName){
       } else {i=G->no_e;} // End the loop because no more edges exist.
   }
   for (i=0;i<G->no_v;i++){
-      if (G->v[i] !=-1){
-        fprintf(fd,"\n%ld",G->v[i]);
+      if (G->v[i][0] !=-1){
+        fprintf(fd,"\n%ld",G->v[i][0]);
         for (j=0;j<G->no_e;j++){
             if (G->e[j][0] !=-1){
                 fprintf(fd,"%c%ld",delim,G->v_incidents[i][j]);
@@ -1276,13 +1289,14 @@ as I may change it.
 bool set_adj(graph *G, bool use_adj){ G->use_adj=use_adj; return use_adj;}
 
 int init_G(graph *G, int no_e, int no_v){
-  int i=0; int j=0;
+  long i=0; 
+  long j=0;
   G->g_type = 1;
   G->use_adj = false;
   
   if(no_v > 0){
     G->no_v = no_v;
-    G->v = (long*) calloc(no_v, sizeof(long));
+    G->v = (long**) calloc(no_v, sizeof(long));
     G->v_degree = (long*) calloc(no_v, sizeof(long));
     G->v_in_deg = (long*) calloc(no_v, sizeof(long));
     G->v_out_deg = (long*) calloc(no_v, sizeof(long));
@@ -1291,7 +1305,8 @@ int init_G(graph *G, int no_e, int no_v){
     G->v_adj_v = (long **) calloc(no_v, sizeof(long));
     
     for (i=0; i<no_v;i++) {
-      G->v[i] = -1;
+      G->v[i] = (long*) calloc(V_ATTRIB_SIZE, sizeof(long));
+      G->v[i][0] = -1;
       G->v_adj[i] = (long*) calloc(no_v, sizeof(long));
       if (no_e >0) {G->v_incidents[i] = (long*) calloc(no_e, sizeof(long));}
     } // end for i
@@ -1314,16 +1329,13 @@ int init_G(graph *G, int no_e, int no_v){
 
 
 int disp_graph(graph *G, int no_e, int no_v){
-  int i,j;
+  long i,j;
   for (i=0; i < no_e; i++){
-      for (j=0; j < E_ATTRIB_SIZE; j++){
-          fprintf(stderr,"\nG->e[%d][%d]=%ld",i,j,G->e[i][j]);
-      }
+    for (j=0; j < E_ATTRIB_SIZE; j++){fprintf(stderr,"\nG->e[%ld][%ld]=%ld",i,j,G->e[i][j]);}
   }
    
-  for (i=0; i<no_v;i++){
-      fprintf(stderr,"\nG.v[%d]=%ld",i,G->v[i]);
-  }
+  for (i=0; i<no_v;i++){fprintf(stderr,"\nG.v[%ld]=%ld",i,G->v[i][0]);}
+
   return 0;
 }
 
