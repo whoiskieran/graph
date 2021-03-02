@@ -82,7 +82,9 @@ typedef struct graph {
 
 int init_G(graph *G, int no_e, int no_v);
 int add_v(graph *G, long insert_v,long v_id);
-int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight);
+int add_e(graph *G, long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight);
+int move_e(graph * G, long e_start, long start_v, long end_v, int direction, int fwd_weigh, int bk_weight);
+int v_has_uniq_id(graph *G);
 long get_no_e(graph *G);
 long get_no_v(graph *G);
 int move_v();
@@ -91,7 +93,6 @@ long find_unique_hameltonain_path(graph *G);
 long get_degree(graph * G, int start_v);
 long get_in_degree(graph *G, long v);
 long get_out_degree(graph *G, long v);
-int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight);
 int v_distance(graph *G, int start_v, int end_v);
 int make_VTNH();
 long * find_edges(graph *G, long v_start,long e_start, long pos);
@@ -304,6 +305,9 @@ int add_v(graph *G, long insert_v,long v_id){
 realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
 */
+
+    if (insert_v >= G->no_v){return -1;}
+
     if ((insert_v) > (G->no_v-1)){
       G->no_v++;
       G->v = (long **) realloc(G->v, G->no_v *sizeof(long));
@@ -312,12 +316,11 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
  
     if (insert_v >= G->no_v){return -1;}
     // make verticies id's unique
-    for (long i=0; i < G->no_v; i++){if(G->v[i][0]==v_id){return -1;}}
 
     G->v[insert_v][0]=v_id;
     G->v[insert_v][1]=-1; // Type
-    G->v[insert_v][2]=-1; // In Degree
-    G->v[insert_v][3]=-1; // Out Degree
+    G->v[insert_v][2]=0; // In Degree
+    G->v[insert_v][3]=0; // Out Degree
     
     G->v_degree[insert_v]=0;
     // This will be a list of verticies adj to this vertix
@@ -399,6 +402,28 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     return 0;
 }
 
+/**
+Check if the ID of each vertix in the graph is unique.
+There is nothing in graph theory which says they have to be.
+This is still useful if you want to impose a constraint that
+vertices should have unique id's
+This function returns -1 when it fails that is when it does not find 
+two verticies with the same id.  
+It returns the array location of the vertix with with a non unique id.
+It does not return the id as that can't be used to fix this problem.
+**/
+
+int v_has_uniq_id(graph *G){
+  for (long i=0; i < G->no_v; i++){
+    for (long j=0; j < G->no_v; j++){
+      if (j != i){
+        if (G->v[j][0] == G->v[i][0]) {return j;}
+      }
+    }
+  }
+  return -1;
+}
+
 long get_no_e(graph *G){return G->no_e;}
 long get_no_v(graph *G){return G->no_v;}
 
@@ -439,7 +464,7 @@ long get_in_degree(graph *G, long v){return (v < G->no_v ? G->v_in_deg[v]:-1);}
 long get_out_degree(graph *G, long v){return (v < G->no_v ? G->v_out_deg[v]:-1);}
 
 
-int move_e(graph * G, int e_start, int start_v, int end_v,int direction,int fwd_weigh, int bk_weight){
+int move_e(graph * G, long e_start, long start_v, long end_v, int direction,int fwd_weigh, int bk_weight){
     // Remove edges
     if(e_start >= G->no_e){return -1;}
     // re-set the adjacency matrix to 0 for this edge.

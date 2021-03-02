@@ -20,8 +20,10 @@ int main(int argc, char *argv[]) {
    // The id of the vertix is irrelivent for this test.
     if (add_v(&G,i,i)==-1){return log_error("function add_v failed to add a vertix");}
   }
-  // This shuld fail as it is adding the same vertix twice.
-  if (add_v(&G,0,0) !=-1){return log_error("function add_v failed it added a vertix with a non unique id");}
-   
+
+  if (add_v(&G,1,0) ==-1){return log_error("function add_v failed to add a vertix");}
+
+  if (v_has_uniq_id(&G) ==-1){log_error("function has_uniq_id failed to find non unique id's of varticies");}
+//  fprintf(stderr,"\n%d\n",v_has_uniq_id(&G));
   return 0;
 }
