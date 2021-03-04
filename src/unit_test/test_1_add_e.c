@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
   for (int i=0; i< no_v; i++){
     sprintf(output_str,"function add_e failed to add edge=%d start_vertix=%d end_vertix=%d",i,i,(i+1)); 
     if ((i+1)==no_v){
-       if (add_e(&G,i, i, 0, 2, 17, 17)==-1){return log_error(output_str);}
+       if (add_e(&G,i, i, 0, 2, 17, 17,-1)==-1){return log_error(output_str);}
     } else {
-      if (add_e(&G,i, i, (i+1), 2, 17, 17)==-1){return log_error(output_str);}
+      if (add_e(&G,i, i, (i+1), 2, 17, 17,-1)==-1){return log_error(output_str);}
     } // end if ((i+1)==no_v)   
   }
    

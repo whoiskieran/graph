@@ -28,22 +28,22 @@ int main(int argc, char *argv[]) {
   for (int i=0; i< no_v; i++){
     sprintf(output_str,"function add_e failed to add edge=%d start_vertix=%d end_vertix=%d",i,i,(i+1)); 
     if ((i+1)==no_v){
-       if (add_e(&G,i, i, 0, 2, 17, 17)==-1){return log_error(output_str);}
-       if (add_e(&G1,i, i, 0, 1, 17, 0)==-1){return log_error(output_str);}
-       if (add_e(&G2,i, i, 0, 1, 17, 0)==-1){return log_error(output_str);}
+       if (add_e(&G,i, i, 0, 2, 17, 17,-1)==-1){return log_error(output_str);}
+       if (add_e(&G1,i, i, 0, 1, 17, 0,-1)==-1){return log_error(output_str);}
+       if (add_e(&G2,i, i, 0, 1, 17, 0,-1)==-1){return log_error(output_str);}
     } else {
-      if (add_e(&G,i, i, (i+1), 2, 17, 17)==-1){return log_error(output_str);}
-      if (add_e(&G1,i, i, (i+1), 1, 17, 0)==-1){return log_error(output_str);}
-      if (add_e(&G2,i, i, (i+1), 1, 17, 0)==-1){return log_error(output_str);}
+      if (add_e(&G,i, i, (i+1), 2, 17, 17,-1)==-1){return log_error(output_str);}
+      if (add_e(&G1,i, i, (i+1), 1, 17, 0,-1)==-1){return log_error(output_str);}
+      if (add_e(&G2,i, i, (i+1), 1, 17, 0,-1)==-1){return log_error(output_str);}
     } // end if ((i+1)==no_v)   
   }
   // Add extra edges for g2.
   sprintf(output_str,"function add_e failed to add G2 3 v0,v0"); 
-  if (add_e(&G2,3, 0, 0, 1, 17, 0)==-1){return log_error(output_str);}  
+  if (add_e(&G2,3, 0, 0, 1, 17, 0,-1)==-1){return log_error(output_str);}  
   sprintf(output_str,"function add_e failed to add G2 4 v1,v1"); 
-  if (add_e(&G2,4, 1, 1, 1, 17, 0)==-1){return log_error(output_str);}  
+  if (add_e(&G2,4, 1, 1, 1, 17, 0,-1)==-1){return log_error(output_str);}  
   sprintf(output_str,"function add_e failed to add G2 4 v2,v2"); 
-  if (add_e(&G2,5, 2, 2, 1, 17, 0)==-1){return log_error(output_str);}  
+  if (add_e(&G2,5, 2, 2, 1, 17, 0,-1)==-1){return log_error(output_str);}  
 
   
   sprintf(output_str,"function edge_exists failed 0,1");   

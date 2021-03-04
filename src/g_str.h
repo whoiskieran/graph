@@ -82,9 +82,10 @@ typedef struct graph {
 
 int init_G(graph *G, int no_e, int no_v);
 int add_v(graph *G, long insert_v,long v_id);
-int add_e(graph *G, long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight);
+int add_e(graph *G, long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight, long e_id);
 int move_e(graph * G, long e_start, long start_v, long end_v, int direction, int fwd_weigh, int bk_weight);
 int v_has_uniq_id(graph *G);
+int e_has_uniq_id(graph *G);
 long get_no_e(graph *G);
 long get_no_v(graph *G);
 int move_v();
@@ -330,7 +331,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     return 1;
 }
 
-int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight){
+int add_e(graph *G,long e_start, long start_v, long end_v,int direction,int fwd_weigh, int bk_weight, long e_id){
 /*
 realloc() will have to be used here.
 https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
@@ -357,7 +358,7 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
     G->e[e_start][1]=end_v;
     G->e[e_start][2]=direction;
     G->e[e_start][3]=fwd_weigh;
-    G->e[e_start][5]=G->no_e; //This is the id.
+    G->e[e_start][5]=e_id; //This is the id.
     
     if (G->use_adj==true){G->v_adj[start_v][end_v]=1;}
 
@@ -424,6 +425,17 @@ int v_has_uniq_id(graph *G){
   return -1;
 }
 
+int e_has_uniq_id(graph *G){
+  for (long i=0; i < G->no_e; i++){
+    for (long j=0; j < G->no_e; j++){
+      if (j != i){
+        if (G->e[j][5] == G->e[i][5]) {return j;}
+      }
+    } // end for long j
+  } // end for long i
+  return -1;
+}
+
 long get_no_e(graph *G){return G->no_e;}
 long get_no_v(graph *G){return G->no_v;}
 
@@ -479,7 +491,7 @@ int move_e(graph * G, long e_start, long start_v, long end_v, int direction,int 
         G->e[e_start][i]=-1;
     }
     // return 0;
-    return add_e(G,e_start,start_v,end_v,direction,fwd_weigh,bk_weight);
+    return add_e(G,e_start,start_v,end_v,direction,fwd_weigh,bk_weight,-1);
 }
 
 /**
@@ -879,7 +891,7 @@ graph combine_g(graph * G1, graph * G2, long bridge_v1, long bridge_v2,int direc
   
   if ((bridge_v1 > -1) && (bridge_v2 > -1)){
     if ((bridge_v1 < G1->no_v) && (bridge_v2 < G2->no_v)){
-      add_e(&G3,no_e, bridge_v1, (bridge_v2+v_offset),direction,fwd_weigh, bk_weight);    
+      add_e(&G3,no_e, bridge_v1, (bridge_v2+v_offset),direction,fwd_weigh, bk_weight,-1);
     }
   }
   
@@ -1069,7 +1081,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
         * wrong.
         **/
           if (edge_exists(G,i,j,no_e+1,2)==-1){
-            add_e(G,no_e,i,j,2,0,0);
+            add_e(G,no_e,i,j,2,0,0,-1);
             no_e++;
           }          
         } else {
@@ -1083,7 +1095,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
           * check if the edge exists and creat it if it does not.
           **/
             if (edge_exists(G,i,j,no_e+1,2)==-1){
-              add_e(G,no_e,i,j,2,0,0);
+              add_e(G,no_e,i,j,2,0,0,-1);
               no_e++;
             }
           } else {
@@ -1092,7 +1104,7 @@ int read_adjency(graph *G, char delim,char * IfileName){
           * 
           **/
             if (edge_exists(G,i,j,no_e+1,1)==-1){
-              add_e(G,no_e,i,j,1,0,0);
+              add_e(G,no_e,i,j,1,0,0,-1);
               no_e++;
             }
           } // end if ((G->v_adj[i][j]==1) && (G->v_adj[j][i]==1)){
@@ -1217,7 +1229,7 @@ int read_incidence(graph *G, char delim,char * IfileName){
       }  // end if incidents <0
     } // end for v
     if ((start_v >-1) && (end_v >-1)){
-      add_e(G,e,start_v,end_v,0,0,0);
+      add_e(G,e,start_v,end_v,0,0,0,-1);
       start_v=-1; end_v=-1;
     }
   } // end for e
