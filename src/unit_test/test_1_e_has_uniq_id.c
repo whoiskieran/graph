@@ -5,9 +5,7 @@
 #include <string.h>
 #include "graph.h"
 /**
-* This code tests the dynamic allocation of memory
-* when a new edge is added after init process 
-* this new edge is grater than the current edge no.
+* This code tests to see if the e_has_uniq_id function will find non unique id's
 **/
 
 int main(int argc, char *argv[]) {
@@ -31,13 +29,10 @@ int main(int argc, char *argv[]) {
       if (add_e(&G,i, i, (i+1), 2, 17, 17, -1)==-1){return log_error(output_str);}
     } // end if ((i+1)==no_v)   
   }
-  // Make a self referencing node 
-  // the test here is the edge number is grater than the original No edges.
-  disp_graph(&G,no_e,no_v);
-  fprintf(stdout,"\n");
+  // All the edge id's are set to -1 so they are not unique.
   if (add_e(&G,3, 1, 1, 2, 17, 17,-1)==-1){return log_error(output_str);} 
   no_e++;
-  disp_graph(&G,no_e,no_v);
-  fprintf(stdout,"\n");
+  sprintf(output_str,"function e_has_uniq_id failed to find non unique id's");  
+  if (e_has_uniq_id(&G) ==-1){return log_error(output_str);}
   return 0;
 }

@@ -1,6 +1,6 @@
 CFLAGS = -O3 -g -Wall -fstrict-aliasing -std=c99 -I ../src
 
-all: test_1_parse test_1_init test_1_add_v test_2_add_v test_3_add_v test_4_add_v test_1_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_2_find_edges test_3_find_edges test_4_find_edges test_5_find_edges test_6_find_edges test_1_write_incidence test_1_read_incidence test_1_get_vertix test_1_find_first_bridge_e test_1_set_fwd_weight test_1_set_bk_weight test_1_get_bk_weight test_1_get_fwd_weight test_1_combine_g test_1_get_no_regions test_1_get_adj_list test_2_get_adj_list test_3_get_adj_list
+all: test_1_parse test_1_init test_1_add_v test_2_add_v test_3_add_v test_4_add_v test_1_add_e test_2_add_e test_1_get_degree test_1_set_adj test_1_v_distance test_1_edge_exists test_1_write_adjency test_1_read_adjency test_2_get_degree test_1_find_edges test_2_find_edges test_3_find_edges test_4_find_edges test_5_find_edges test_6_find_edges test_1_write_incidence test_1_read_incidence test_1_get_vertix test_1_find_first_bridge_e test_1_set_fwd_weight test_1_set_bk_weight test_1_get_bk_weight test_1_get_fwd_weight test_1_combine_g test_1_get_no_regions test_1_get_adj_list test_2_get_adj_list test_3_get_adj_list test_1_e_has_uniq_id test_2_e_has_uniq_id test_1_v_has_uniq_id test_2_v_has_uniq_id
 		
 test:unit_test/test.c
 	$(CC) $(CFLAGS) unit_test/test.c -o unit_test/$@
@@ -607,4 +607,30 @@ test_3_get_adj_list:unit_test/test_3_get_adj_list.c
 	./unit_test/$@ -E 7 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2_Error.txt" -O "unit_test/test_3_get_adj_list_data/v__Find_Bridge_Edge_2_Error.txt"
 	./unit_test/$@ -E 8 -V 7 -I "unit_test/adj_matrix/adjacency_matrix_Find_Bridge_Edge_2.txt" -O "unit_test/test_3_get_adj_list_data/v__Find_Bridge_Edge_2.txt"
 
+	rm unit_test/$@
+
+
+test_1_e_has_uniq_id:unit_test/test_1_e_has_uniq_id.c 
+	@echo "###### Test ONE add edge has unique id #####"
+	$(CC) $(CFLAGS) unit_test/test_1_e_has_uniq_id.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
+
+test_2_e_has_uniq_id:unit_test/test_2_e_has_uniq_id.c 
+	@echo "###### Test TWO add edge has unique id  ALL id's are unique so this function should find this #####"
+	$(CC) $(CFLAGS) unit_test/test_2_e_has_uniq_id.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
+
+
+test_1_v_has_uniq_id:unit_test/test_1_v_has_uniq_id.c 
+	@echo "###### Test ONE add vertix has unique id #####"
+	$(CC) $(CFLAGS) unit_test/test_1_v_has_uniq_id.c -o unit_test/$@
+	./unit_test/$@
+	rm unit_test/$@
+
+test_2_v_has_uniq_id:unit_test/test_2_v_has_uniq_id.c 
+	@echo "###### Test TWO add verticies has unique id  ALL id's are unique so this function should find this #####"
+	$(CC) $(CFLAGS) unit_test/test_2_v_has_uniq_id.c -o unit_test/$@
+	./unit_test/$@
 	rm unit_test/$@

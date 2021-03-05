@@ -404,14 +404,14 @@ https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm
 }
 
 /**
-Check if the ID of each vertix in the graph is unique.
-There is nothing in graph theory which says they have to be.
-This is still useful if you want to impose a constraint that
-vertices should have unique id's
-This function returns -1 when it fails that is when it does not find 
-two verticies with the same id.  
-It returns the array location of the vertix with with a non unique id.
-It does not return the id as that can't be used to fix this problem.
+* Check if the ID of each vertix in the graph is unique.
+* There is nothing in graph theory which says they have to be.
+* This is still useful if you want to impose a constraint that
+* vertices should have unique id's
+* This function returns -1 when it fails that is when it does not find 
+* two verticies with the same id.  
+* It returns the array location of the vertix with a non unique id.
+* It does not return the id as that can't be used to fix this problem.
 **/
 
 int v_has_uniq_id(graph *G){
@@ -424,6 +424,18 @@ int v_has_uniq_id(graph *G){
   }
   return -1;
 }
+
+
+/**
+* Check if the ID of each edge in the graph is unique.
+* There is nothing in graph theory which says they have to be.
+* This is still useful if you want to impose a constraint that
+* edges should have unique id's
+* This function returns -1 when it fails that is when it does not find 
+* two edges with the same id.  
+* It returns the array location of the edge with a non unique id.
+* It does not return the id as that can't be used to fix this problem.
+**/
 
 int e_has_uniq_id(graph *G){
   for (long i=0; i < G->no_e; i++){
