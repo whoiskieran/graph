@@ -1,0 +1,20 @@
+Step 0 of 4 - This is the non-rotated graph 
+0
+1
+2
+3
+Step 1
+1
+2
+3
+0
+Step 2
+2
+3
+0
+1
+Step 3
+3
+0
+1
+2
