@@ -1,0 +1,8 @@
+#!/usr/pkg/bin/bash
+cd ../
+MAIN_DIR=`pwd`
+
+echo "Making file"
+echo "Copying files to bin "
+echo "Executing Tests"
+echo $MAIN_DIR
